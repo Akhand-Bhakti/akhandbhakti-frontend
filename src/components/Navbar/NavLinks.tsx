@@ -2,32 +2,46 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
-export default function NavLinks() {
+interface NavLinksProps {
+  isScrolled: boolean;
+}
+
+export default function NavLinks({ isScrolled }: NavLinksProps) {
   const pathname = usePathname();
   const [dropdown, setDropdown] = useState(false);
   const triggerRef = useRef<HTMLDivElement | null>(null);
 
+  // ACTIVE LINK STYLE
   const active = (path: string) =>
     pathname === path
-      ? "text-white font-bold"
-      : "text-white/90 hover:text-white font-semibold";
+      ? `${isScrolled ? "text-black" : "text-white"} font-bold`
+      : `${
+          isScrolled
+            ? "text-black/80 hover:text-black"
+            : "text-white/90 hover:text-white"
+        } font-semibold`;
 
-  // Close dropdown on Escape (optional, small enhancement)
-  if (typeof window !== "undefined") {
-    window.addEventListener("keydown", (e) => {
+  // Escape closes dropdown
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setDropdown(false);
-    });
-  }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
 
   return (
-    <div className="flex items-center gap-8 text-base font-semibold">
+    <div
+      className={`flex items-center gap-8 text-base font-semibold transition-colors duration-300`}
+    >
+      {/* Products */}
       <Link href="/products" className={active("/products")}>
         Products
       </Link>
 
-      {/* Dropdown */}
+      {/* Categories Dropdown */}
       <div
         className="relative cursor-pointer"
         onMouseEnter={() => setDropdown(true)}
@@ -35,14 +49,20 @@ export default function NavLinks() {
         ref={triggerRef}
       >
         <div
-          className="flex items-center gap-1 text-white/90 hover:text-white font-semibold select-none"
+          className={`
+            flex items-center gap-1 select-none font-semibold
+            ${
+              isScrolled
+                ? "text-black/80 hover:text-black"
+                : "text-white/90 hover:text-white"
+            }
+          `}
           role="button"
           aria-haspopup="true"
           aria-expanded={dropdown}
           tabIndex={0}
           onFocus={() => setDropdown(true)}
           onBlur={(e) => {
-            // keep open if focus moved inside the dropdown
             const next = (e.relatedTarget as HTMLElement) || null;
             if (!next || !triggerRef.current?.contains(next))
               setDropdown(false);
@@ -51,13 +71,11 @@ export default function NavLinks() {
           Categories <ChevronDown size={18} />
         </div>
 
+        {/* Dropdown menu */}
         {dropdown && (
           <div
             className="absolute top-full left-0 mt-0 bg-white text-black p-4 rounded-xl shadow-xl w-48 z-50
                        transform transition-all duration-150 ease-out opacity-100 translate-y-1"
-            onMouseEnter={() => setDropdown(true)}
-            onMouseLeave={() => setDropdown(false)}
-            // Keep focusable for keyboard users
             tabIndex={-1}
           >
             <Link
