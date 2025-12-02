@@ -8,18 +8,32 @@ import NavLinks from "./NavLinks";
 import MobileMenu from "./MobileMenu";
 import SearchModal from "./SearchModal";
 import ProfileMenu from "./ProfileMenu";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const router = useRouter();
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+
+  // TEMP auth state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleUserClick = () => {
+    if (!isAuthenticated) {
+      router.push("/register");
+    } else {
+      setProfileOpen(!profileOpen);
+    }
+  };
 
   return (
     <>
@@ -28,7 +42,7 @@ export default function Navbar() {
           fixed top-0 left-0 w-full z-50 transition-all duration-300 
           ${
             isScrolled
-              ? "bg-[#9b4b33]/90 backdrop-blur-md shadow-md"
+              ? "bg-white backdrop-blur-md shadow-md"
               : "bg-transparent"
           }
         `}
@@ -48,18 +62,20 @@ export default function Navbar() {
             </h1>
           </Link>
 
-          {/* Desktop Links */}
+          {/* Desktop Nav */}
           <div className="hidden md:flex">
             <NavLinks />
           </div>
 
-          {/* Icons */}
+          {/* Right Icons */}
           <div className="flex items-center gap-6 text-white">
+            {/* Search */}
             <Search
               className="cursor-pointer hover:scale-110 transition"
               onClick={() => setSearchOpen(true)}
             />
 
+            {/* Cart */}
             <div className="relative cursor-pointer">
               <ShoppingBag className="hover:scale-110 transition" />
               <span className="absolute -top-2 -right-2 bg-white text-black text-xs px-1.5 rounded-full">
@@ -67,15 +83,18 @@ export default function Navbar() {
               </span>
             </div>
 
+            {/* AUTH USER ICON */}
             <div className="relative">
               <User
                 className="cursor-pointer hover:scale-110 transition"
-                onClick={() => setProfileOpen(!profileOpen)}
+                onClick={handleUserClick}
               />
-              <ProfileMenu open={profileOpen} />
+
+              {/* Only show dropdown if authenticated */}
+              {isAuthenticated && <ProfileMenu open={profileOpen} />}
             </div>
 
-            {/* Mobile Button */}
+            {/* Mobile menu */}
             <Menu
               className="cursor-pointer md:hidden"
               onClick={() => setMobileOpen(true)}

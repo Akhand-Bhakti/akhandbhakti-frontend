@@ -1,7 +1,9 @@
-import React from "react";
+import Banner from "@/components/Banner";
 
-const Home = () => {
-  return <div className="bg-red-700 text-8xl">Home</div>;
-};
-
-export default Home;
+export default function Home() {
+  return (
+    <>
+      <Banner />
+    </>
+  );
+}
