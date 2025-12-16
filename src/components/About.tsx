@@ -14,15 +14,21 @@ export default function About() {
 
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl font-bold text-[#7B3F07] leading-tight">
-            Guruji Parameshwar
+            Shri Shri Shagun
             <br />
-            Ananda
+            Vashishth Ji
           </h2>
 
           {/* Description */}
           <p className="text-lg text-[#8B5A2B] leading-relaxed">
             A beacon of divine wisdom who has dedicated his life to spreading
             the ancient knowledge of Rudraksha and its transformative powers.
+            &quot;Rudraksha is not just a bead, it is a bridge between the human
+            and the divine, a sacred gift from Lord Shiva himself.&quot;
+            &quot;Rudraksha is not just a bead, it is a bridge between the human
+            and the divine, a sacred gift from Lord Shiva himself.&quot;
+            &quot;Rudraksha is not just a bead, it is a bridge between the human
+            and the divine, a sacred gift from Lord Shiva himself.&quot;
           </p>
 
           <div className="w-full h-px bg-orange-300/60"></div>
@@ -33,11 +39,11 @@ export default function About() {
             and the divine, a sacred gift from Lord Shiva himself.&quot;
           </p>
           <p className="text-[#6A3A09] font-semibold">
-            – Guruji Parameshwar Ananda
+            – Shri Shri Shagun Vashishth Ji
           </p>
 
           {/* Stats */}
-          <div className="flex flex-wrap gap-10 pt-6">
+          {/* <div className="flex flex-wrap gap-10 pt-6">
             <div>
               <p className="text-3xl font-bold text-[#7B3F07]">35+</p>
               <p className="text-sm text-[#6A3A09]">Years of Service</p>
@@ -50,7 +56,7 @@ export default function About() {
               <p className="text-3xl font-bold text-[#7B3F07]">108+</p>
               <p className="text-sm text-[#6A3A09]">Sacred Ceremonies</p>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* RIGHT SECTION */}
@@ -69,8 +75,8 @@ export default function About() {
           </div>
 
           {/* Om Icon */}
-          <div className="absolute bottom-4 right-4 bg-white shadow-lg p-3 rounded-xl">
-            <Image src="/om-icon.png" alt="Om Icon" width={32} height={32} />
+          <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg">
+            <p className="text-4xl text-orange-600">🕉️</p>
           </div>
         </div>
       </div>

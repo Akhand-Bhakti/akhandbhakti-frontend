@@ -63,19 +63,18 @@ export default function Banner() {
       <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 mt-15">
         {/* LEFT COLUMN — fully centered */}
         <div className="flex flex-col items-center text-center">
-          <div className="relative w-72 h-72 lg:w-[380px] lg:h-[380px] rounded-full overflow-hidden ring-10 ring-white/15">
+          <div className="relative w-72 h-72 lg:w-[380px] lg:h-[380px] rounded-full overflow-hidden ring-10 ring-white/15 mt-10">
             <Image src="/guru.png" alt="Guru" fill className="object-cover" />
           </div>
 
           <h2 className="text-3xl lg:text-4xl font-bold text-white mt-6">
             Divine Guidance
           </h2>
-
           <p className="text-white/85 mt-2 max-w-sm">
             Bringing peace and spiritual enlightenment to your life
           </p>
 
-          <div className="flex gap-12 mt-1 text-white">
+          {/* <div className="flex gap-12 mt-1 text-white">
             <div className="text-center">
               <h3 className="text-2xl font-bold">10+</h3>
               <p className="text-sm text-white/75">Years</p>
@@ -90,7 +89,7 @@ export default function Banner() {
               <h3 className="text-2xl font-bold">100+</h3>
               <p className="text-sm text-white/75">Blessings</p>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* RIGHT COLUMN — fully centered */}
@@ -126,13 +125,13 @@ export default function Banner() {
             </div>
           </div>
           {/* BOTTOM BAR — centered and compact */}
-          <div className="relative z-20 max-w-4xl mx-auto mt-3 bg-orange-100 rounded-2xl shadow-xl p-3 flex gap-4 justify-center right-15">
+          <div className="relative z-20 max-w-4xl mx-auto mt-3 bg-orange-200 rounded-2xl shadow-xl p-3 flex gap-4 justify-center right-15">
             {products.map((item, i) => (
               <button
                 key={item.id}
                 onClick={() => setActive(i)}
                 className={`w-[150px] p-3 rounded-2xl transition-all ${
-                  active === i ? "bg-orange-200 scale-105" : "bg-white"
+                  active === i ? "bg-orange-300 scale-105" : "bg-white"
                 }`}
               >
                 <div className="relative w-10 h-5 mx-auto">

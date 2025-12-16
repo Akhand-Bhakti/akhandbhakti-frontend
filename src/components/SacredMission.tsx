@@ -56,7 +56,7 @@ export default function SacredMission() {
           </div>
 
           {/* Card 3 */}
-          <div className="bg-orange-100 rounded-3xl shadow-md border border-orange-600 p-8 text-left hover:shadow-lg transition">
+          {/* <div className="bg-orange-100 rounded-3xl shadow-md border border-orange-600 p-8 text-left hover:shadow-lg transition">
             <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center mb-4">
               <Users className="text-orange-600" />
             </div>
@@ -67,7 +67,7 @@ export default function SacredMission() {
               Guruji provides personalized consultation to help you choose the
               right Rudraksha based on your spiritual needs and birth chart.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

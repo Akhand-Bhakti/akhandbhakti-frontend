@@ -49,9 +49,9 @@ export default function Navbar() {
             <Image
               src="/logo.png"
               alt="Akhand Bhakti Logo"
-              width={48}
-              height={48}
-              className="rounded-full"
+              width={88}
+              height={58}
+              // className="rounded-full"
             />
             <h1
               className={`font-semibold text-lg tracking-wide ${

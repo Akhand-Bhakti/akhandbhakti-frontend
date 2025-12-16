@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCartIcon } from "lucide-react";
+import { HeartIcon } from "lucide-react";
+import { fetchProducts } from "@/services/productService";
 
 interface Product {
   _id: string;
@@ -23,26 +24,26 @@ export default function ProductSection() {
 
   const filterButtons = [
     "all",
-    "single-bead",
-    "mala",
-    "pendant",
+    "rudraksha",
+    "karungali",
+    "puja prasad",
     "bracelet",
     "combination",
   ];
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const loadProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/v1/products"); // your backend route
-        const data = await res.json();
+        const data = await fetchProducts();
         setProducts(data.products);
+      } catch (err) {
+        console.error("Failed to load products", err);
+      } finally {
         setLoading(false);
-      } catch (error) {
-        console.log(error);
       }
     };
 
-    fetchProducts();
+    loadProducts();
   }, []);
 
   const filteredProducts =
@@ -87,12 +88,10 @@ export default function ProductSection() {
               key={product._id}
               className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition relative"
             >
-              {/* Wishlist Icon */}
               <button className="absolute top-3 right-3 bg-white p-2 rounded-full shadow">
-                <ShoppingCartIcon size={16} />
+                <HeartIcon size={16} />
               </button>
 
-              {/* Product Image */}
               <div className="relative w-full h-48">
                 <Image
                   src={product.mainImage?.url || "/placeholder.png"}
@@ -102,7 +101,6 @@ export default function ProductSection() {
                 />
               </div>
 
-              {/* Text Section */}
               <div className="p-4">
                 <h3 className="font-semibold text-gray-900 text-sm">
                   {product.name.length > 35
@@ -110,20 +108,17 @@ export default function ProductSection() {
                     : product.name}
                 </h3>
 
-                {/* Price */}
                 <p className="mt-2 font-bold text-gray-800">
                   ₹{product.variants?.[0]?.basePrice || "N/A"}
                 </p>
 
-                {/* Ratings (custom component later) */}
                 <div className="mt-2 text-yellow-500 text-sm">★★★★☆</div>
 
-                {/* Learn more */}
                 <Link
                   href={`/product/${product.slug}`}
                   className="text-orange-600 text-sm font-semibold mt-3 inline-block"
                 >
-                  Learn more →
+                  View Details →
                 </Link>
               </div>
             </div>
