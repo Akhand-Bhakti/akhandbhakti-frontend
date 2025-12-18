@@ -19,7 +19,7 @@ export default function NavLinks({ isScrolled }: NavLinksProps) {
       ? `${isScrolled ? "text-black" : "text-white"} font-bold`
       : `${
           isScrolled
-            ? "text-black/80 hover:text-black"
+            ? "text-white/80 hover:text-white"
             : "text-white/90 hover:text-white"
         } font-semibold`;
 
@@ -53,7 +53,7 @@ export default function NavLinks({ isScrolled }: NavLinksProps) {
             flex items-center gap-1 select-none font-semibold
             ${
               isScrolled
-                ? "text-black/80 hover:text-black"
+                ? "text-white/80 hover:text-white"
                 : "text-white/90 hover:text-white"
             }
           `}
@@ -112,7 +112,7 @@ export default function NavLinks({ isScrolled }: NavLinksProps) {
         )}
       </div>
 
-      <Link href="/gallery" className={active("/gallery")}>
+      <Link href="/#gallery" className={active("/#gallery")}>
         Gallery
       </Link>
       <Link href="/about" className={active("/about")}>

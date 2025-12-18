@@ -21,7 +21,7 @@ export default function Gallery() {
   ];
 
   return (
-    <section className="w-full py-12 bg-orange-100">
+    <section id="gallery" className="w-full py-12 bg-orange-100 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-bold text-[#2D2D2D] mb-8">

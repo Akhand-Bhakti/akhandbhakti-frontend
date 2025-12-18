@@ -17,7 +17,7 @@ interface Product {
   category: string;
 }
 
-export default function ProductSection() {
+export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
@@ -49,20 +49,18 @@ export default function ProductSection() {
   const filteredProducts =
     filter === "all" ? products : products.filter((p) => p.category === filter);
 
-  const visibleProducts = filteredProducts.slice(0, 8);
-
   return (
-    <section className="w-full py-16 px-6 lg:px-16">
-      {/* Title */}
-      <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-gray-900">Blessed Collection</h2>
-        <p className="text-gray-600 text-sm mt-1">
-          Authentic & Energized Rudraksha
+    <section className="pt-28 pb-20 px-6 lg:px-16">
+      {/* Page Title */}
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-gray-900">Our Products</h1>
+        <p className="text-gray-600 mt-2">
+          Explore our complete collection of authentic & energized products
         </p>
       </div>
 
       {/* Filter Buttons */}
-      <div className="flex justify-center gap-4 mb-10 flex-wrap">
+      <div className="flex justify-center gap-4 mb-12 flex-wrap">
         {filterButtons.map((btn) => (
           <button
             key={btn}
@@ -81,19 +79,25 @@ export default function ProductSection() {
       {/* Products Grid */}
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
         {loading ? (
-          <p className="text-center text-gray-500 w-full">Loading...</p>
-        ) : visibleProducts.length === 0 ? (
-          <p className="text-center text-gray-500 w-full">No products found.</p>
+          <p className="text-center text-gray-500 col-span-full">
+            Loading products...
+          </p>
+        ) : filteredProducts.length === 0 ? (
+          <p className="text-center text-gray-500 col-span-full">
+            No products found.
+          </p>
         ) : (
-          visibleProducts.map((product) => (
+          filteredProducts.map((product) => (
             <div
               key={product._id}
               className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition relative"
             >
+              {/* Wishlist */}
               <button className="absolute top-3 right-3 bg-white p-2 rounded-full shadow">
                 <HeartIcon size={16} />
               </button>
 
+              {/* Image */}
               <div className="relative w-full h-48">
                 <Image
                   src={product.mainImage?.url || "/placeholder.png"}
@@ -103,6 +107,7 @@ export default function ProductSection() {
                 />
               </div>
 
+              {/* Details */}
               <div className="p-4">
                 <h3 className="font-semibold text-gray-900 text-sm">
                   {product.name.length > 35
@@ -126,16 +131,6 @@ export default function ProductSection() {
             </div>
           ))
         )}
-      </div>
-
-      {/* Explore More */}
-      <div className="flex justify-center mt-14">
-        <Link
-          href="/products"
-          className="px-8 py-3 border border-orange-500 text-orange-500 font-semibold rounded-full hover:bg-orange-500 hover:text-white transition"
-        >
-          Explore More
-        </Link>
       </div>
     </section>
   );

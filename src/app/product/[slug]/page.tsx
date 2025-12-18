@@ -100,8 +100,11 @@ export default function ProductPage() {
 
             {/* Features */}
             <div className="mt-6 text-sm text-gray-600 leading-relaxed">
-              Rudraksha beads are sacred seeds known for spiritual balance,
-              positivity, and well-being.
+              At Akhandbhakti, every purchase welcomes divine energy into your
+              life and supports our efforts to care for our cows and perform
+              pujan in different parts of India. With each order, you&apos;re
+              contributing to Namak-Chamak Rudrabhishek and to help with cow
+              shelters .
             </div>
 
             {/* Quantity + Cart */}
@@ -132,7 +135,24 @@ export default function ProductPage() {
           {/* Description */}
           <div>
             <h2 className="font-semibold mb-3">Description</h2>
-            <div className="h-36 bg-gray-200 rounded-xl" />
+            <div className="bg-gray-100 rounded-xl p-4 text-sm text-gray-700 leading-relaxed">
+              {product.description
+                .split("\n")
+                .map((line: string, index: number) => {
+                  if (line.startsWith("- ")) {
+                    return (
+                      <li key={index} className="ml-4 list-disc">
+                        {line.replace("- ", "")}
+                      </li>
+                    );
+                  }
+                  return (
+                    <p key={index} className="mb-2">
+                      {line}
+                    </p>
+                  );
+                })}
+            </div>
           </div>
 
           {/* Lab Test */}
