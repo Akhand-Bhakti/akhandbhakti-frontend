@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { HeartIcon } from "lucide-react";
 import { fetchProducts } from "@/services/productService";
+import StarRating from "@/StarRating";
+import { useSearchParams, useRouter } from "next/navigation";
 
 interface Product {
   _id: string;
@@ -20,34 +22,33 @@ interface Product {
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("all");
-
   const filterButtons = [
     "all",
-    "rudraksha",
-    "karungali",
-    "puja prasad",
-    "bracelet",
-    "combination",
+    "rudraksha malas",
+    "wearable rudraksha",
+    "rudraksha beads",
+    "puja essentials",
   ];
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const keyword = searchParams.get("keyword") || "";
+  const category = searchParams.get("category") || "all";
 
   useEffect(() => {
     const loadProducts = async () => {
+      setLoading(true);
       try {
-        const data = await fetchProducts();
+        const data = await fetchProducts({ keyword, category });
         setProducts(data.products);
-      } catch (err) {
-        console.error("Failed to load products", err);
       } finally {
         setLoading(false);
       }
     };
 
     loadProducts();
-  }, []);
+  }, [keyword, category]);
 
-  const filteredProducts =
-    filter === "all" ? products : products.filter((p) => p.category === filter);
+  const filteredProducts = products;
 
   return (
     <section className="pt-28 pb-20 px-6 lg:px-16">
@@ -64,9 +65,15 @@ export default function ProductsPage() {
         {filterButtons.map((btn) => (
           <button
             key={btn}
-            onClick={() => setFilter(btn)}
+            onClick={() => {
+              router.push(
+                `/products?category=${encodeURIComponent(btn)}${
+                  keyword ? `&keyword=${keyword}` : ""
+                }`
+              );
+            }}
             className={`px-4 py-1.5 rounded-full text-sm transition ${
-              filter === btn
+              category === btn
                 ? "bg-orange-500 text-white"
                 : "bg-orange-100 text-orange-600"
             }`}
@@ -119,7 +126,10 @@ export default function ProductsPage() {
                   ₹{product.variants?.[0]?.basePrice || "N/A"}
                 </p>
 
-                <div className="mt-2 text-yellow-500 text-sm">★★★★☆</div>
+                <StarRating
+                  rating={product.ratings}
+                  totalReviews={product.numOfReviews}
+                />
 
                 <Link
                   href={`/product/${product.slug}`}

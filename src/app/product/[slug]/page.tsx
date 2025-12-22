@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { fetchProductBySlug } from "@/services/productService";
+import StarRating from "@/StarRating";
 
 export default function ProductPage() {
   const { slug } = useParams();
@@ -89,7 +90,10 @@ export default function ProductPage() {
           {/* Product Info */}
           <div>
             <h1 className="text-3xl font-bold">{product.name}</h1>
-
+            <StarRating
+              rating={product.ratings}
+              totalReviews={product.numOfReviews}
+            />
             <p className="text-sm text-gray-500 mt-1">
               Lab tested, authentic & energized
             </p>
@@ -160,19 +164,70 @@ export default function ProductPage() {
             <h2 className="font-semibold mb-3">Lab Test</h2>
             <div className="h-28 bg-gray-200 rounded-xl" />
           </div>
-
-          {/* Reviews */}
-          <div>
-            <h2 className="font-semibold mb-3">Review</h2>
-            <div className="h-32 bg-gray-200 rounded-xl" />
-          </div>
         </div>
       </div>
 
       {/* ================= RELATED PRODUCTS (FULL WIDTH) ================= */}
       <div className="max-w-7xl mx-auto px-6 mt-24">
-        <h2 className="text-xl font-semibold mb-6">Related Products</h2>
-        <div className="h-48 bg-gray-200 rounded-xl" />
+        {/* Reviews */}
+        <div>
+          <h2 className="text-xl font-semibold mb-6">
+            Reviews ({product.numOfReviews})
+          </h2>
+
+          {product.reviews.length === 0 ? (
+            <p className="text-gray-500">
+              No reviews yet. Be the first to review this product.
+            </p>
+          ) : (
+            <>
+              {/* Reviews Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {product.reviews
+                  .slice(0, 12)
+                  .map((review: any, index: number) => (
+                    <div
+                      key={index}
+                      className="bg-white border rounded-xl p-4 shadow-sm hover:shadow-md transition"
+                    >
+                      {/* Reviewer Name */}
+                      <p className="font-semibold text-gray-900 truncate">
+                        {review.name}
+                      </p>
+
+                      {/* Rating */}
+                      <div className="flex items-center gap-1 text-yellow-500 text-sm mt-1">
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i}>{i < review.rating ? "★" : "☆"}</span>
+                        ))}
+                      </div>
+
+                      {/* Comment */}
+                      <p className="text-gray-600 text-sm mt-2 line-clamp-3">
+                        {review.comment}
+                      </p>
+                    </div>
+                  ))}
+              </div>
+
+              {/* View More Button */}
+              {product.reviews.length > 12 && (
+                <div className="flex justify-center mt-8">
+                  <button
+                    className="px-6 py-2 border border-orange-500 text-orange-500 font-semibold rounded-full hover:bg-orange-500 hover:text-white transition"
+                    onClick={() => alert("Full reviews page/modal coming soon")}
+                  >
+                    View More Reviews
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+        <div className="mt-10">
+          <h2 className="text-xl font-semibold mb-6">Related Products</h2>
+          <div className="h-48 bg-gray-200 rounded-xl" />
+        </div>
       </div>
     </section>
   );

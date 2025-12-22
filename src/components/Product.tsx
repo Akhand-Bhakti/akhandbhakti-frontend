@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HeartIcon } from "lucide-react";
 import { fetchProducts } from "@/services/productService";
+import StarRating from "@/StarRating";
 
 interface Product {
   _id: string;
@@ -24,11 +25,10 @@ export default function ProductSection() {
 
   const filterButtons = [
     "all",
-    "rudraksha",
-    "karungali",
-    "puja prasad",
-    "bracelet",
-    "combination",
+    "rudraksha malas",
+    "wearable rudraksha",
+    "rudraksha beads",
+    "puja essentials",
   ];
 
   useEffect(() => {
@@ -114,7 +114,10 @@ export default function ProductSection() {
                   ₹{product.variants?.[0]?.basePrice || "N/A"}
                 </p>
 
-                <div className="mt-2 text-yellow-500 text-sm">★★★★☆</div>
+                <StarRating
+                  rating={product.ratings}
+                  totalReviews={product.numOfReviews}
+                />
 
                 <Link
                   href={`/product/${product.slug}`}

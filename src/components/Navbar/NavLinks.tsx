@@ -79,35 +79,35 @@ export default function NavLinks({ isScrolled }: NavLinksProps) {
             tabIndex={-1}
           >
             <Link
-              href="/category/rudraksha"
+              href="/products?category=rudraksha%20malas"
               className="block py-2 font-semibold hover:text-orange-600"
             >
-              Rudraksha
+              Rudraksha Malas
             </Link>
             <Link
-              href="/category/bracelet"
+              href="/products?category=wearable%20rudraksha"
               className="block py-2 font-semibold hover:text-orange-600"
             >
-              Bracelet
+              Wearable Rudraksha
             </Link>
             <Link
-              href="/category/yantra"
+              href="/products?category=rudraksha%20beads"
               className="block py-2 font-semibold hover:text-orange-600"
             >
-              Yantra
+              Rudraksha Beads
             </Link>
             <Link
-              href="/category/gemstone"
+              href="/products?category=puja%20essentials"
               className="block py-2 font-semibold hover:text-orange-600"
             >
-              Gemstone
+              Puja Essentials
             </Link>
-            <Link
-              href="/category/other"
+            {/* <Link
+              href="/products?category=bracelet"
               className="block py-2 font-semibold hover:text-orange-600"
             >
               Other Items
-            </Link>
+            </Link> */}
           </div>
         )}
       </div>
