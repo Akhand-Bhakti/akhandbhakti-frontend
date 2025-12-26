@@ -1,5 +1,5 @@
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 /* Fetch all products */
 export async function fetchProducts(params?: {
@@ -13,7 +13,7 @@ export async function fetchProducts(params?: {
     query.append("category", params.category);
   }
 
-  const res = await fetch(`${API_BASE_URL}/products?${query.toString()}`);
+  const res = await fetch(`${API_BASE_URL}/v1/products?${query.toString()}`);
 
   if (!res.ok) throw new Error("Failed to fetch products");
   return res.json();
@@ -21,16 +21,11 @@ export async function fetchProducts(params?: {
 
 /* Fetch single product by slug */
 export async function fetchProductBySlug(slug: string) {
-  try {
-    const res = await fetch(`${API_BASE_URL}/product/slug/${slug}`);
+  const res = await fetch(`${API_BASE_URL}/v1/product/slug/${slug}`);
 
-    if (!res.ok) {
-      throw new Error(`Product not found (${res.status})`);
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error("fetchProductBySlug error:", error);
-    throw error;
+  if (!res.ok) {
+    throw new Error(`Product not found (${res.status})`);
   }
+
+  return res.json();
 }

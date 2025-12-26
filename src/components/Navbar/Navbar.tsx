@@ -9,6 +9,28 @@ import MobileMenu from "./MobileMenu";
 import SearchModal from "./SearchModal";
 import ProfileMenu from "./ProfileMenu";
 import { useRouter, usePathname } from "next/navigation";
+import { useAuthStore } from "@/store/authStore";
+
+function AuthDropdown({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="absolute right-0 mt-3 w-40 bg-white text-black rounded-xl shadow-lg overflow-hidden">
+      <Link
+        href="/login"
+        className="block px-4 py-2 hover:bg-gray-100"
+        onClick={onClose}
+      >
+        Login
+      </Link>
+      <Link
+        href="/register"
+        className="block px-4 py-2 hover:bg-gray-100"
+        onClick={onClose}
+      >
+        Register
+      </Link>
+    </div>
+  );
+}
 
 export default function Navbar() {
   const router = useRouter();
@@ -21,7 +43,8 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated, logout } = useAuthStore();
+  const [authMenuOpen, setAuthMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!isHome) return;
@@ -32,10 +55,12 @@ export default function Navbar() {
   }, [isHome]);
 
   const handleUserClick = () => {
-    if (!isAuthenticated) {
-      router.push("/register");
+    if (isAuthenticated) {
+      setProfileOpen((prev) => !prev);
+      setAuthMenuOpen(false);
     } else {
-      setProfileOpen(!profileOpen);
+      setAuthMenuOpen((prev) => !prev);
+      setProfileOpen(false);
     }
   };
 
@@ -90,7 +115,16 @@ export default function Navbar() {
                 className="cursor-pointer hover:scale-110 transition"
                 onClick={handleUserClick}
               />
-              {isAuthenticated && <ProfileMenu open={profileOpen} />}
+
+              {/* Logged-in user menu */}
+              {isAuthenticated && profileOpen && (
+                <ProfileMenu open={profileOpen} />
+              )}
+
+              {/* Guest user menu */}
+              {!isAuthenticated && authMenuOpen && (
+                <AuthDropdown onClose={() => setAuthMenuOpen(false)} />
+              )}
             </div>
 
             <Menu
