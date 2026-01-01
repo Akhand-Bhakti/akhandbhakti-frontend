@@ -7,7 +7,8 @@ import GoogleButton from "@/components/auth/GoogleButton";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, loading, error, isAuthenticated } = useAuthStore();
+  const { login, actionLoading, error, isAuthenticated, authLoading } =
+    useAuthStore();
 
   const [form, setForm] = useState({
     email: "",
@@ -20,10 +21,10 @@ export default function LoginPage() {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (!authLoading && isAuthenticated) {
       router.push("/");
     }
-  }, [isAuthenticated, router]);
+  }, [authLoading, isAuthenticated, router]);
 
   return (
     <div className="min-h-screen pt-28 px-4 flex items-center justify-center bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
@@ -65,10 +66,10 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={actionLoading}
             className="w-full bg-[#C47A2C] text-white py-2.5 rounded-lg font-medium hover:bg-[#b56f26] transition disabled:opacity-70"
           >
-            {loading ? "Logging in…" : "Login"}
+            {actionLoading ? "Logging in…" : "Login"}
           </button>
 
           {/* Divider */}
@@ -87,6 +88,15 @@ export default function LoginPage() {
             Forgot password?
           </p>
         </form>
+        <p className="text-sm text-center mt-6 text-gray-600">
+          Don&apos;t have an account?{" "}
+          <span
+            className="text-[#C47A2C] cursor-pointer hover:underline"
+            onClick={() => router.push("/register")}
+          >
+            SignUp
+          </span>
+        </p>
       </div>
     </div>
   );

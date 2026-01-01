@@ -112,7 +112,7 @@ export default function NavLinks({ isScrolled }: NavLinksProps) {
         )}
       </div>
 
-      <Link href="/#gallery" className={active("/#gallery")}>
+      <Link href="/gallery" className={active("/gallery")}>
         Gallery
       </Link>
       <Link href="/about" className={active("/about")}>

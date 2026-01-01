@@ -12,7 +12,9 @@ interface User {
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
-  loading: boolean;
+
+  authLoading: boolean; // 🔑 for route protection
+  actionLoading: boolean; // 🔑 for buttons
   error: string | null;
 
   loadUser: () => Promise<void>;
@@ -28,62 +30,69 @@ interface AuthState {
     password: string;
   }) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile: (data: { name: string }) => Promise<void>;
+  changePassword: (data: {
+    oldPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+  }) => Promise<boolean>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isAuthenticated: false,
-  loading: false,
+
+  authLoading: true, // 👈 starts true
+  actionLoading: false,
   error: null,
 
   loadUser: async () => {
     try {
-      set({ loading: true });
       const { data } = await api.get("/auth/me");
       set({
         user: data.user,
         isAuthenticated: true,
-        loading: false,
+        authLoading: false,
       });
     } catch {
       set({
         user: null,
         isAuthenticated: false,
-        loading: false,
+        authLoading: false,
       });
     }
   },
 
   login: async (formData) => {
     try {
-      set({ loading: true, error: null });
+      set({ actionLoading: true, error: null });
       const { data } = await api.post("/auth/login", formData);
       set({
         user: data.user,
         isAuthenticated: true,
-        loading: false,
+        actionLoading: false,
       });
     } catch (err: any) {
       set({
         error: err.response?.data?.message || "Login failed",
-        loading: false,
+        actionLoading: false,
       });
     }
   },
 
   register: async (formData) => {
     try {
-      set({ loading: true, error: null });
+      set({ actionLoading: true, error: null });
       const { data } = await api.post("/auth/register", formData);
       set({
         user: data.user,
-        isAuthenticated: true, // auto-login
-        loading: false,
+        isAuthenticated: true,
+        actionLoading: false,
       });
     } catch (err: any) {
       set({
         error: err.response?.data?.message || "Registration failed",
-        loading: false,
+        actionLoading: false,
       });
     }
   },
@@ -95,5 +104,44 @@ export const useAuthStore = create<AuthState>((set) => ({
       isAuthenticated: false,
       error: null,
     });
+  },
+  updateProfile: async (formData) => {
+    try {
+      set({ actionLoading: true, error: null });
+
+      const { data } = await api.put("/auth/me/update", formData);
+
+      set({
+        user: data.user,
+        actionLoading: false,
+      });
+    } catch (err: any) {
+      set({
+        error: err.response?.data?.message || "Profile update failed",
+        actionLoading: false,
+      });
+    }
+  },
+  changePassword: async (formData) => {
+    try {
+      set({ actionLoading: true, error: null });
+
+      const { data } = await api.put("/auth/password/update", formData);
+
+      set({
+        user: data.user,
+        isAuthenticated: true,
+        actionLoading: false,
+      });
+
+      return true;
+    } catch (err: any) {
+      set({
+        error: err.response?.data?.message || "Password update failed",
+        actionLoading: false,
+      });
+
+      return false;
+    }
   },
 }));

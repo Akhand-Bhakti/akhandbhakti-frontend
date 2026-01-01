@@ -7,7 +7,8 @@ import GoogleButton from "@/components/auth/GoogleButton";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { register, loading, error, isAuthenticated } = useAuthStore();
+  const { register, actionLoading, error, isAuthenticated, authLoading } =
+    useAuthStore();
 
   const [form, setForm] = useState({
     name: "",
@@ -21,10 +22,10 @@ export default function RegisterPage() {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (!authLoading && isAuthenticated) {
       router.push("/");
     }
-  }, [isAuthenticated, router]);
+  }, [authLoading, isAuthenticated, router]);
 
   return (
     <div className="min-h-screen pt-28 px-4 flex items-center justify-center bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
@@ -87,11 +88,11 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={actionLoading}
             className="w-full bg-[#C47A2C] text-white py-2.5 rounded-lg font-medium
               hover:bg-[#b56f26] transition disabled:opacity-70"
           >
-            {loading ? "Creating account…" : "Create Account"}
+            {actionLoading ? "Creating account…" : "Create Account"}
           </button>
 
           {/* Divider */}
