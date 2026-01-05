@@ -10,6 +10,7 @@ import SearchModal from "./SearchModal";
 import ProfileMenu from "./ProfileMenu";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
+import { useCartStore } from "@/store/cartStore";
 
 function AuthDropdown({ onClose }: { onClose: () => void }) {
   return (
@@ -45,6 +46,7 @@ export default function Navbar() {
 
   const { isAuthenticated, logout } = useAuthStore();
   const [authMenuOpen, setAuthMenuOpen] = useState(false);
+  const cartCount = useCartStore((s) => s.getTotalItems());
 
   useEffect(() => {
     if (!isHome) return;
@@ -103,12 +105,14 @@ export default function Navbar() {
               onClick={() => setSearchOpen(true)}
             />
 
-            <div className="relative cursor-pointer">
+            <Link href="/cart" className="relative cursor-pointer">
               <ShoppingBag className="hover:scale-110 transition" />
-              <span className="absolute -top-2 -right-2 text-xs px-1.5 rounded-full bg-white text-black">
-                0
-              </span>
-            </div>
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 text-xs px-1.5 rounded-full bg-white text-black">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
 
             <div className="relative">
               <User

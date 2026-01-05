@@ -5,12 +5,14 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { fetchProductBySlug } from "@/services/productService";
 import StarRating from "@/StarRating";
+import { useCartStore } from "@/store/cartStore";
 
 export default function ProductPage() {
   const { slug } = useParams();
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [qty, setQty] = useState(1);
+  const addItem = useCartStore((state) => state.addItem);
 
   useEffect(() => {
     if (!slug) return;
@@ -28,6 +30,19 @@ export default function ProductPage() {
 
     loadProduct();
   }, [slug]);
+  const handleAddToCart = () => {
+    if (!product) return;
+
+    addItem({
+      productId: product._id,
+      name: product.name,
+      image: product.mainImage?.url || "/placeholder.png",
+      price: product.variants?.[0]?.basePrice,
+      variant: "India", // region placeholder (future)
+      quantity: qty,
+      stock: product.stock || 10,
+    });
+  };
 
   if (loading) return <p className="text-center py-32">Loading product…</p>;
   if (!product) return <p className="text-center py-32">Product not found</p>;
@@ -126,7 +141,10 @@ export default function ProductPage() {
                 </button>
               </div>
 
-              <button className="bg-[#E8C37E] px-10 py-3 rounded-lg font-semibold">
+              <button
+                onClick={handleAddToCart}
+                className="bg-[#E8C37E] px-10 py-3 rounded-lg font-semibold hover:bg-[#ddb463] transition"
+              >
                 Add to Cart
               </button>
             </div>

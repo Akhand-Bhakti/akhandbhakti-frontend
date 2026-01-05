@@ -28,3 +28,8 @@ html {
 .animate-slideIn {
   animation: slideIn 0.3s ease;
 }
+
+.input {
+  @apply w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm
+  focus:outline-none focus:ring-2 focus:ring-[#C47A2C]/40;
+}
