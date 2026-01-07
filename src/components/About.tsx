@@ -59,12 +59,12 @@ export default function About() {
         <div className="space-y-6">
           {/* Badge */}
           <span className="inline-block bg-orange-100 text-orange-700 px-4 py-2 rounded-full text-sm font-medium">
-            🌿 Spiritual Guide & Master
+            🌿 Spiritual Practitioner & Shiv Shakti Sadhak
           </span>
 
           {/* Heading */}
           <h2 className="text-4xl md:text-5xl font-bold text-[#7B3F07] leading-tight">
-            Shri Shri Shagun
+            Shri Shagun
             <br />
             Vashishth Ji
           </h2>
@@ -105,7 +105,7 @@ export default function About() {
             and the divine, a sacred gift from Lord Shiva himself.&quot;
           </p>
           <p className="text-[#6A3A09] font-semibold">
-            – Shri Shri Shagun Vashishth Ji
+            – Shri Shagun Vashishth Ji
           </p>
 
           {/* Stats */}
@@ -129,7 +129,7 @@ export default function About() {
         <div className="relative">
           <div className="rounded-3xl overflow-hidden border-4 border-orange-200 shadow-xl">
             <Image
-              src="/guruji.jpg"
+              src="/home-about/guruji.jpg"
               alt="Guruji Parameshwar Ananda"
               width={800}
               height={600}

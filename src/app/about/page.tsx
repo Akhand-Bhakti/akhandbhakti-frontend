@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <main className="w-full">
       {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#5E2817] to-[#C0653E]">
+      <section className="relative overflow-hidden bg-linear-to-br from-[#5E2817] to-[#C0653E]">
         {/* texture */}
         <div
           className="absolute inset-0 opacity-10 pointer-events-none"
