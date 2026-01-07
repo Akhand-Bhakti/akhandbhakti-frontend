@@ -41,21 +41,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/products/hybrid-mala" className="hover:text-white">
-                  Hybrid mala
-                </Link>
-              </li>
-              <li>
                 <Link href="/products/bracelet" className="hover:text-white">
                   Bracelet
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/products/abhimantrit-prasad"
-                  className="hover:text-white"
-                >
-                  Abhimantrit Prasad
                 </Link>
               </li>
               <li>
@@ -84,18 +71,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/our-story" className="hover:text-white">
-                  Our Story
-                </Link>
-              </li>
-              <li>
                 <Link href="/lab-testing" className="hover:text-white">
                   Lab Testing
-                </Link>
-              </li>
-              <li>
-                <Link href="/authenticity" className="hover:text-white">
-                  Authenticity Guarantee
                 </Link>
               </li>
               <li>
@@ -115,16 +92,16 @@ export default function Footer() {
                   Contact Us
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/faq" className="hover:text-white">
                   FAQs
                 </Link>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <Link href="/shipping" className="hover:text-white">
                   Shipping Information
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/track-order" className="hover:text-white">
                   Track Your Order
@@ -155,6 +132,16 @@ export default function Footer() {
               <li>
                 <Link href="/cookie-policy" className="hover:text-white">
                   Cookie Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/cookie-policy" className="hover:text-white">
+                  Shipping Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/cookie-policy" className="hover:text-white">
+                  Return & Refund Policy
                 </Link>
               </li>
             </ul>

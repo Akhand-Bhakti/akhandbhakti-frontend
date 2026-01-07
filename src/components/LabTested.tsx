@@ -26,7 +26,7 @@ export default function LabTested() {
               src="/lab/certified.png"
               alt="Lab Tested Certificate"
               fill
-              className="object-center"
+              className="object-contain"
             />
           </div>
         </div>
