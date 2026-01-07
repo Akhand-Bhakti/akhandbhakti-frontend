@@ -14,9 +14,9 @@ export default function ContactPage() {
           {/* Left: Text + Contact Cards */}
           <div>
             <h1 className="text-4xl font-bold text-[#7B3F07] leading-tight mb-4">
-              Connect With Divine
+              Connect With Akhand
               <br />
-              Rudraksha
+              Bhakti
             </h1>
 
             <p className="text-gray-600 mb-8 max-w-md">
@@ -31,7 +31,7 @@ export default function ContactPage() {
               </div>
               <div>
                 <p className="font-semibold text-gray-700">Call Us</p>
-                <p className="text-gray-600 text-sm">+91 98765 43210</p>
+                <p className="text-gray-600 text-sm">+91 88824 70657</p>
                 <p className="text-gray-400 text-xs">
                   Mon - Sat, 9 AM - 7 PM IST
                 </p>
@@ -46,7 +46,7 @@ export default function ContactPage() {
               <div>
                 <p className="font-semibold text-gray-700">Email Us</p>
                 <p className="text-gray-600 text-sm">
-                  guruji@rudrakshaseva.com
+                  akhandbhaktioffical@gmail.com
                 </p>
                 <p className="text-gray-400 text-xs">
                   We respond within 24 hours
@@ -58,7 +58,7 @@ export default function ContactPage() {
           {/* Right: Image Card */}
           <div className="bg-linear-to-b from-orange-200/40 to-orange-200/10 rounded-xl overflow-hidden shadow-lg absolute right-55">
             <Image
-              src="/guruji.jpg"
+              src="/contact/contact.jpg"
               alt="Guruji"
               width={700}
               height={600}
@@ -67,12 +67,8 @@ export default function ContactPage() {
 
             {/* Quote Overlay */}
             <div className="absolute bottom-0 left-0 w-full p-6 bg-linear-to-t from-black/60 to-transparent">
-              <p className="text-white text-lg italic">
-                “Every question is a step towards enlightenment. We are here to
-                guide you.”
-              </p>
               <p className="text-white/80 text-sm mt-2">
-                — Guruji Parameshwar Ananda
+                — Shri Shagun Vashishth Ji
               </p>
             </div>
           </div>
@@ -82,7 +78,7 @@ export default function ContactPage() {
       {/* FORM SECTION */}
       <div className="max-w-4xl mx-auto px-6 mt-24">
         <h2 className="text-3xl font-bold text-center text-[#7B3F07] mb-3">
-          Send Your Message
+          Connect with Us /Book Appointment
         </h2>
         <p className="text-center text-gray-600 mb-8">
           Fill out the form below and our spiritual team will get back to you
@@ -99,8 +95,9 @@ export default function ContactPage() {
               </label>
               <select className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
                 <option>General Inquiry</option>
-                <option>Rudraksha Consultation</option>
+                <option>Book an Appointment</option>
                 <option>Order Related</option>
+                <option>Book Pujan</option>
               </select>
             </div>
 
@@ -142,7 +139,7 @@ export default function ContactPage() {
             </div>
 
             {/* Subject */}
-            <div>
+            {/* <div>
               <label className="text-sm font-medium text-gray-700">
                 Subject
               </label>
@@ -151,7 +148,7 @@ export default function ContactPage() {
                 className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
                 placeholder="What is your inquiry?"
               />
-            </div>
+            </div> */}
 
             {/* Message */}
             <div>
