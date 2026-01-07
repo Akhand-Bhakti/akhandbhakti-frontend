@@ -26,7 +26,7 @@ export default function ProductSection() {
   const filterButtons = [
     "all",
     "rudraksha malas",
-    "wearable rudraksha",
+    "wearables",
     "rudraksha beads",
     "puja essentials",
   ];

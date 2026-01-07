@@ -36,7 +36,7 @@ export default function SacredMission() {
 
         <div className="flex justify-center mt-14">
           <Link
-            href="/products"
+            href="/about"
             className="px-8 py-3 border border-orange-500 text-orange-500 font-semibold rounded-full hover:bg-orange-500 hover:text-white transition"
           >
             Know More About AkhandBhakti

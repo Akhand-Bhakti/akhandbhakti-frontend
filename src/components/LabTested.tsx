@@ -23,10 +23,10 @@ export default function LabTested() {
           {/* Replace image inside when you get the lab-tested document */}
           <div className="relative w-full h-[250px] md:h-[400px] bg-gray-200">
             <Image
-              src="/lab-tested.jpg"
+              src="/lab/certified.png"
               alt="Lab Tested Certificate"
               fill
-              className="object-contain"
+              className="object-center"
             />
           </div>
         </div>
