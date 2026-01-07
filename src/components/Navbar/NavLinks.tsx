@@ -85,10 +85,10 @@ export default function NavLinks({ isScrolled }: NavLinksProps) {
               Rudraksha Malas
             </Link>
             <Link
-              href="/products?category=wearable%20rudraksha"
+              href="/products?category=wearables"
               className="block py-2 font-semibold hover:text-orange-600"
             >
-              Wearable Rudraksha
+              Wearables
             </Link>
             <Link
               href="/products?category=rudraksha%20beads"

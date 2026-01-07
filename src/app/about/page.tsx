@@ -7,7 +7,6 @@ export default function AboutPage() {
     <main className="w-full">
       {/* ================= HERO ================= */}
       <section className="relative overflow-hidden bg-linear-to-br from-[#5E2817] to-[#C0653E]">
-        {/* texture */}
         <div
           className="absolute inset-0 opacity-10 pointer-events-none"
           style={{
@@ -19,10 +18,17 @@ export default function AboutPage() {
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-24 text-center text-white mt-25">
           <h1 className="text-4xl lg:text-5xl font-bold">About AkhandBhakti</h1>
+
           <p className="mt-4 text-lg text-white/85 max-w-3xl mx-auto">
-            A sacred spiritual platform devoted to preserving and sharing the
-            timeless wisdom of Sanatana Dharma through authentic spiritual
-            products, disciplined practices, and conscious devotion.
+            AkhandBhakti is a sacred spiritual platform devoted to preserving
+            and sharing the timeless wisdom of Sanatana Dharma through authentic
+            spiritual products, disciplined practices, and conscious devotion.
+          </p>
+
+          <p className="mt-4 text-white/80 max-w-3xl mx-auto leading-relaxed">
+            Founded with the belief that true spirituality is continuous, pure,
+            and intentional — AkhandBhakti stands for unbroken faith, where
+            devotion is not occasional, but a way of life.
           </p>
         </div>
       </section>
@@ -36,9 +42,16 @@ export default function AboutPage() {
             </h2>
 
             <p className="mt-4 text-gray-700 leading-relaxed">
-              Founded with the belief that true spirituality is continuous,
-              pure, and intentional, AkhandBhakti stands for unbroken faith — a
-              path where devotion is not occasional, but a way of life.
+              AkhandBhakti represents devotion that is continuous, disciplined,
+              and rooted in consciousness — a spiritual path where faith is not
+              driven by trend or convenience, but by dedication and inner
+              awareness.
+            </p>
+
+            <p className="mt-4 text-gray-700 leading-relaxed">
+              Our offerings are guided by scriptural understanding rather than
+              commercial influence — ensuring that every sacred product is
+              treated with reverence, purity, and intention.
             </p>
 
             <p className="mt-4 font-semibold text-orange-700">
@@ -64,9 +77,17 @@ export default function AboutPage() {
             Our Abhimantrit Process
           </h2>
 
-          <p className="mt-3 text-gray-700 max-w-3xl mx-auto">
-            Every product is prepared through disciplined Vedic rituals,
-            performed with mantra, sankalp, and spiritual intent.
+          <p className="mt-3 text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            All our products are Abhimantrit through proper Vedic rituals and
+            Namak-Chamak Rudrabhishek during a 10–12 hour Shiv Sadhna performed
+            by Guruji — with mantra, sankalp, and spiritual intent.
+          </p>
+
+          <p className="mt-3 text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            Each sacred item is prepared uniquely for the seeker who receives
+            it. While spiritual outcomes depend on individual faith and
+            practice, our responsibility is to maintain authenticity,
+            transparency, and sanctity at every step.
           </p>
 
           <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -95,9 +116,10 @@ export default function AboutPage() {
           </h2>
 
           <p className="mt-4 text-gray-700 leading-relaxed">
-            A fixed proportion of the amount received from devotees is dedicated
-            to Namak-Chamak Rudrabhishek and Gau-Seva — ensuring that devotion
-            contributes back to sacred service and dharmic responsibility.
+            A fixed proportion of the amount received from devotees and
+            customers is dedicated to Namak-Chamak Rudrabhishek & Gau-Seva —
+            ensuring that devotion contributes back to sacred service and
+            dharmic responsibility.
           </p>
         </div>
       </section>
@@ -106,6 +128,12 @@ export default function AboutPage() {
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-gray-900">What We Offer</h2>
+
+          <p className="mt-3 text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            We specialize in genuine Rudraksha malas, beads, bracelets, puja
+            essentials, and Abhimantrit spiritual products — carefully sourced
+            and prepared in accordance with traditional Vedic principles.
+          </p>
 
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -129,9 +157,13 @@ export default function AboutPage() {
       <section className="py-20 px-6 bg-orange-100">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-lg text-gray-800 italic leading-relaxed">
-            While spiritual outcomes depend on individual faith and practice,
-            our responsibility is to maintain authenticity, transparency, and
-            sanctity at every step.
+            Spiritual products are not accessories — they are tools for sadhana,
+            discipline, inner balance, and conscious living.
+          </p>
+
+          <p className="mt-4 text-gray-800 leading-relaxed">
+            Our role is not to sell belief — but to preserve sanctity, share
+            knowledge, and guide seekers with responsibility and truth.
           </p>
         </div>
       </section>
@@ -142,10 +174,21 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-gray-900">Our Mission</h2>
 
           <p className="mt-4 text-gray-700 leading-relaxed">
+            AkhandBhakti serves seekers across the world — connecting ancient
+            Indian traditions with the modern spiritual aspirant through a
+            secure and accessible platform.
+          </p>
+
+          <p className="mt-4 text-gray-700 leading-relaxed">
             Beyond commerce, AkhandBhakti is a space for learning, guidance, and
-            spiritual awareness. We aim to help seekers understand the spiritual
-            significance of what they wear or worship and walk their path with
-            clarity and confidence.
+            spiritual awareness — helping seekers understand the true
+            significance of what they wear, worship, and believe.
+          </p>
+
+          <p className="mt-6 font-semibold text-gray-900">
+            AkhandBhakti is not built on promises, but on purpose. <br />
+            Not on superstition, but on tradition. <br />
+            Not on trends, but on truth.
           </p>
         </div>
       </section>
@@ -157,9 +200,9 @@ export default function AboutPage() {
 
           <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {[
-              "Authentic Spiritual Products",
-              "Transparent Sourcing",
-              "Respect for Vedic Traditions",
+              "Authentic & Natural Spiritual Products",
+              "Transparency in Sourcing & Certification",
+              "Respect for Vedic Traditions & Practices",
               "Guidance Over Selling",
               "Faith with Responsibility",
             ].map((item) => (
@@ -171,6 +214,86 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+      {/* ================= FULL ABOUT TEXT (ALL IN ONE PLACE) ================= */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 text-center">
+            About AkhandBhakti
+          </h2>
+
+          <p className="mt-6 text-gray-700 leading-relaxed">
+            AkhandBhakti is a sacred spiritual platform devoted to preserving
+            and sharing the timeless wisdom of Sanatana Dharma through authentic
+            spiritual products, disciplined practices, and conscious devotion.
+          </p>
+
+          <p className="mt-4 text-gray-700 leading-relaxed">
+            Founded with the belief that true spirituality is continuous, pure,
+            and intentional, AkhandBhakti stands for unbroken faith — a path
+            where devotion is not occasional, but a way of life.
+          </p>
+
+          <p className="mt-4 text-gray-700 leading-relaxed">
+            All the products are Abhimantrit by proper Vedic rituals and
+            Namak-Chamak Rudrabhishek during a 10–12 hour Shiv Sadhna by Guruji.
+            A fixed proportion of the amount received from devotees and
+            customers is used for Namak-Chamak Rudrabhishek & Gau-Seva.
+          </p>
+
+          <p className="mt-4 text-gray-700 leading-relaxed">
+            We specialize in genuine Rudraksha malas, beads, bracelets, puja
+            essentials, and Abhimantrit spiritual products — carefully sourced
+            and prepared in accordance with traditional Vedic principles. Every
+            offering at AkhandBhakti is selected with reverence, handled with
+            purity, and guided by scriptural understanding rather than
+            commercial trends.
+          </p>
+
+          <p className="mt-4 text-gray-700 leading-relaxed">
+            Our Abhimantrit process follows disciplined spiritual rituals
+            performed with mantra, sankalp, and intent — ensuring that each
+            sacred item is prepared uniquely for the seeker who receives it.
+            While spiritual outcomes depend on individual faith and practice,
+            our responsibility is to maintain authenticity, transparency, and
+            sanctity at every step.
+          </p>
+
+          <p className="mt-4 text-gray-700 leading-relaxed">
+            AkhandBhakti serves spiritual seekers across the world, connecting
+            ancient Indian traditions with the modern seeker through a secure
+            and accessible online platform. We believe that spiritual products
+            are not mere accessories, but tools for sadhana, discipline, inner
+            balance, and conscious living.
+          </p>
+
+          <p className="mt-4 text-gray-700 leading-relaxed">
+            Beyond commerce, AkhandBhakti is a space for learning, guidance, and
+            spiritual awareness. Our mission is to help seekers make informed
+            choices, understand the spiritual significance of what they wear or
+            worship, and walk their path with clarity and confidence.
+          </p>
+
+          <p className="mt-6 font-semibold text-gray-900 leading-relaxed">
+            AkhandBhakti is not built on promises, but on purpose.
+            <br />
+            Not on superstition, but on tradition.
+            <br />
+            Not on trends, but on truth.
+          </p>
+
+          <h3 className="mt-10 text-2xl font-bold text-gray-900">
+            Our Core Commitments
+          </h3>
+
+          <ul className="mt-4 space-y-2 text-gray-700 leading-relaxed">
+            <li>• Authentic & natural spiritual products</li>
+            <li>• Transparency in sourcing and certification</li>
+            <li>• Respect for Vedic traditions and practices</li>
+            <li>• Guidance over selling</li>
+            <li>• Faith with responsibility</li>
+          </ul>
         </div>
       </section>
     </main>
