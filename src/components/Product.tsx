@@ -55,9 +55,11 @@ export default function ProductSection() {
     <section className="w-full py-16 px-6 lg:px-16">
       {/* Title */}
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-gray-900">Blessed Collection</h2>
+        <h2 className="text-3xl font-bold text-gray-900">
+          Abhimantrit Essentials
+        </h2>
         <p className="text-gray-600 text-sm mt-1">
-          Authentic & Energized Rudraksha
+          Selected with care, energized with mantra and for spiritual growth
         </p>
       </div>
 

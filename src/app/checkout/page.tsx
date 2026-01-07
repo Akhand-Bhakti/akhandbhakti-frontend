@@ -18,14 +18,16 @@ function CheckoutContent() {
   const router = useRouter();
   const { items, getTotalPrice } = useCartStore();
 
-  const [address, setAddress] = useState({
+  const [shippingInfo, setShippingInfo] = useState({
     fullName: "",
     phone: "",
-    addressLine: "",
+    address: "",
     city: "",
     state: "",
     pincode: "",
   });
+
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (items.length === 0) {
@@ -33,13 +35,39 @@ function CheckoutContent() {
     }
   }, [items.length, router]);
 
-  // ✅ Safe render guard
   if (items.length === 0) return null;
+
+  /* ================= VALIDATION ================= */
+  const validateShipping = () => {
+    if (!shippingInfo.fullName.trim()) return "Full name is required";
+    if (!/^[6-9]\d{9}$/.test(shippingInfo.phone))
+      return "Enter a valid 10-digit phone number";
+    if (!shippingInfo.address.trim()) return "Address is required";
+    if (!shippingInfo.city.trim()) return "City is required";
+    if (!shippingInfo.state.trim()) return "State is required";
+    if (!/^\d{6}$/.test(shippingInfo.pincode))
+      return "Enter a valid 6-digit pincode";
+    return null;
+  };
+
+  /* ================= PLACE ORDER (NO API YET) ================= */
+  const placeOrderHandler = () => {
+    setError("");
+
+    const errorMsg = validateShipping();
+    if (errorMsg) {
+      setError(errorMsg);
+      return;
+    }
+
+    // NEXT STEP: API call will go here
+    console.log("Address OK, ready to create order");
+  };
 
   return (
     <div className="min-h-screen pt-28 px-4 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
-        {/* ================= LEFT: ADDRESS FORM ================= */}
+        {/* ================= LEFT ================= */}
         <div className="lg:col-span-2 bg-white/80 backdrop-blur-xl rounded-2xl p-6 shadow">
           <h2 className="text-xl font-semibold mb-6 text-gray-800">
             Shipping Address
@@ -50,9 +78,9 @@ function CheckoutContent() {
               type="text"
               placeholder="Full Name"
               className="input"
-              value={address.fullName}
+              value={shippingInfo.fullName}
               onChange={(e) =>
-                setAddress({ ...address, fullName: e.target.value })
+                setShippingInfo({ ...shippingInfo, fullName: e.target.value })
               }
             />
 
@@ -60,9 +88,9 @@ function CheckoutContent() {
               type="tel"
               placeholder="Phone Number"
               className="input"
-              value={address.phone}
+              value={shippingInfo.phone}
               onChange={(e) =>
-                setAddress({ ...address, phone: e.target.value })
+                setShippingInfo({ ...shippingInfo, phone: e.target.value })
               }
             />
 
@@ -70,9 +98,9 @@ function CheckoutContent() {
               type="text"
               placeholder="Address"
               className="input sm:col-span-2"
-              value={address.addressLine}
+              value={shippingInfo.address}
               onChange={(e) =>
-                setAddress({ ...address, addressLine: e.target.value })
+                setShippingInfo({ ...shippingInfo, address: e.target.value })
               }
             />
 
@@ -80,17 +108,19 @@ function CheckoutContent() {
               type="text"
               placeholder="City"
               className="input"
-              value={address.city}
-              onChange={(e) => setAddress({ ...address, city: e.target.value })}
+              value={shippingInfo.city}
+              onChange={(e) =>
+                setShippingInfo({ ...shippingInfo, city: e.target.value })
+              }
             />
 
             <input
               type="text"
               placeholder="State"
               className="input"
-              value={address.state}
+              value={shippingInfo.state}
               onChange={(e) =>
-                setAddress({ ...address, state: e.target.value })
+                setShippingInfo({ ...shippingInfo, state: e.target.value })
               }
             />
 
@@ -98,15 +128,17 @@ function CheckoutContent() {
               type="text"
               placeholder="Pincode"
               className="input"
-              value={address.pincode}
+              value={shippingInfo.pincode}
               onChange={(e) =>
-                setAddress({ ...address, pincode: e.target.value })
+                setShippingInfo({ ...shippingInfo, pincode: e.target.value })
               }
             />
           </div>
+
+          {error && <p className="text-sm text-red-500 mt-4">{error}</p>}
         </div>
 
-        {/* ================= RIGHT: ORDER SUMMARY ================= */}
+        {/* ================= RIGHT ================= */}
         <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 shadow h-fit sticky top-32">
           <h2 className="text-xl font-semibold mb-6 text-gray-800">
             Order Summary
@@ -146,10 +178,10 @@ function CheckoutContent() {
           </div>
 
           <button
-            disabled
-            className="mt-6 w-full py-3 rounded-lg bg-gray-300 text-gray-600 font-medium cursor-not-allowed"
+            onClick={placeOrderHandler}
+            className="mt-6 w-full py-3 rounded-lg bg-[#C47A2C] text-white font-medium"
           >
-            Place Order (Payment next)
+            Place Order
           </button>
         </div>
       </div>

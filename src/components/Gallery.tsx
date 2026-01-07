@@ -9,15 +9,15 @@ interface ImgProps {
 
 export default function Gallery() {
   const images: string[] = [
-    "/gallery1.jpg",
-    "/gallery2.jpg",
-    "/gallery3.jpg",
-    "/gallery4.jpg",
-    "/gallery5.jpg",
-    "/gallery6.jpg",
-    "/gallery7.jpg",
-    "/gallery8.jpg",
-    "/gallery9.jpg",
+    "/gallery/gallery1.png",
+    "/gallery/gallery2.png",
+    "/gallery/gallery3.png",
+    "/gallery/gallery4.png",
+    "/gallery/gallery5.png",
+    "/gallery/gallery6.png",
+    "/gallery/gallery7.png",
+    "/gallery/gallery8.png",
+    "/gallery/gallery9.png",
   ];
 
   return (
@@ -25,7 +25,7 @@ export default function Gallery() {
       <div className="max-w-7xl mx-auto px-4">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-bold text-[#2D2D2D] mb-8">
-          Rooted In Tradition, Made For Today
+          Sacred Creations, Timeless Purpose
         </h2>
 
         {/* -------------------------------------------------------------------
