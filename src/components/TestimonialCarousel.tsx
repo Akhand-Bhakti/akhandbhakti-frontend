@@ -38,14 +38,14 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-// ✅ Duplicate for infinite effect
+//  Duplicate for infinite effect
 const infiniteData = [...testimonials, ...testimonials];
 
 export default function TestimonialCarousel() {
   const [index, setIndex] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  // ✅ Auto slide every 5 seconds
+  //  Auto slide every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       // eslint-disable-next-line react-hooks/immutability
@@ -86,7 +86,7 @@ export default function TestimonialCarousel() {
           TESTIMONIAL
         </p>
         <h2 className="text-center text-3xl md:text-4xl font-bold mb-2">
-          Over 600,000 Happy Customers
+          Over 8,000 Happy Customers
         </h2>
         <p className="text-center text-gray-600 mb-12">
           with thousands of 5-star reviews
