@@ -141,9 +141,9 @@ export default function About() {
           </div>
 
           {/* Om Icon */}
-          <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg">
+          {/* <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg">
             <p className="text-4xl text-orange-600">🕉️</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

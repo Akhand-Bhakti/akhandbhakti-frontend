@@ -48,7 +48,7 @@ export default function AboutPage() {
 
           <div className="relative h-[340px] rounded-3xl overflow-hidden shadow-xl">
             <Image
-              src="/home/guru.jpg"
+              src="/about/guru.jpg"
               alt="Guruji"
               fill
               className="object-cover"

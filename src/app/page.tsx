@@ -15,6 +15,7 @@ export default function Home() {
       <GallerySection />
       <SacredMission />
       <About />
+
       <LabTested />
       <TestimonialCarousel />
       <Footer />
