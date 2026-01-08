@@ -12,6 +12,8 @@ export default function ProductPage() {
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [qty, setQty] = useState(1);
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+
   const addItem = useCartStore((state) => state.addItem);
 
   useEffect(() => {
@@ -21,6 +23,7 @@ export default function ProductPage() {
       try {
         const data = await fetchProductBySlug(slug as string);
         setProduct(data.product);
+        setActiveImage(data.product.mainImage?.url);
       } catch (err) {
         console.error(err);
       } finally {
@@ -30,6 +33,7 @@ export default function ProductPage() {
 
     loadProduct();
   }, [slug]);
+
   const handleAddToCart = () => {
     if (!product) return;
 
@@ -38,7 +42,7 @@ export default function ProductPage() {
       name: product.name,
       image: product.mainImage?.url || "/placeholder.png",
       price: product.variants?.[0]?.basePrice,
-      variant: "India", // region placeholder (future)
+      variant: "India",
       quantity: qty,
       stock: product.stock || 10,
     });
@@ -47,6 +51,10 @@ export default function ProductPage() {
   if (loading) return <p className="text-center py-32">Loading product…</p>;
   if (!product) return <p className="text-center py-32">Product not found</p>;
 
+  const galleryImages = [product.mainImage, ...(product.gallery || [])].filter(
+    Boolean
+  );
+
   return (
     <section className="bg-[#FAF7F2] pt-18 pb-24">
       {/* TWO COLUMN LAYOUT */}
@@ -54,19 +62,36 @@ export default function ProductPage() {
         {/* ================= LEFT COLUMN ================= */}
         <div className="space-y-10">
           {/* Main Image */}
-          <div className="relative w-full h-[480px] bg-white rounded-2xl shadow">
+          <div className="relative w-full h-[520px] bg-white rounded-2xl shadow overflow-hidden">
             <Image
-              src={product.mainImage?.url || "/placeholder.png"}
+              src={activeImage || "/placeholder.png"}
               alt={product.name}
               fill
-              className="object-contain p-8"
+              priority
+              className="object-cover transition-transform duration-300 hover:scale-105"
             />
           </div>
 
           {/* Thumbnails */}
           <div className="grid grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-20 bg-gray-200 rounded-lg" />
+            {galleryImages.map((img: any, index: number) => (
+              <button
+                key={index}
+                onClick={() => setActiveImage(img.url)}
+                className={`relative h-24 rounded-lg overflow-hidden border transition
+                  ${
+                    activeImage === img.url
+                      ? "border-orange-500"
+                      : "border-transparent"
+                  }`}
+              >
+                <Image
+                  src={img.url}
+                  alt={`Thumbnail ${index}`}
+                  fill
+                  className="object-cover"
+                />
+              </button>
             ))}
           </div>
 
@@ -199,7 +224,6 @@ export default function ProductPage() {
             </p>
           ) : (
             <>
-              {/* Reviews Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {product.reviews
                   .slice(0, 12)
@@ -208,19 +232,16 @@ export default function ProductPage() {
                       key={index}
                       className="bg-white border rounded-xl p-4 shadow-sm hover:shadow-md transition"
                     >
-                      {/* Reviewer Name */}
                       <p className="font-semibold text-gray-900 truncate">
                         {review.name}
                       </p>
 
-                      {/* Rating */}
                       <div className="flex items-center gap-1 text-yellow-500 text-sm mt-1">
                         {[...Array(5)].map((_, i) => (
                           <span key={i}>{i < review.rating ? "★" : "☆"}</span>
                         ))}
                       </div>
 
-                      {/* Comment */}
                       <p className="text-gray-600 text-sm mt-2 line-clamp-3">
                         {review.comment}
                       </p>
@@ -228,7 +249,6 @@ export default function ProductPage() {
                   ))}
               </div>
 
-              {/* View More Button */}
               {product.reviews.length > 12 && (
                 <div className="flex justify-center mt-8">
                   <button
@@ -242,6 +262,7 @@ export default function ProductPage() {
             </>
           )}
         </div>
+
         <div className="mt-10">
           <h2 className="text-xl font-semibold mb-6">Related Products</h2>
           <div className="h-48 bg-gray-200 rounded-xl" />
