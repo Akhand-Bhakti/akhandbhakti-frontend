@@ -51,7 +51,7 @@ export default function ProductsPage() {
   const filteredProducts = products;
 
   return (
-    <section className="pt-28 pb-20 px-6 lg:px-16">
+    <section className="pt-8 pb-20 px-6 lg:px-16">
       {/* Page Title */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900">Our Products</h1>

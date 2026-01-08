@@ -22,7 +22,7 @@ function ProfileContent() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen pt-28 px-4 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
+    <div className="min-h-screen pt-8 px-4 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 shadow-[0_20px_60px_-15px_rgba(196,122,44,0.45)]">

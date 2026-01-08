@@ -55,7 +55,7 @@ export default function Banner() {
 
   return (
     <section
-      className="relative px-6 lg:px-16 py-12 w-full overflow-hidden min-h-screen flex items-center"
+      className="relative -mt-16 px-6 lg:px-16 py-12 w-full overflow-hidden min-h-screen flex items-center"
       style={{ background: p.bg }}
     >
       {/* static background texture */}

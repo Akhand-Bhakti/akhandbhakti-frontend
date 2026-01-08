@@ -48,7 +48,7 @@ export default function ProductPage() {
   if (!product) return <p className="text-center py-32">Product not found</p>;
 
   return (
-    <section className="bg-[#FAF7F2] pt-28 pb-24">
+    <section className="bg-[#FAF7F2] pt-18 pb-24">
       {/* TWO COLUMN LAYOUT */}
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
         {/* ================= LEFT COLUMN ================= */}

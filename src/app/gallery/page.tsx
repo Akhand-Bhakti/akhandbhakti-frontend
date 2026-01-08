@@ -23,7 +23,7 @@ const images = [
 
 export default function GalleryPage() {
   return (
-    <div className="min-h-screen pt-28 px-4 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
+    <div className="min-h-screen pt-18 px-4 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
       {/* Header */}
       <div className="max-w-6xl mx-auto mb-12 text-center">
         <h1 className="text-3xl sm:text-4xl font-semibold text-[#C47A2C]">

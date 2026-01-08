@@ -19,7 +19,7 @@ function CartContent() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen pt-28 flex items-center justify-center bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
         <div className="text-center">
           <p className="text-lg text-gray-600 mb-4">Your cart is empty</p>
           <button
@@ -34,7 +34,7 @@ function CartContent() {
   }
 
   return (
-    <div className="min-h-screen pt-28 px-4 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
+    <div className="min-h-screen pt-8 px-4 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-semibold mb-6 text-[#C47A2C]">
           Your Cart

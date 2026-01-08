@@ -20,7 +20,9 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <CartProvider>
-            <Navbar />
+            <header className="sticky top-0 h-16 bg-transparent z-50">
+              <Navbar />
+            </header>
             {children}
           </CartProvider>
         </AuthProvider>

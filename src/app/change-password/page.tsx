@@ -42,7 +42,7 @@ function ChangePasswordContent() {
   };
 
   return (
-    <div className="min-h-screen pt-28 px-4 flex items-center justify-center bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
+    <div className="min-h-screen px-4 flex items-center justify-center bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
       <div className="w-full max-w-md bg-white/80 backdrop-blur-xl rounded-2xl px-6 py-8 sm:px-8 shadow-[0_20px_60px_-15px_rgba(196,122,44,0.45)]">
         <div className="text-center mb-6">
           <h1 className="text-2xl font-semibold text-gray-800">

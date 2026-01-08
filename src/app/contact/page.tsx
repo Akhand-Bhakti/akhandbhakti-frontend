@@ -7,7 +7,7 @@ export default function ContactPage() {
   return (
     <section className="w-full bg-orange-200 pb-24">
       {/* Top Section */}
-      <div className="max-w-7xl mx-auto px-6 pt-26">
+      <div className="max-w-7xl mx-auto px-6 pt-16">
         <p className="text-orange-600 font-semibold mb-2">Om Namah Shivaya</p>
 
         <div className="grid md:grid-cols-2 gap-10 items-start">
