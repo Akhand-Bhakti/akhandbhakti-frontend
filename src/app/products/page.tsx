@@ -110,7 +110,7 @@ export default function ProductsPage() {
                   src={product.mainImage?.url || "/placeholder.png"}
                   alt={product.name}
                   fill
-                  className="object-cover p-3"
+                  className="object-cover rounded-4xl p-3"
                 />
               </div>
 
