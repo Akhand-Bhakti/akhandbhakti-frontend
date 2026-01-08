@@ -135,12 +135,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/cookie-policy" className="hover:text-white">
+                <Link href="/shipping" className="hover:text-white">
                   Shipping Policy
                 </Link>
               </li>
               <li>
-                <Link href="/cookie-policy" className="hover:text-white">
+                <Link href="/return" className="hover:text-white">
                   Return & Refund Policy
                 </Link>
               </li>
