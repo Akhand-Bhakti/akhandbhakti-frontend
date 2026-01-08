@@ -155,9 +155,7 @@ export default function privacy() {
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
               <p>
                 📧 Email:{" "}
-                <span className="font-semibold">
                   akhandbhaktiofficial@gmail.com
-                </span>
               </p>
               <p>
                 🌐 Website:{" "}
