@@ -1,62 +1,88 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import { X } from "lucide-react";
 
 const images = [
-  { src: "/gallery/1.jpg", span: "col-span-4", ratio: "aspect-[16/7]" },
-  { src: "/gallery/2.jpg", span: "col-span-2", ratio: "aspect-[4/4]" },
-
-  { src: "/gallery/3.jpg", span: "col-span-2", ratio: "aspect-[4/3]" },
-  { src: "/gallery/4.jpg", span: "col-span-4", ratio: "aspect-[16/7]" },
-
-  { src: "/gallery/5.jpg", span: "col-span-2", ratio: "aspect-[1/1]" },
-  { src: "/gallery/6.jpg", span: "col-span-2", ratio: "aspect-[1/1]" },
-  { src: "/gallery/7.jpg", span: "col-span-2", ratio: "aspect-[1/1]" },
-
-  { src: "/gallery/8.jpg", span: "col-span-6", ratio: "aspect-[21/7]" },
-
-  { src: "/gallery/9.jpg", span: "col-span-2", ratio: "aspect-[1/1]" },
-  { src: "/gallery/10.jpg", span: "col-span-2", ratio: "aspect-[1/1]" },
-  { src: "/gallery/11.jpg", span: "col-span-2", ratio: "aspect-[1/1]" },
-
-  { src: "/gallery/12.jpg", span: "col-span-4", ratio: "aspect-[16/7]" },
-  { src: "/gallery/13.jpg", span: "col-span-2", ratio: "aspect-[4/3]" },
+  "/gallery/h1.jpg",
+  "/gallery/h2.jpg",
+  "/gallery/h3.jpg",
+  "/gallery/h4.jpg",
+  "/gallery/h5.jpg",
+  "/gallery/h6.jpg",
+  "/gallery/v1.jpg",
+  "/gallery/v2.jpg",
+  "/gallery/v3.jpg",
+  "/gallery/v4.jpg",
+  "/gallery/v5.jpg",
+  "/gallery/v6.jpg",
+  "/gallery/v7.jpg",
+  "/gallery/v8.jpg",
+  "/gallery/v9.jpg",
 ];
 
 export default function GalleryPage() {
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+
   return (
-    <div className="min-h-screen pt-18 px-4 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
+    <div className="min-h-screen pt-14 px-4 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
       {/* Header */}
-      <div className="max-w-6xl mx-auto mb-12 text-center">
-        <h1 className="text-3xl sm:text-4xl font-semibold text-[#C47A2C]">
+      <div className="max-w-6xl mx-auto mb-14 text-center">
+        <h1 className="text-4xl sm:text-5xl font-semibold text-[#C47A2C] tracking-wide">
           Divine Moments
         </h1>
-        <p className="text-sm sm:text-base text-gray-600 mt-3 max-w-2xl mx-auto">
-          Sacred rituals and timeless moments captured with devotion.
+        <p className="text-gray-600 mt-4 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+          Sacred rituals, timeless traditions, and divine energy captured
+          through moments of devotion and grace.
         </p>
       </div>
 
-      {/* Grid */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-6 gap-6">
-        {images.map((img, i) => (
+      {/* Gallery */}
+      <div className="max-w-7xl mx-auto columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+        {images.map((src, index) => (
           <div
-            key={i}
-            className={`relative ${img.span} ${img.ratio}
-    overflow-hidden rounded-2xl
-    bg-white/80 backdrop-blur-xl
-    shadow-[0_20px_60px_-15px_rgba(196,122,44,0.35)]
-    hover:scale-[1.015] transition-transform`}
+            key={index}
+            onClick={() => setActiveImage(src)}
+            className="relative overflow-hidden rounded-2xl cursor-pointer group shadow-lg"
           >
             <Image
-              src={img.src}
+              src={src}
               alt="Gallery image"
-              fill
-              sizes="(max-width: 640px) 100vw,
-         (max-width: 1024px) 50vw,
-         33vw"
-              className="object-cover"
+              width={600}
+              height={800}
+              className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+              loading="lazy"
             />
+
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-500" />
           </div>
         ))}
       </div>
+
+      {/* Lightbox */}
+      {activeImage && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center px-4">
+          <button
+            onClick={() => setActiveImage(null)}
+            className="absolute top-6 right-6 text-white hover:scale-110 transition"
+          >
+            <X size={32} />
+          </button>
+
+          <div className="relative max-w-6xl max-h-[85vh]">
+            <Image
+              src={activeImage}
+              alt="Preview"
+              width={1200}
+              height={800}
+              className="max-h-[85vh] w-auto object-contain mx-auto rounded-xl"
+              priority
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
