@@ -1,6 +1,5 @@
 import About from "@/components/About";
 import Banner from "@/components/Banner";
-import Footer from "@/components/Footer";
 import GallerySection from "@/components/Gallery";
 import LabTested from "@/components/LabTested";
 import ProductSection from "@/components/Product";
@@ -17,7 +16,6 @@ export default function Home() {
       <About />
       <LabTested />
       <TestimonialCarousel />
-      <Footer />
     </>
   );
 }

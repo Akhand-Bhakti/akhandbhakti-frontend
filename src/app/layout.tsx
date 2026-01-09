@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import AuthProvider from "@/components/AuthProvider";
 import CartProvider from "@/components/cart/CartProvider";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Akhand Bhakti",
@@ -24,6 +25,7 @@ export default function RootLayout({
               <Navbar />
             </header>
             {children}
+            <Footer />
           </CartProvider>
         </AuthProvider>
       </body>
