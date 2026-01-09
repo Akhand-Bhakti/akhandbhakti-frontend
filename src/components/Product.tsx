@@ -81,54 +81,56 @@ export default function ProductSection() {
       </div>
 
       {/* Products Grid */}
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
         {loading ? (
-          <p className="text-center text-gray-500 w-full">Loading...</p>
+          <p className="text-center text-gray-500 col-span-full">Loading...</p>
         ) : visibleProducts.length === 0 ? (
-          <p className="text-center text-gray-500 w-full">No products found.</p>
+          <p className="text-center text-gray-500 col-span-full">
+            No products found.
+          </p>
         ) : (
           visibleProducts.map((product) => (
-            <div
+            <Link
               key={product._id}
-              className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition relative"
+              href={`/product/${product.slug}`}
+              className="block"
             >
-              <button className="absolute top-3 right-3 bg-white p-2 rounded-full shadow">
-                <HeartIcon size={16} />
-              </button>
-
-              <div className="relative w-full h-48">
-                <Image
-                  src={product.mainImage?.url || "/placeholder.png"}
-                  alt={product.name}
-                  fill
-                  className="object-contain p-3"
-                />
-              </div>
-
-              <div className="p-4">
-                <h3 className="font-semibold text-gray-900 text-sm">
-                  {product.name.length > 35
-                    ? product.name.slice(0, 32) + "..."
-                    : product.name}
-                </h3>
-
-                <p className="mt-2 font-bold text-gray-800">
-                  ₹{product.variants?.[0]?.basePrice || "N/A"}
-                </p>
-
-                <StarRating
-                  rating={product.ratings}
-                  totalReviews={product.numOfReviews}
-                />
-
-                <Link
-                  href={`/product/${product.slug}`}
-                  className="text-orange-600 text-sm font-semibold mt-3 inline-block"
+              <div className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition relative cursor-pointer">
+                {/* Wishlist */}
+                <button
+                  onClick={(e) => e.preventDefault()}
+                  className="absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10"
                 >
-                  View Details →
-                </Link>
+                  <HeartIcon size={16} />
+                </button>
+
+                {/* Image */}
+                <div className="relative w-full aspect-square bg-gray-50 flex items-center justify-center">
+                  <Image
+                    src={product.mainImage?.url || "/placeholder.png"}
+                    alt={product.name}
+                    fill
+                    className="object-cover rounded-4xl p-4"
+                  />
+                </div>
+
+                {/* Details */}
+                <div className="p-4">
+                  <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 min-h-10">
+                    {product.name}
+                  </h3>
+
+                  <p className="mt-2 font-bold text-gray-800">
+                    ₹{product.variants?.[0]?.basePrice || "N/A"}
+                  </p>
+
+                  <StarRating
+                    rating={product.ratings}
+                    totalReviews={product.numOfReviews}
+                  />
+                </div>
               </div>
-            </div>
+            </Link>
           ))
         )}
       </div>
