@@ -185,6 +185,14 @@ function CheckoutContent() {
           </button>
         </div>
       </div>
+      <div className="mt-20 mb-20 flex items-center justify-center bg-linear-to-b">
+        <button
+          onClick={() => router.push("/")}
+          className="px-6 py-2 rounded-lg bg-[#C47A2C] text-white"
+        >
+          Continue Shopping
+        </button>
+      </div>
     </div>
   );
 }

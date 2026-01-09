@@ -64,19 +64,19 @@ export default function TestimonialCarousel() {
   };
 
   // ✅ Reset smoothly for infinite loop
-  useEffect(() => {
-    if (index === testimonials.length) {
-      setTimeout(() => {
-        sliderRef.current!.style.transition = "none";
-        setIndex(0);
-        sliderRef.current!.style.transform = `translateX(0px)`;
+  // useEffect(() => {
+  //   if (index === testimonials.length) {
+  //     setTimeout(() => {
+  //       sliderRef.current!.style.transition = "none";
+  //       setIndex(0);
+  //       sliderRef.current!.style.transform = `translateX(0px)`;
 
-        setTimeout(() => {
-          sliderRef.current!.style.transition = "transform 0.6s ease";
-        }, 50);
-      }, 600);
-    }
-  }, [index]);
+  //       setTimeout(() => {
+  //         sliderRef.current!.style.transition = "transform 0.6s ease";
+  //       }, 50);
+  //     }, 600);
+  //   }
+  // }, [index]);
 
   return (
     <section className="w-full py-20 bg-[#FFF8EA] overflow-hidden">
@@ -88,12 +88,21 @@ export default function TestimonialCarousel() {
         <h2 className="text-center text-3xl md:text-4xl font-bold mb-2">
           Over 8,000 Happy Customers
         </h2>
-        <p className="text-center text-gray-600 mb-12">
+        <p className="text-center text-gray-600 mb-4">
           with thousands of 5-star reviews
         </p>
+        <div className="flex justify-center gap-1 mb-2">
+          {[...Array(5)].map((_, idx) => (
+            <Star
+              key={idx}
+              size={45}
+              className="fill-yellow-400 text-yellow-400"
+            />
+          ))}
+        </div>
 
         {/* Arrows */}
-        <button
+        {/* <button
           onClick={prev}
           className="absolute left-0 top-2/3 -translate-y-1/2 bg-white shadow-md p-2 rounded-full z-10"
         >
@@ -107,7 +116,6 @@ export default function TestimonialCarousel() {
           <ChevronRight size={20} />
         </button>
 
-        {/* Slider */}
         <div className="overflow-hidden">
           <div
             ref={sliderRef}
@@ -129,7 +137,6 @@ export default function TestimonialCarousel() {
                   className="mx-auto rounded-xl mb-3"
                 />
 
-                {/* Stars */}
                 <div className="flex justify-center gap-1 mb-2">
                   {[...Array(5)].map((_, idx) => (
                     <Star
@@ -145,7 +152,7 @@ export default function TestimonialCarousel() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

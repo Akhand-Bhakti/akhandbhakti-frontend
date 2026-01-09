@@ -26,7 +26,7 @@ export default function GalleryPage() {
   const [activeImage, setActiveImage] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen pt-14 px-4 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
+    <div className="min-h-screen pt-14 px-4 mb-20 bg-linear-to-b from-[#f8efe4] via-[#fdf6ee] to-white">
       {/* Header */}
       <div className="max-w-6xl mx-auto mb-14 text-center">
         <h1 className="text-4xl sm:text-5xl font-semibold text-[#C47A2C] tracking-wide">

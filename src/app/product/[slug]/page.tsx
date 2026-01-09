@@ -62,7 +62,7 @@ export default function ProductPage() {
         {/* ================= LEFT COLUMN ================= */}
         <div className="space-y-10">
           {/* Main Image */}
-          <div className="relative w-full h-[520px] bg-white rounded-2xl shadow overflow-hidden">
+          <div className="relative w-full max-w-[420px] mx-auto aspect-3/4 bg-white rounded-2xl shadow overflow-hidden">
             <Image
               src={activeImage || "/placeholder.png"}
               alt={product.name}
@@ -73,7 +73,7 @@ export default function ProductPage() {
           </div>
 
           {/* Thumbnails */}
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-5 gap-4">
             {galleryImages.map((img: any, index: number) => (
               <button
                 key={index}
