@@ -25,6 +25,7 @@ function CheckoutContent() {
     city: "",
     state: "",
     pincode: "",
+    country: "",
   });
 
   const [error, setError] = useState("");
@@ -131,6 +132,15 @@ function CheckoutContent() {
               value={shippingInfo.pincode}
               onChange={(e) =>
                 setShippingInfo({ ...shippingInfo, pincode: e.target.value })
+              }
+            />
+            <input
+              type="text"
+              placeholder="Country"
+              className="input"
+              value={shippingInfo.country}
+              onChange={(e) =>
+                setShippingInfo({ ...shippingInfo, country: e.target.value })
               }
             />
           </div>

@@ -2,8 +2,34 @@
 
 import Image from "next/image";
 import { Phone, Mail } from "lucide-react";
+import { useState } from "react";
 
 export default function ContactPage() {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const payload = {
+      inquiryType: formData.get("inquiryType"),
+      name: formData.get("name"),
+      phone: formData.get("phone"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact/appointment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    alert("Message sent!");
+  };
+
+  const [loading, setLoading] = useState(false);
+
   return (
     <section className="w-full bg-orange-200 pb-24">
       {/* Top Section */}
@@ -87,13 +113,16 @@ export default function ContactPage() {
 
         {/* Form Card */}
         <div className="bg-white border rounded-2xl shadow-lg p-8">
-          <form className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Inquiry Type */}
             <div>
               <label className="text-sm font-medium text-gray-700">
                 Type of Inquiry
               </label>
-              <select className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+              <select
+                name="inquiryType"
+                className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+              >
                 <option>General Inquiry</option>
                 <option>Book an Appointment</option>
                 <option>Order Related</option>
@@ -109,6 +138,7 @@ export default function ContactPage() {
                 </label>
                 <input
                   type="text"
+                  name="name"
                   className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
                   placeholder="Enter Your Name"
                 />
@@ -120,6 +150,7 @@ export default function ContactPage() {
                 </label>
                 <input
                   type="text"
+                  name="phone"
                   className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
                   placeholder="+91"
                 />
@@ -133,6 +164,7 @@ export default function ContactPage() {
               </label>
               <input
                 type="email"
+                name="email"
                 className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
                 placeholder="example@gmail.com"
               />
@@ -157,6 +189,7 @@ export default function ContactPage() {
               </label>
               <textarea
                 rows={5}
+                name="message"
                 className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
                 placeholder="Share your question or concern with us..."
               ></textarea>
@@ -165,9 +198,10 @@ export default function ContactPage() {
             {/* Button */}
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-orange-500 text-white py-3 rounded-xl font-semibold hover:bg-orange-600 transition flex justify-center items-center gap-2"
             >
-              Send Message
+              {loading ? "Sending..." : "Send Message"}
             </button>
           </form>
 

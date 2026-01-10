@@ -8,43 +8,43 @@ export default function Banner() {
   const products = [
     {
       id: 1,
-      title: "Abhimantrit Nepali Panchmukhi Rudraksha",
+      title: "Abhimantrit 5 Mukhi Rudraksha Mala (5mm) 108+1 Beads",
       desc: "Blessed Panchmukhi Rudraksha made for divine protection and peace.",
-      price: "₹599.00",
-      image: "/prod1.png",
-      thumb: "/prod1.png",
+      price: "₹1551.00",
+      image: "/prod11.png",
+      thumb: "/prod11.png",
       bg: "linear-gradient(135deg,#5E2817,#C0653E)",
-      slug: "1234",
+      slug: "abhimantrit-5-mukhi-rudraksha-mala-5mm-1081-beads",
     },
     {
       id: 2,
-      title: "Abhimantrit Hanuman Mala",
+      title: "Abhimantrit 5 Mukhi Rudraksha Sumerni 27+1 Beads",
       desc: "Powerful Hanuman mala energised for courage and strength.",
-      price: "₹599.00",
-      image: "/prod2.png",
-      thumb: "/prod2.png",
+      price: "₹1151.00",
+      image: "/prod12.png",
+      thumb: "/prod12.png",
       bg: "linear-gradient(135deg,#be4a1c,#842d14)",
-      slug: "1234",
+      slug: "abhimantrit-5-mukhi-rudraksha-sumerni-271-beads",
     },
     {
       id: 3,
-      title: "Abhimantrit Jal",
+      title: "Abhimantrit 7 Mukhi Rudraksha Bead",
       desc: "Sacred Abhimantrit Jal for devotion and purity.",
-      price: "₹799.00",
-      image: "/prod3.png",
-      thumb: "/prod3.png",
-      bg: "linear-gradient(135deg,#1e54e2,#1440b3)",
-      slug: "1234",
+      price: "₹1551.00",
+      image: "/prod13.png",
+      thumb: "/prod13.png",
+      bg: "linear-gradient(135deg, #e0662e, #8c3519)",
+      slug: "abhimantrit-7-mukhi-rudraksha-bead",
     },
     {
       id: 4,
-      title: "Abhimantrit Bhimseni Kapoor",
+      title: "Fresh Bhasm Potli 450 gm",
       desc: "Pure Bhimseni Kapoor for spiritual purification.",
-      price: "₹599.00",
-      image: "/prod4.png",
-      thumb: "/prod4.png",
+      price: "₹551.00",
+      image: "/prod14.png",
+      thumb: "/prod14.png",
       bg: "linear-gradient(135deg,#666c73,#3e4349)",
-      slug: "1234",
+      slug: "fresh-bhasm-potli-450-gm",
     },
   ];
 
@@ -137,7 +137,7 @@ export default function Banner() {
           <div className="relative mt-6 w-[300px] h-[220px] bg-white/15 rounded-full"></div>
 
           {/* product image */}
-          <div className="relative -mt-60 flex flex-col items-center">
+          <div className="relative -mt-62 flex flex-col items-center">
             <div className="relative w-60 h-60 2xl:w-72 2xl:h-72">
               <Image
                 src={activeProduct.image}

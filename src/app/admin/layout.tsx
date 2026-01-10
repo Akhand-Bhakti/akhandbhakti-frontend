@@ -8,6 +8,7 @@ import {
   ShoppingCart,
   Users,
   LogOut,
+  MessageSquare,
 } from "lucide-react";
 import { useEffect } from "react";
 import { useAuthStore } from "@/store/authStore";
@@ -23,6 +24,7 @@ const navItems: NavItem[] = [
   { name: "Products", href: "/admin/products", icon: Package },
   { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
   { name: "Users", href: "/admin/users", icon: Users },
+  { name: "Appointments", href: "/admin/appointments", icon: MessageSquare },
 ];
 
 export default function AdminLayout({
