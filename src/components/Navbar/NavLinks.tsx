@@ -15,14 +15,13 @@ export default function NavLinks({ isScrolled }: NavLinksProps) {
 
   // ACTIVE LINK STYLE
   const active = (path: string) =>
-    pathname === path
+    pathname.startsWith(path)
       ? `${isScrolled ? "text-black" : "text-white"} font-bold`
       : `${
           isScrolled
             ? "text-white/80 hover:text-white"
             : "text-white/90 hover:text-white"
         } font-semibold`;
-
   // Escape closes dropdown
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {

@@ -17,6 +17,38 @@ interface ImageField {
   url: string;
 }
 
+interface Pricing {
+  regions: {
+    INDIA?: {
+      price: number;
+      currency: "INR";
+    };
+    EUROPE?: {
+      price: number;
+      currency: "EUR";
+    };
+    MIDDLE_EAST?: {
+      price: number;
+      currency: "AED";
+    };
+    NORTH_AMERICA?: {
+      price: number;
+      currency: "USD";
+    };
+    REST_OF_WORLD?: {
+      price: number;
+      currency: "USD";
+    };
+  };
+  countries: Record<
+    string,
+    {
+      price: number;
+      currency: string;
+    }
+  >;
+}
+
 interface Product {
   _id: string;
   name: string;
@@ -27,11 +59,7 @@ interface Product {
   tags: string[];
   mainImage: ImageField;
   gallery: ImageField[];
-  variants: {
-    region: string;
-    basePrice: number;
-    currency: string;
-  }[];
+  pricing: Pricing;
 }
 
 /* ---------------- Component ---------------- */
@@ -42,7 +70,6 @@ export default function EditProductPage() {
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [price, setPrice] = useState<number | "">("");
   const [tagInput, setTagInput] = useState("");
 
   const [form, setForm] = useState<Product | null>(null);
@@ -54,8 +81,13 @@ export default function EditProductPage() {
       const { data } = await api.get(`/v1/product/${id}`);
       const product: Product = data.product;
 
+      // Ensure pricing structure exists
+      product.pricing = product.pricing || {
+        regions: {},
+        countries: {},
+      };
+
       setForm(product);
-      setPrice(product.variants?.[0]?.basePrice ?? "");
     } catch (error) {
       alert("Failed to load product");
       router.push("/admin/products");
@@ -68,10 +100,51 @@ export default function EditProductPage() {
     fetchProduct();
   }, []);
 
+  if (loading || !form) {
+    return <p className="text-gray-500">Loading product...</p>;
+  }
+
+  /* ---------- Helpers ---------- */
+
+  const updateRegionPrice = (
+    region: keyof Pricing["regions"],
+    field: "price",
+    value: number
+  ) => {
+    setForm((prev) => {
+      if (!prev) return prev;
+
+      return {
+        ...prev,
+        pricing: {
+          ...prev.pricing,
+          regions: {
+            ...prev.pricing.regions,
+            [region]: {
+              ...(prev.pricing.regions[region] || {
+                currency:
+                  region === "EUROPE"
+                    ? "EUR"
+                    : region === "MIDDLE_EAST"
+                    ? "AED"
+                    : region === "NORTH_AMERICA"
+                    ? "USD"
+                    : region === "REST_OF_WORLD"
+                    ? "USD"
+                    : "INR",
+              }),
+              [field]: value,
+            },
+          },
+        },
+      };
+    });
+  };
+
   /* ---------- Tags ---------- */
 
   const addTag = () => {
-    if (!tagInput.trim() || !form) return;
+    if (!tagInput.trim()) return;
     if (form.tags.includes(tagInput.trim())) return;
 
     setForm({
@@ -83,8 +156,6 @@ export default function EditProductPage() {
   };
 
   const removeTag = (tag: string) => {
-    if (!form) return;
-
     setForm({
       ...form,
       tags: form.tags.filter((t) => t !== tag),
@@ -98,8 +169,6 @@ export default function EditProductPage() {
     field: keyof ImageField,
     value: string
   ) => {
-    if (!form) return;
-
     const updated = [...form.gallery];
     updated[index] = {
       ...updated[index],
@@ -110,7 +179,7 @@ export default function EditProductPage() {
   };
 
   const addGalleryImage = () => {
-    if (!form || form.gallery.length >= 5) return;
+    if (form.gallery.length >= 5) return;
 
     setForm({
       ...form,
@@ -119,7 +188,7 @@ export default function EditProductPage() {
   };
 
   const removeGalleryImage = (index: number) => {
-    if (!form || form.gallery.length <= 1) return;
+    if (form.gallery.length <= 1) return;
 
     setForm({
       ...form,
@@ -131,25 +200,23 @@ export default function EditProductPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form) return;
+
+    if (!form.pricing?.regions?.INDIA?.price) {
+      alert("India price is mandatory");
+      return;
+    }
+
+    if (!form.pricing?.regions?.REST_OF_WORLD?.price) {
+      alert("Default International (USD) price is mandatory");
+      return;
+    }
 
     try {
       setSaving(true);
-
-      const payload = {
-        ...form,
-        variants: [
-          {
-            region: "India",
-            basePrice: Number(price),
-            currency: "INR",
-          },
-        ],
-      };
-
-      await api.put(`/v1/admin/product/${id}`, payload);
+      await api.put(`/v1/admin/product/${id}`, form);
       router.push("/admin/products");
     } catch (error) {
+      console.error(error);
       alert("Failed to update product");
     } finally {
       setSaving(false);
@@ -157,10 +224,6 @@ export default function EditProductPage() {
   };
 
   /* ---------------- UI ---------------- */
-
-  if (loading || !form) {
-    return <p className="text-gray-500">Loading product...</p>;
-  }
 
   return (
     <div className="max-w-4xl space-y-6">
@@ -214,84 +277,95 @@ export default function EditProductPage() {
           className="input"
         />
 
-        {/* Main Image */}
-        <div>
-          <h3 className="font-semibold mb-2">Main Image</h3>
-          <div className="grid md:grid-cols-2 gap-3">
+        {/* ---------------- Pricing Section ---------------- */}
+
+        <div className="space-y-4">
+          <h3 className="font-semibold">Region Pricing</h3>
+
+          {/* INDIA */}
+          <div>
+            <label className="text-sm font-medium">
+              India (INR) — Required
+            </label>
             <input
-              value={form.mainImage.public_id}
+              type="number"
+              value={form.pricing.regions.INDIA?.price || ""}
               onChange={(e) =>
-                setForm({
-                  ...form,
-                  mainImage: {
-                    ...form.mainImage,
-                    public_id: e.target.value,
-                  },
-                })
+                updateRegionPrice("INDIA", "price", Number(e.target.value))
+              }
+              className="input"
+              required
+            />
+          </div>
+
+          {/* EUROPE */}
+          <div>
+            <label className="text-sm font-medium">Europe (EUR)</label>
+            <input
+              type="number"
+              value={form.pricing.regions.EUROPE?.price || ""}
+              onChange={(e) =>
+                updateRegionPrice("EUROPE", "price", Number(e.target.value))
               }
               className="input"
             />
+          </div>
 
+          {/* MIDDLE EAST */}
+          <div>
+            <label className="text-sm font-medium">Middle East (AED)</label>
             <input
-              value={form.mainImage.url}
+              type="number"
+              value={form.pricing.regions.MIDDLE_EAST?.price || ""}
               onChange={(e) =>
-                setForm({
-                  ...form,
-                  mainImage: {
-                    ...form.mainImage,
-                    url: e.target.value,
-                  },
-                })
+                updateRegionPrice(
+                  "MIDDLE_EAST",
+                  "price",
+                  Number(e.target.value)
+                )
+              }
+              className="input"
+            />
+          </div>
+
+          {/* NORTH AMERICA */}
+          <div>
+            <label className="text-sm font-medium">North America (USD)</label>
+            <input
+              type="number"
+              value={form.pricing.regions.NORTH_AMERICA?.price || ""}
+              onChange={(e) =>
+                updateRegionPrice(
+                  "NORTH_AMERICA",
+                  "price",
+                  Number(e.target.value)
+                )
+              }
+              className="input"
+            />
+          </div>
+          {/* REST OF WORLD */}
+          <div>
+            <label className="text-sm font-medium">
+              Default International (USD)
+            </label>
+            <input
+              type="number"
+              value={form.pricing.regions.REST_OF_WORLD?.price || ""}
+              onChange={(e) =>
+                updateRegionPrice(
+                  "REST_OF_WORLD",
+                  "price",
+                  Number(e.target.value)
+                )
               }
               className="input"
             />
           </div>
         </div>
 
-        {/* Gallery */}
-        <div>
-          <h3 className="font-semibold mb-2">Gallery Images</h3>
+        {/* ---------------- Tags ---------------- */}
 
-          {form.gallery.map((img, index) => (
-            <div key={index} className="grid md:grid-cols-2 gap-3 mb-3">
-              <input
-                value={img.public_id}
-                onChange={(e) =>
-                  updateGallery(index, "public_id", e.target.value)
-                }
-                className="input"
-              />
-
-              <input
-                value={img.url}
-                onChange={(e) => updateGallery(index, "url", e.target.value)}
-                className="input"
-              />
-
-              {form.gallery.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => removeGalleryImage(index)}
-                  className="text-red-600 text-sm"
-                >
-                  Remove
-                </button>
-              )}
-            </div>
-          ))}
-
-          {form.gallery.length < 5 && (
-            <button
-              type="button"
-              onClick={addGalleryImage}
-              className="text-sm text-blue-600"
-            >
-              + Add Image
-            </button>
-          )}
-        </div>
-
-        {/* Tags */}
         <div>
           <h3 className="font-semibold mb-2">Tags</h3>
 
@@ -320,20 +394,8 @@ export default function EditProductPage() {
           />
         </div>
 
-        {/* Price */}
-        <div>
-          <h3 className="font-semibold mb-2">Price (INR)</h3>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) =>
-              setPrice(e.target.value === "" ? "" : Number(e.target.value))
-            }
-            className="input"
-          />
-        </div>
+        {/* ---------------- Actions ---------------- */}
 
-        {/* Actions */}
         <div className="flex gap-3 pt-4">
           <button
             type="submit"

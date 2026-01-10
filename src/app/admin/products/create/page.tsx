@@ -26,11 +26,19 @@ interface CreateProductPayload {
   tags: string[];
   mainImage: ImageField;
   gallery: ImageField[];
-  variants: {
-    region: "India";
-    basePrice: number;
-    currency: "INR";
-  }[];
+  pricing: {
+    regions: {
+      INDIA: {
+        price: number;
+        currency: "INR";
+      };
+      REST_OF_WORLD: {
+        price: number;
+        currency: "USD";
+      };
+    };
+    countries: Record<string, never>;
+  };
 }
 
 /* ---------------- Constants ---------------- */
@@ -58,6 +66,7 @@ export default function CreateProductPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState<number | "">("");
+  const [usdPrice, setUsdPrice] = useState<number | "">("");
 
   const [tagInput, setTagInput] = useState("");
 
@@ -78,13 +87,19 @@ export default function CreateProductPage() {
         url: "",
       },
     ],
-    variants: [
-      {
-        region: "India",
-        basePrice: 0,
-        currency: "INR",
+    pricing: {
+      regions: {
+        INDIA: {
+          price: 0,
+          currency: "INR",
+        },
+        REST_OF_WORLD: {
+          price: 0,
+          currency: "USD",
+        },
       },
-    ],
+      countries: {},
+    },
   });
 
   /* ---------- Handlers ---------- */
@@ -171,20 +186,26 @@ export default function CreateProductPage() {
       return;
     }
 
-    if (price === "") {
-      alert("Please enter price");
+    if (price === "" || usdPrice === "") {
+      alert("Please enter both INR and USD prices");
       return;
     }
 
     const payload: CreateProductPayload = {
       ...form,
-      variants: [
-        {
-          region: "India",
-          basePrice: Number(price),
-          currency: "INR",
+      pricing: {
+        regions: {
+          INDIA: {
+            price: Number(price),
+            currency: "INR",
+          },
+          REST_OF_WORLD: {
+            price: Number(usdPrice),
+            currency: "USD",
+          },
         },
-      ],
+        countries: {},
+      },
     };
 
     try {
@@ -222,8 +243,9 @@ export default function CreateProductPage() {
               className="input"
             />
           </div>
+
           <div>
-            <h3 className="font-semibold mb-2">Slug Image</h3>
+            <h3 className="font-semibold mb-2">Slug</h3>
             <input
               name="slug"
               placeholder="Slug"
@@ -233,6 +255,7 @@ export default function CreateProductPage() {
               className="input bg-gray-50"
             />
           </div>
+
           <div>
             <h3 className="font-semibold mb-2">Category</h3>
             <select
@@ -246,6 +269,7 @@ export default function CreateProductPage() {
               ))}
             </select>
           </div>
+
           <div>
             <h3 className="font-semibold mb-2">Stock Quantity</h3>
             <input
@@ -263,6 +287,7 @@ export default function CreateProductPage() {
             />
           </div>
         </div>
+
         <div>
           <h3 className="font-semibold mb-2">Description</h3>
           <textarea
@@ -275,6 +300,7 @@ export default function CreateProductPage() {
             className="input"
           />
         </div>
+
         {/* Main Image */}
         <div>
           <h3 className="font-semibold mb-2">Main Image</h3>
@@ -392,12 +418,25 @@ export default function CreateProductPage() {
 
         {/* Price */}
         <div>
-          <h3 className="font-semibold mb-2">Price (INR)</h3>
+          <h3 className="font-semibold mb-2">Base Price – India (INR)</h3>
           <input
             type="number"
             value={price}
             onChange={(e) =>
               setPrice(e.target.value === "" ? "" : Number(e.target.value))
+            }
+            className="input"
+          />
+        </div>
+        <div>
+          <h3 className="font-semibold mb-2">
+            Default International Price – USD
+          </h3>
+          <input
+            type="number"
+            value={usdPrice}
+            onChange={(e) =>
+              setUsdPrice(e.target.value === "" ? "" : Number(e.target.value))
             }
             className="input"
           />

@@ -9,10 +9,18 @@ interface Product {
   name: string;
   category: string;
   status: "active" | "hidden";
-  variants: {
-    region: string;
-    basePrice: number;
-  }[];
+  pricing: {
+    regions: {
+      INDIA?: {
+        price: number;
+        currency: string;
+      };
+      REST_OF_WORLD?: {
+        price: number;
+        currency: string;
+      };
+    };
+  };
   createdAt: string;
 }
 
@@ -122,7 +130,15 @@ export default function ProductsPage() {
 
             <tbody>
               {products.map((product) => {
-                const price = product.variants?.[0]?.basePrice ?? 0;
+                const price =
+                  product.pricing?.regions?.INDIA?.price ??
+                  product.pricing?.regions?.REST_OF_WORLD?.price ??
+                  0;
+
+                const currency =
+                  product.pricing?.regions?.INDIA?.currency ??
+                  product.pricing?.regions?.REST_OF_WORLD?.currency ??
+                  "INR";
 
                 return (
                   <tr key={product._id} className="border-t">
@@ -130,7 +146,10 @@ export default function ProductsPage() {
 
                     <td className="px-4 py-3 capitalize">{product.category}</td>
 
-                    <td className="px-4 py-3">₹{price}</td>
+                    <td className="px-4 py-3">
+                      {currency} {price}
+                    </td>
+
                     <td className="px-4 py-3">
                       <button
                         onClick={() => toggleStatus(product)}
