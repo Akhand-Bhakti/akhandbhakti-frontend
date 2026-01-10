@@ -135,7 +135,7 @@ export default function About() {
               height={600}
               className="w-full h-auto object-cover"
               placeholder="blur"
-              blurDataURL="/guruji-blur.jpg" // optional low-quality image
+              blurDataURL="/guruji-blur.jpg"
               priority
             />
           </div>

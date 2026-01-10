@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function LabTested() {
   return (
-    <section className="w-full py-20 bg-white">
+    <section id="lab-testing" className="w-full py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-bold text-[#7B3F07] mb-4">

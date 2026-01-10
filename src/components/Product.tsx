@@ -12,7 +12,8 @@ interface Product {
   name: string;
   slug: string;
   mainImage: { url: string };
-  variants: { basePrice: number; currency: string }[];
+  price: number;
+  currency: string;
   ratings: number;
   numOfReviews: number;
   category: string;
@@ -121,7 +122,7 @@ export default function ProductSection() {
                   </h3>
 
                   <p className="mt-2 font-bold text-gray-800">
-                    ₹{product.variants?.[0]?.basePrice || "N/A"}
+                    {product.currency} {product.price}
                   </p>
 
                   <StarRating

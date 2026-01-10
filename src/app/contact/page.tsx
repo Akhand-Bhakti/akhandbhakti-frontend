@@ -30,7 +30,7 @@ export default function ContactPage() {
                 <Phone className="text-orange-500" size={26} />
               </div>
               <div>
-                <p className="font-semibold text-gray-700">Call Us</p>
+                <p className="font-semibold text-gray-700">Text Us</p>
                 <p className="text-gray-600 text-sm">+91 88824 70657</p>
                 <p className="text-gray-400 text-xs">
                   Mon - Sat, 9 AM - 7 PM IST
@@ -172,7 +172,7 @@ export default function ContactPage() {
           </form>
 
           <p className="text-center text-gray-500 mt-4 text-sm">
-            Your message is safe with us — protected by our sacred guidance
+            Your message is safe with us — protected by us
           </p>
         </div>
       </div>

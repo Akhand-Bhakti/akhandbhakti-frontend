@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { fetchProductBySlug } from "@/services/productService";
 import StarRating from "@/StarRating";
 import { useCartStore } from "@/store/cartStore";
+import Link from "next/link";
 
 export default function ProductPage() {
   const { slug } = useParams();
@@ -33,6 +34,11 @@ export default function ProductPage() {
 
     loadProduct();
   }, [slug]);
+  useEffect(() => {
+    if (product?.stock && qty > product.stock) {
+      setQty(product.stock);
+    }
+  }, [product, qty]);
 
   const handleAddToCart = () => {
     if (!product) return;
@@ -41,11 +47,22 @@ export default function ProductPage() {
       productId: product._id,
       name: product.name,
       image: product.mainImage?.url || "/placeholder.png",
-      price: product.variants?.[0]?.basePrice,
-      variant: "India",
+      price: product.price,
+      currency: product.currency,
       quantity: qty,
       stock: product.stock || 10,
     });
+  };
+  const router = useRouter();
+
+  const handleBuyNow = () => {
+    if (!product) return;
+
+    // add to cart first
+    handleAddToCart();
+
+    // then go to checkout
+    router.push("/checkout");
   };
 
   if (loading) return <p className="text-center py-32">Loading product…</p>;
@@ -54,6 +71,18 @@ export default function ProductPage() {
   const galleryImages = [product.mainImage, ...(product.gallery || [])].filter(
     Boolean
   );
+
+  const features = [
+    { text: "100% Authentic", img: "/icons/authentic.png" },
+    { text: "Lab Tested", img: "/icons/lab.png" },
+    { text: "Energized", img: "/icons/energy.png" },
+    { text: "Hand Picked", img: "/icons/handpicked.png" },
+    { text: "Secure Packaging", img: "/icons/secure.png" },
+    { text: "Trusted by Devotees", img: "/icons/trusted.png" },
+  ];
+
+  const stock = product?.stock ?? 0;
+  const outOfStock = stock === 0;
 
   return (
     <section className="bg-[#FAF7F2] pt-18 pb-24">
@@ -94,35 +123,6 @@ export default function ProductPage() {
               </button>
             ))}
           </div>
-
-          {/* Why Choose Us */}
-          <div className="bg-white rounded-2xl p-8 shadow">
-            <h3 className="font-semibold mb-6">Why should you choose us?</h3>
-
-            <div className="grid grid-cols-2 gap-6 text-sm">
-              {[
-                "100% Authentic",
-                "Lab Tested",
-                "Energized",
-                "Hand Picked",
-                "Secure Packaging",
-                "Trusted by Devotees",
-              ].map((item, i) => (
-                <div key={i} className="text-gray-700">
-                  ✔ {item}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* FAQ */}
-          <div className="bg-[#FFF2CC] rounded-2xl p-6 text-sm">
-            <p className="font-medium">Got Questions?</p>
-            <p className="mt-2 text-gray-700">
-              We are here for you. If you have any questions related to our
-              products, contact our support.
-            </p>
-          </div>
         </div>
 
         {/* ================= RIGHT COLUMN ================= */}
@@ -139,16 +139,17 @@ export default function ProductPage() {
             </p>
 
             <p className="mt-6 text-2xl font-semibold text-orange-600">
-              ₹{product.variants?.[0]?.basePrice}
+              {product.currency} {product.price}
             </p>
 
             {/* Features */}
             <div className="mt-6 text-sm text-gray-600 leading-relaxed">
-              At Akhandbhakti, every purchase welcomes divine energy into your
-              life and supports our efforts to care for our cows and perform
-              pujan in different parts of India. With each order, you&apos;re
-              contributing to Namak-Chamak Rudrabhishek and to help with cow
-              shelters .
+              At AkhandBhakti, every purchase is a sacred step toward inviting
+              divine energy into your life. Your support enables us to care for
+              our cows and conduct pujan and spiritual rituals across various
+              regions of India. With each order, you contribute to the
+              Namak–Chamak Rudrabhishek and help sustain cow shelters, nurturing
+              both spiritual and social harmony.
             </div>
 
             {/* Quantity + Cart */}
@@ -161,20 +162,37 @@ export default function ProductPage() {
                   −
                 </button>
                 <span className="px-5">{qty}</span>
-                <button onClick={() => setQty(qty + 1)} className="px-4 py-2">
+                <button
+                  onClick={() => setQty(qty + 1)}
+                  disabled={qty >= stock}
+                  className="px-4 py-2 disabled:opacity-40"
+                >
                   +
                 </button>
               </div>
 
               <button
                 onClick={handleAddToCart}
-                className="bg-[#E8C37E] px-10 py-3 rounded-lg font-semibold hover:bg-[#ddb463] transition"
+                disabled={outOfStock}
+                className={`w-full py-3 rounded-lg font-semibold transition ${
+                  outOfStock
+                    ? "bg-gray-300 cursor-not-allowed"
+                    : "bg-[#dfa231] hover:bg-[#f1af2a]"
+                }`}
               >
                 Add to Cart
               </button>
             </div>
 
-            <button className="mt-4 w-full bg-[#D8A74F] py-3 rounded-lg font-semibold">
+            <button
+              onClick={handleBuyNow}
+              disabled={outOfStock}
+              className={`mt-4 w-full py-3 rounded-lg font-semibold transition ${
+                outOfStock
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-[#dfa231] hover:bg-[#f1af2a]"
+              }`}
+            >
               Buy Now
             </button>
           </div>
@@ -201,12 +219,43 @@ export default function ProductPage() {
                 })}
             </div>
           </div>
+          {/* Why Choose Us */}
+          <div className="bg-white rounded-2xl p-8 shadow">
+            <h3 className="font-semibold mb-6">Why should you choose us?</h3>
+
+            <div className="grid grid-cols-2 gap-6 text-sm">
+              {features.map((item, i) => (
+                <div key={i} className="flex items-center gap-3 text-gray-700">
+                  <Image
+                    src={item.img}
+                    alt={item.text}
+                    width={20}
+                    height={20}
+                    className="object-contain"
+                  />
+                  <span>{item.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* FAQ */}
+          <div className="bg-[#FFF2CC] rounded-2xl p-6 text-sm">
+            <p className="font-medium">Got Questions?</p>
+            <p className="mt-2 text-gray-700">
+              We are here for you. If you have any questions related to our
+              products,{" "}
+              <Link href="/contact" className="text-blue-400 underline">
+                contact our support.
+              </Link>{" "}
+            </p>
+          </div>
 
           {/* Lab Test */}
-          <div>
+          {/* <div>
             <h2 className="font-semibold mb-3">Lab Test</h2>
             <div className="h-28 bg-gray-200 rounded-xl" />
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -263,10 +312,10 @@ export default function ProductPage() {
           )}
         </div>
 
-        <div className="mt-10">
+        {/* <div className="mt-10">
           <h2 className="text-xl font-semibold mb-6">Related Products</h2>
           <div className="h-48 bg-gray-200 rounded-xl" />
-        </div>
+        </div> */}
       </div>
     </section>
   );

@@ -146,10 +146,7 @@ function CheckoutContent() {
 
           <div className="space-y-4">
             {items.map((item) => (
-              <div
-                key={`${item.productId}-${item.variant}`}
-                className="flex gap-4 items-center"
-              >
+              <div key={item.productId} className="flex gap-4 items-center">
                 <Image
                   src={item.image}
                   alt={item.name}
@@ -160,13 +157,11 @@ function CheckoutContent() {
 
                 <div className="flex-1">
                   <p className="text-sm font-medium">{item.name}</p>
-                  <p className="text-xs text-gray-500">
-                    {item.variant} × {item.quantity}
-                  </p>
+                  <p className="text-xs text-gray-500">Qty × {item.quantity}</p>
                 </div>
 
                 <p className="text-sm font-medium">
-                  ₹{item.price * item.quantity}
+                  {item.currency} {item.price * item.quantity}
                 </p>
               </div>
             ))}
@@ -174,7 +169,9 @@ function CheckoutContent() {
 
           <div className="border-t mt-6 pt-4 flex justify-between text-base font-semibold">
             <span>Total</span>
-            <span>₹{getTotalPrice()}</span>
+            <span>
+              {items[0]?.currency} {getTotalPrice()}
+            </span>
           </div>
 
           <button

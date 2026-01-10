@@ -12,7 +12,7 @@ export default function GoogleButton() {
       onClick={handleGoogleLogin}
       className="w-full flex items-center justify-center gap-3 py-2.5 border rounded-md bg-white hover:bg-gray-50 transition"
     >
-      <Image src="/google.svg" alt="Google" width={20} height={20} />
+      <Image src="/login/google.png" alt="Google" width={20} height={20} />
       <span className="text-sm font-medium text-gray-700">
         Continue with Google
       </span>

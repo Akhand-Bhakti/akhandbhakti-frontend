@@ -26,26 +26,38 @@ export default function Footer() {
             <h3 className="font-semibold text-lg mb-3">Products</h3>
             <ul className="space-y-2 text-white/80">
               <li>
-                <Link href="/products/rudraksha" className="hover:text-white">
-                  Rudraksha
+                <Link
+                  href="/products?category=rudraksha%20malas"
+                  className="hover:text-white"
+                >
+                  Rudraksha malas
                 </Link>
               </li>
               <li>
-                <Link href="/products/karungali" className="hover:text-white">
-                  Karungali
+                <Link
+                  href="/products?category=wearables"
+                  className="hover:text-white"
+                >
+                  Wearables
                 </Link>
               </li>
               <li>
-                <Link href="/products/moonga" className="hover:text-white">
-                  Moonga
+                <Link
+                  href="/products?category=rudraksha%20beads"
+                  className="hover:text-white"
+                >
+                  Rudraksha Beads
                 </Link>
               </li>
               <li>
-                <Link href="/products/bracelet" className="hover:text-white">
-                  Bracelet
+                <Link
+                  href="/products?category=puja%20essentials"
+                  className="hover:text-white"
+                >
+                  Puja essentials
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/products/special-combo"
                   className="hover:text-white"
@@ -57,7 +69,7 @@ export default function Footer() {
                 <Link href="/products/kamal-gatta" className="hover:text-white">
                   Kamal Gatta Mala
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -71,15 +83,15 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/lab-testing" className="hover:text-white">
+                <Link href="#lab-testing" className="hover:text-white">
                   Lab Testing
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="/testimonials" className="hover:text-white">
                   Testimonials
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -102,11 +114,11 @@ export default function Footer() {
                   Shipping Information
                 </Link>
               </li> */}
-              <li>
+              {/* <li>
                 <Link href="/track-order" className="hover:text-white">
                   Track Your Order
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href="/payment-options" className="hover:text-white">
                   Payment Option
@@ -154,7 +166,7 @@ export default function Footer() {
               <li className="flex gap-2 items-start">
                 <MapPin size={38} />
                 <Link
-                  href="https://maps.google.com/?q=C3,+Tyagi+Market,+Makanpur,+Indirapuram,+Ghaziabad,+201020"
+                  href="https://maps.app.goo.gl/zuCrcR6aiqg8u1iZA"
                   className="hover:text-white"
                 >
                   C3, Tyagi Market, Makanpur, Indirapuram,
@@ -179,12 +191,30 @@ export default function Footer() {
             {/* Social Icons */}
             <h3 className="font-semibold text-lg mt-6 mb-3">Follow us</h3>
             <div className="flex gap-4">
-              <Facebook size={26} className="cursor-pointer hover:opacity-80" />
-              <Instagram
-                size={26}
-                className="cursor-pointer hover:opacity-80"
-              />
-              <Youtube size={26} className="cursor-pointer hover:opacity-80" />
+              <a
+                href="https://www.facebook.com/akhandbhaktiofficial"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition"
+              >
+                <Facebook size={26} />
+              </a>
+              <a
+                href="https://www.instagram.com/akhandbhaktiofficial"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition"
+              >
+                <Instagram size={26} />
+              </a>
+              <a
+                href="https://www.youtube.com/@akhandbhaktiofficial"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition"
+              >
+                <Youtube size={26} />
+              </a>
             </div>
           </div>
         </div>
@@ -217,7 +247,7 @@ export default function Footer() {
             <h3 className="font-semibold mb-3">Company</h3>
             <ul className="space-y-2 text-white/80">
               <li>About Us</li>
-              <li>Our Story</li>
+              {/* <li>Our Story</li> */}
               <li>Lab Testing</li>
             </ul>
 
@@ -225,7 +255,7 @@ export default function Footer() {
             <ul className="space-y-2 text-white/80">
               <li>Contact Us</li>
               <li>FAQs</li>
-              <li>Track Order</li>
+              {/* <li>Track Order</li> */}
             </ul>
           </div>
         </div>
