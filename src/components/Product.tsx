@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { HeartIcon } from "lucide-react";
+import { HeartIcon, ShoppingCart } from "lucide-react";
 import { fetchProducts } from "@/services/productService";
 import StarRating from "@/StarRating";
+import { useCartStore } from "@/store/cartStore";
+import { toast } from "sonner";
 
 interface Product {
   _id: string;
@@ -31,6 +33,25 @@ export default function ProductSection() {
     "rudraksha beads",
     "puja essentials",
   ];
+  const addItem = useCartStore((state) => state.addItem);
+
+  const handleAddToCart = (e: React.MouseEvent, product: Product) => {
+    e.preventDefault(); // prevents Link navigation
+    e.stopPropagation(); // prevents bubbling
+
+    addItem({
+      productId: product._id,
+      name: product.name,
+      image: product.mainImage?.url || "/placeholder.png",
+      price: product.price,
+      currency: product.currency,
+      quantity: 1,
+      stock: 10, // ideally pass real stock if available
+    });
+    toast.success("Added to cart 🛒", {
+      description: product.name,
+    });
+  };
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -98,11 +119,17 @@ export default function ProductSection() {
             >
               <div className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition relative cursor-pointer">
                 {/* Wishlist */}
-                <button
+                {/* <button
                   onClick={(e) => e.preventDefault()}
                   className="absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10"
                 >
                   <HeartIcon size={16} />
+                </button> */}
+                <button
+                  onClick={(e) => handleAddToCart(e, product)}
+                  className="absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10"
+                >
+                  <ShoppingCart size={20} />
                 </button>
 
                 {/* Image */}

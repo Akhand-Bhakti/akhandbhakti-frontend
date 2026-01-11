@@ -7,6 +7,7 @@ import { fetchProductBySlug } from "@/services/productService";
 import StarRating from "@/StarRating";
 import { useCartStore } from "@/store/cartStore";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function ProductPage() {
   const { slug } = useParams();
@@ -50,7 +51,10 @@ export default function ProductPage() {
       price: product.price,
       currency: product.currency,
       quantity: qty,
-      stock: product.stock || 10,
+      stock: product.stock || 0,
+    });
+    toast.success("Added to cart 🛒", {
+      description: product.name,
     });
   };
   const router = useRouter();
