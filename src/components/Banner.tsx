@@ -91,7 +91,7 @@ export default function Banner() {
   2xl:w-[420px] 2xl:h-[420px]"
           >
             <Image
-              src="/home/guru.jpg"
+              src="/home/guru.JPG"
               alt="Guru"
               fill
               className="object-cover"

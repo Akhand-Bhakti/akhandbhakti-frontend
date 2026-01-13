@@ -129,7 +129,7 @@ export default function About() {
         <div className="relative">
           <div className="rounded-3xl overflow-hidden border-4 border-orange-200 shadow-xl">
             <Image
-              src="/home-about/guruji.jpg"
+              src="/home-about/guruji.JPG"
               alt="Guruji Parameshwar Ananda"
               width={800}
               height={600}
