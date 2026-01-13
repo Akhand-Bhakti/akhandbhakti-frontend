@@ -31,29 +31,31 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <section className="w-full bg-orange-200 pb-24">
+    <section className="w-full bg-orange-200 pb-16 md:pb-24">
       {/* Top Section */}
-      <div className="max-w-7xl mx-auto px-6 pt-16">
-        <p className="text-orange-600 font-semibold mb-2">Om Namah Shivaya</p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 md:pt-16">
+        <p className="text-orange-600 font-semibold mb-2 text-center md:text-left">
+          Om Namah Shivaya
+        </p>
 
-        <div className="grid md:grid-cols-2 gap-10 items-start">
-          {/* Left: Text + Contact Cards */}
-          <div>
-            <h1 className="text-4xl font-bold text-[#7B3F07] leading-tight mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          {/* Left */}
+          <div className="text-center md:text-left">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#7B3F07] leading-tight mb-4">
               Connect With Akhand
-              <br />
+              <br className="hidden md:block" />
               Bhakti
             </h1>
 
-            <p className="text-gray-600 mb-8 max-w-md">
+            <p className="text-gray-600 mb-8 max-w-md mx-auto md:mx-0">
               Reach out to Guruji for personalized spiritual guidance, Rudraksha
               consultations, or any questions about your sacred journey.
             </p>
 
             {/* Call Card */}
-            <div className="bg-white border rounded-xl p-5 shadow-md mb-5 flex items-center gap-4 hover:shadow-lg transition">
+            <div className="bg-white border rounded-xl p-4 shadow-md mb-5 flex items-center gap-4">
               <div className="p-3 bg-orange-100 rounded-xl">
-                <Phone className="text-orange-500" size={26} />
+                <Phone className="text-orange-500" size={24} />
               </div>
               <div>
                 <p className="font-semibold text-gray-700">Text Us</p>
@@ -65,13 +67,13 @@ export default function ContactPage() {
             </div>
 
             {/* Email Card */}
-            <div className="bg-white border rounded-xl p-5 shadow-md flex items-center gap-4 hover:shadow-lg transition">
+            <div className="bg-white border rounded-xl p-4 shadow-md flex items-center gap-4">
               <div className="p-3 bg-orange-100 rounded-xl">
-                <Mail className="text-orange-500" size={26} />
+                <Mail className="text-orange-500" size={24} />
               </div>
               <div>
                 <p className="font-semibold text-gray-700">Email Us</p>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-sm break-all">
                   akhandbhaktioffical@gmail.com
                 </p>
                 <p className="text-gray-400 text-xs">
@@ -81,19 +83,18 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right: Image Card */}
-          <div className="bg-linear-to-b from-orange-200/40 to-orange-200/10 rounded-xl overflow-hidden shadow-lg absolute right-55">
+          {/* Right Image */}
+          <div className="relative bg-gradient-to-b from-orange-200/40 to-orange-200/10 rounded-xl overflow-hidden shadow-lg">
             <Image
               src="/contact/contact.jpg"
               alt="Guruji"
               width={700}
               height={600}
-              className="object-contain w-full h-[480px]"
+              className="object-cover w-full h-[260px] sm:h-[320px] md:h-[480px]"
             />
 
-            {/* Quote Overlay */}
-            <div className="absolute bottom-0 left-0 w-full p-6 bg-linear-to-t from-black/60 to-transparent">
-              <p className="text-white/80 text-sm mt-2">
+            <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/60 to-transparent">
+              <p className="text-white/80 text-sm">
                 — Shri Shagun Vashishth Ji
               </p>
             </div>
@@ -102,111 +103,68 @@ export default function ContactPage() {
       </div>
 
       {/* FORM SECTION */}
-      <div className="max-w-4xl mx-auto px-6 mt-24">
-        <h2 className="text-3xl font-bold text-center text-[#7B3F07] mb-3">
-          Connect with Us /Book Appointment
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 mt-20">
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-[#7B3F07] mb-3">
+          Connect with Us / Book Appointment
         </h2>
-        <p className="text-center text-gray-600 mb-8">
+
+        <p className="text-center text-gray-600 mb-8 text-sm md:text-base">
           Fill out the form below and our spiritual team will get back to you
-          with divine blessings
         </p>
 
-        {/* Form Card */}
-        <div className="bg-white border rounded-2xl shadow-lg p-8">
+        <div className="bg-white border rounded-2xl shadow-lg p-6 md:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Inquiry Type */}
-            <div>
-              <label className="text-sm font-medium text-gray-700">
-                Type of Inquiry
-              </label>
-              <select
-                name="inquiryType"
-                className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
-              >
-                <option>General Inquiry</option>
-                <option>Book an Appointment</option>
-                <option>Order Related</option>
-                <option>Book Pujan</option>
-              </select>
-            </div>
+            <select
+              name="inquiryType"
+              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
+            >
+              <option>General Inquiry</option>
+              <option>Book an Appointment</option>
+              <option>Order Related</option>
+              <option>Book Pujan</option>
+            </select>
 
-            {/* Name + Phone */}
-            <div className="grid md:grid-cols-2 gap-5">
-              <div>
-                <label className="text-sm font-medium text-gray-700">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
-                  placeholder="Enter Your Name"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-gray-700">
-                  Phone Number
-                </label>
-                <input
-                  type="text"
-                  name="phone"
-                  className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
-                  placeholder="+91"
-                />
-              </div>
-            </div>
-
-            {/* Email */}
-            <div>
-              <label className="text-sm font-medium text-gray-700">
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
-                placeholder="example@gmail.com"
-              />
-            </div>
-
-            {/* Subject */}
-            {/* <div>
-              <label className="text-sm font-medium text-gray-700">
-                Subject
-              </label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
-                className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
-                placeholder="What is your inquiry?"
+                name="name"
+                placeholder="Full Name"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
               />
-            </div> */}
 
-            {/* Message */}
-            <div>
-              <label className="text-sm font-medium text-gray-700">
-                Your Message
-              </label>
-              <textarea
-                rows={5}
-                name="message"
-                className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
-                placeholder="Share your question or concern with us..."
-              ></textarea>
+              <input
+                type="text"
+                name="phone"
+                placeholder="+91"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
+              />
             </div>
 
-            {/* Button */}
+            <input
+              type="email"
+              name="email"
+              placeholder="example@gmail.com"
+              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
+            />
+
+            <textarea
+              rows={4}
+              name="message"
+              placeholder="Share your question or concern..."
+              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-400"
+            />
+
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-orange-500 text-white py-3 rounded-xl font-semibold hover:bg-orange-600 transition flex justify-center items-center gap-2"
+              className="w-full bg-orange-500 text-white py-3 rounded-xl font-semibold hover:bg-orange-600 transition"
             >
               {loading ? "Sending..." : "Send Message"}
             </button>
           </form>
 
-          <p className="text-center text-gray-500 mt-4 text-sm">
-            Your message is safe with us — protected by us
+          <p className="text-center text-gray-500 mt-4 text-xs md:text-sm">
+            Your message is safe with us
           </p>
         </div>
       </div>
