@@ -1,8 +1,30 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function AboutPage() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const steps = [
+    {
+      title: "Vedic Rituals",
+      desc: "Each item undergoes authentic Vedic rituals conducted as per scriptures, ensuring spiritual purity and alignment with ancient traditions.",
+    },
+    {
+      title: "Namak-Chamak Rudrabhishek",
+      desc: "A powerful Rudrabhishek performed with Namak and Chamak to invoke Lord Shiva’s blessings and energize the sacred item.",
+    },
+    {
+      title: "12–16 Hours Shiv Sadhna",
+      desc: "Extended Shiv Sadhna performed by Guruji with complete focus, discipline, and devotion to infuse divine energy.",
+    },
+    {
+      title: "Mantra & Sankalp",
+      desc: "Specific mantras and sankalp are taken for the seeker, aligning the Abhimantrit item with their spiritual intent.",
+    },
+  ];
   return (
     <main className="w-full">
       {/* ================= HERO ================= */}
@@ -79,31 +101,44 @@ export default function AboutPage() {
 
           <p className="mt-3 text-gray-700 max-w-3xl mx-auto leading-relaxed">
             All our products are Abhimantrit through proper Vedic rituals and
-            Namak-Chamak Rudrabhishek during a 12–16 hour Shiv Sadhna performed
-            by Guruji — with mantra, sankalp, and spiritual intent.
+            Namak-Chamak Rudrabhishek during a 12–16 hour Shiv Sadhna.
           </p>
 
-          <p className="mt-3 text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Each sacred item is prepared uniquely for the seeker who receives
-            it. While spiritual outcomes depend on individual faith and
-            practice, our responsibility is to maintain authenticity,
-            transparency, and sanctity at every step.
-          </p>
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            {steps.map((step, index) => {
+              const isOpen = openIndex === index;
 
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              "Vedic Rituals",
-              "Namak-Chamak Rudrabhishek",
-              "12–16 Hours Shiv Sadhna",
-              "Mantra & Sankalp",
-            ].map((step) => (
-              <div
-                key={step}
-                className="bg-#C47A2C rounded-2xl p-6 shadow-sm border"
-              >
-                <p className="font-semibold text-gray-900">{step}</p>
-              </div>
-            ))}
+              return (
+                <div
+                  key={step.title}
+                  className="bg-[#C47A2C] rounded-2xl shadow-sm border overflow-hidden"
+                >
+                  {/* BUTTON */}
+                  <button
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    className="w-full p-6 flex items-center justify-between text-white font-semibold"
+                  >
+                    {step.title}
+                    <ChevronDown
+                      className={`transition-transform duration-300 ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {/* DROPDOWN */}
+                  <div
+                    className={`px-6 text-sm text-white/90 transition-all duration-300 ${
+                      isOpen
+                        ? "max-h-40 pb-6 opacity-100"
+                        : "max-h-0 pb-0 opacity-0"
+                    } overflow-hidden`}
+                  >
+                    {step.desc}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
