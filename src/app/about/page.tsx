@@ -179,7 +179,7 @@ export default function AboutPage() {
             ].map((item) => (
               <div
                 key={item}
-                className="bg-[#C47A2C] p-6 rounded-2xl shadow-sm border"
+                className="bg-[#ebaa64] p-6 rounded-2xl shadow-sm border"
               >
                 <p className="font-semibold text-gray-800">{item}</p>
               </div>
