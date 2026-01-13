@@ -25,6 +25,7 @@ const navItems: NavItem[] = [
   { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
   { name: "Users", href: "/admin/users", icon: Users },
   { name: "Appointments", href: "/admin/appointments", icon: MessageSquare },
+  { name: "Live Chats", href: "/admin/live-chat", icon: MessageSquare },
 ];
 
 export default function AdminLayout({

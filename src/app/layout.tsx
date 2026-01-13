@@ -5,6 +5,7 @@ import AuthProvider from "@/components/AuthProvider";
 import CartProvider from "@/components/cart/CartProvider";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
+import ChatWidget from "@/components/chat/ChatWidget";
 
 export const metadata: Metadata = {
   title: "Akhand Bhakti",
@@ -26,6 +27,7 @@ export default function RootLayout({
               <Navbar />
             </header>
             {children}
+            <ChatWidget />
             <Toaster richColors position="bottom-right" />
             <Footer />
           </CartProvider>
