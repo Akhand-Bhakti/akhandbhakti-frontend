@@ -5,24 +5,24 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function AboutPage() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const steps = [
     {
       title: "Vedic Rituals",
-      desc: "Each item undergoes authentic Vedic rituals conducted as per scriptures, ensuring spiritual purity and alignment with ancient traditions.",
+      desc: "Each item undergoes authentic Vedic rituals conducted as per scriptures, ensuring spiritual purity and sanctity.",
     },
     {
       title: "Namak-Chamak Rudrabhishek",
-      desc: "A powerful Rudrabhishek performed with Namak and Chamak to invoke Lord Shiva’s blessings and energize the sacred item.",
+      desc: "A powerful Rudrabhishek performed with Namak and Chamak to invoke Lord Shiva’s blessings.",
     },
     {
       title: "12–16 Hours Shiv Sadhna",
-      desc: "Extended Shiv Sadhna performed by Guruji with complete focus, discipline, and devotion to infuse divine energy.",
+      desc: "Extended Shiv Sadhna performed with discipline and devotion to energize the sacred item.",
     },
     {
       title: "Mantra & Sankalp",
-      desc: "Specific mantras and sankalp are taken for the seeker, aligning the Abhimantrit item with their spiritual intent.",
+      desc: "Personalized mantra chanting and sankalp aligned with the seeker’s spiritual intent.",
     },
   ];
   return (
@@ -99,40 +99,67 @@ export default function AboutPage() {
             Our Abhimantrit Process
           </h2>
 
-          <p className="mt-3 text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            All our products are Abhimantrit through proper Vedic rituals and
-            Namak-Chamak Rudrabhishek during a 12–16 hour Shiv Sadhna.
-          </p>
+          {/* ================= DESKTOP VIEW ================= */}
+          <div className="hidden lg:block mt-12">
+            {/* Boxes */}
+            <div className="grid grid-cols-4 gap-6">
+              {steps.map((step, index) => {
+                const isActive = index === activeIndex;
 
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+                return (
+                  <button
+                    key={step.title}
+                    onClick={() => setActiveIndex(index)}
+                    className={`rounded-2xl p-6 border transition-all duration-300
+                    ${
+                      isActive
+                        ? "bg-[#C47A2C] text-white shadow-lg"
+                        : "bg-orange-100 text-gray-800 opacity-60 hover:opacity-100"
+                    }`}
+                  >
+                    <p className="font-semibold">{step.title}</p>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Fixed Description Area */}
+            <div className="mt-10 bg-white border rounded-2xl p-8 shadow-md max-w-3xl mx-auto">
+              <p className="text-gray-700 text-lg leading-relaxed">
+                {steps[activeIndex].desc}
+              </p>
+            </div>
+          </div>
+
+          {/* ================= MOBILE VIEW ================= */}
+          <div className="block lg:hidden mt-12 space-y-5 text-left">
             {steps.map((step, index) => {
-              const isOpen = openIndex === index;
+              const isOpen = index === activeIndex;
 
               return (
                 <div
                   key={step.title}
-                  className="bg-[#C47A2C] rounded-2xl shadow-sm border overflow-hidden"
+                  className="bg-[#C47A2C] rounded-2xl overflow-hidden border"
                 >
-                  {/* BUTTON */}
                   <button
-                    onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="w-full p-6 flex items-center justify-between text-white font-semibold"
+                    onClick={() => setActiveIndex(isOpen ? -1 : index)}
+                    className="w-full p-6 flex justify-between items-center text-white font-semibold"
                   >
                     {step.title}
                     <ChevronDown
-                      className={`transition-transform duration-300 ${
+                      className={`transition-transform ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
 
-                  {/* DROPDOWN */}
                   <div
-                    className={`px-6 text-sm text-white/90 transition-all duration-300 ${
+                    className={`px-6 text-white/90 text-sm transition-all duration-300 overflow-hidden
+                    ${
                       isOpen
                         ? "max-h-40 pb-6 opacity-100"
                         : "max-h-0 pb-0 opacity-0"
-                    } overflow-hidden`}
+                    }`}
                   >
                     {step.desc}
                   </div>
