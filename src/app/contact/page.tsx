@@ -84,16 +84,16 @@ export default function ContactPage() {
           </div>
 
           {/* Right Image */}
-          <div className="relative bg-gradient-to-b from-orange-200/40 to-orange-200/10 rounded-xl overflow-hidden shadow-lg">
+          <div className="relative bg-linear-to-b from-orange-200/40 to-orange-200/10 rounded-xl overflow-hidden shadow-lg">
             <Image
               src="/contact/contact.jpg"
               alt="Guruji"
               width={700}
               height={600}
-              className="object-cover w-full h-[260px] sm:h-[320px] md:h-[480px]"
+              className="object-cover w-full h-[260px] sm:h-80 md:h-[480px]"
             />
 
-            <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/60 to-transparent">
+            <div className="absolute bottom-0 left-0 w-full p-4 bg-linear-to-t from-black/60 to-transparent">
               <p className="text-white/80 text-sm">
                 — Shri Shagun Vashishth Ji
               </p>
@@ -121,7 +121,7 @@ export default function ContactPage() {
               <option>General Inquiry</option>
               <option>Book an Appointment</option>
               <option>Order Related</option>
-              <option>Book Pujan</option>
+              <option>Book Rudraabhishek</option>
             </select>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -79,7 +79,7 @@ export default function AboutPage() {
 
           <p className="mt-3 text-gray-700 max-w-3xl mx-auto leading-relaxed">
             All our products are Abhimantrit through proper Vedic rituals and
-            Namak-Chamak Rudrabhishek during a 10–12 hour Shiv Sadhna performed
+            Namak-Chamak Rudrabhishek during a 12–16 hour Shiv Sadhna performed
             by Guruji — with mantra, sankalp, and spiritual intent.
           </p>
 
@@ -94,12 +94,12 @@ export default function AboutPage() {
             {[
               "Vedic Rituals",
               "Namak-Chamak Rudrabhishek",
-              "10–12 Hours Shiv Sadhna",
+              "12–16 Hours Shiv Sadhna",
               "Mantra & Sankalp",
             ].map((step) => (
               <div
                 key={step}
-                className="bg-white rounded-2xl p-6 shadow-sm border"
+                className="bg-#C47A2C rounded-2xl p-6 shadow-sm border"
               >
                 <p className="font-semibold text-gray-900">{step}</p>
               </div>

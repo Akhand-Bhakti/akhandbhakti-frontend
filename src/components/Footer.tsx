@@ -169,7 +169,7 @@ export default function Footer() {
                   href="https://maps.app.goo.gl/zuCrcR6aiqg8u1iZA"
                   className="hover:text-white"
                 >
-                  C3, Tyagi Market, Makanpur, Indirapuram,
+                  Shiv shakti sadhna stha, Makanpur
                   <br />
                   Ghaziabad, Uttar Pradesh 201020
                 </Link>
@@ -183,7 +183,7 @@ export default function Footer() {
                   href="mailto:akhandbhaktiofficial@gmail.com"
                   className="hover:text-white"
                 >
-                  akhandbhaktiofficial@gmail.com
+                  care@akhandbhakti.com
                 </Link>
               </li>
             </ul>
