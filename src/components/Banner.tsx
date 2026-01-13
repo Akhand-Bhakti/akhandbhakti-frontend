@@ -161,7 +161,7 @@ export default function Banner() {
               onClick={() => router.push(`/product/${activeProduct.slug}`)}
               className="
     md:hidden
-    relative translate-y-50
+    relative translate-y-57
     bg-orange-500 text-white text-sm font-semibold
     px-6 py-2 rounded-full shadow-md
     active:scale-95 transition
