@@ -6,6 +6,7 @@ import CartProvider from "@/components/cart/CartProvider";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 import Script from "next/script";
+import ScrollToTop from "@/components/ScroolToTop";
 
 export const metadata: Metadata = {
   title: "Akhand Bhakti",
@@ -26,6 +27,7 @@ export default function RootLayout({
             <header className="sticky top-0 h-16 bg-transparent z-50">
               <Navbar />
             </header>
+            <ScrollToTop />
             {children}
             <Toaster richColors position="bottom-right" />
             <Script
