@@ -266,8 +266,9 @@ export default function Footer() {
           <ul className="space-y-3 text-white/80 mb-6">
             <li className="flex gap-2 items-start">
               <MapPin size={18} />
-              C3, Tyagi Market, Makanpur, Indirapuram, Ghaziabad, Uttar Pradesh
-              201020
+              Shiv shakti sadhna stha, Makanpur
+              <br />
+              Ghaziabad, Uttar Pradesh 201020
             </li>
             <li className="flex gap-2 items-center">
               <Phone size={18} />
