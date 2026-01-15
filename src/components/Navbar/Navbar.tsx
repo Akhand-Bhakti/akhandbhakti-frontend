@@ -8,7 +8,7 @@ import NavLinks from "./NavLinks";
 import MobileMenu from "./MobileMenu";
 import SearchModal from "./SearchModal";
 import ProfileMenu from "./ProfileMenu";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
 
@@ -34,21 +34,19 @@ function AuthDropdown({ onClose }: { onClose: () => void }) {
 }
 
 export default function Navbar() {
-  const router = useRouter();
   const pathname = usePathname();
-
   const isHome = pathname === "/";
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [authMenuOpen, setAuthMenuOpen] = useState(false);
 
   const { isAuthenticated, authLoading } = useAuthStore();
-
-  const [authMenuOpen, setAuthMenuOpen] = useState(false);
   const cartCount = useCartStore((s) => s.getTotalItems());
 
+  /* Scroll behavior */
   useEffect(() => {
     if (!isHome) return;
 
@@ -73,77 +71,76 @@ export default function Navbar() {
       : "bg-transparent"
     : "bg-[#C47A2C] shadow-md";
 
-  const textColor = isHome && !isScrolled ? "text-white" : "text-white";
+  const textColor = "text-white";
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${navbarBg}`}
-      >
-        <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo.png"
-              alt="Akhand Bhakti Logo"
-              width={88}
-              height={58}
-            />
-            <h1 className={`font-semibold text-lg tracking-wide ${textColor}`}>
-              अखंड BHAKTI
-            </h1>
-          </Link>
-
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex">
-            <NavLinks isScrolled={!isHome || isScrolled} />
-          </div>
-
-          {/* Right Icons */}
-          <div className={`flex items-center gap-6 ${textColor}`}>
-            <Search
-              className="cursor-pointer hover:scale-110 transition"
-              onClick={() => setSearchOpen(true)}
-            />
-
-            <Link href="/cart" className="relative cursor-pointer">
-              <ShoppingBag className="hover:scale-110 transition" />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 text-xs px-1.5 rounded-full bg-white text-black">
-                  {cartCount}
-                </span>
-              )}
+      {/* 🔒 Block navbar UI until auth is resolved (HOOK SAFE) */}
+      {authLoading ? null : (
+        <nav
+          className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${navbarBg}`}
+        >
+          <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-3">
+              <Image
+                src="/logo.png"
+                alt="Akhand Bhakti Logo"
+                width={88}
+                height={58}
+              />
+              <h1
+                className={`font-semibold text-lg tracking-wide ${textColor}`}
+              >
+                अखंड BHAKTI
+              </h1>
             </Link>
 
-            <div className="relative">
-              {authLoading ? (
-                // Optional: skeleton / nothing
-                <User className="opacity-50" />
-              ) : (
-                <>
-                  <User
-                    className="cursor-pointer hover:scale-110 transition"
-                    onClick={handleUserClick}
-                  />
-
-                  {isAuthenticated && profileOpen && (
-                    <ProfileMenu open={profileOpen} />
-                  )}
-
-                  {!isAuthenticated && authMenuOpen && (
-                    <AuthDropdown onClose={() => setAuthMenuOpen(false)} />
-                  )}
-                </>
-              )}
+            {/* Desktop Nav */}
+            <div className="hidden lg:flex">
+              <NavLinks isScrolled={!isHome || isScrolled} />
             </div>
 
-            <Menu
-              className="cursor-pointer lg:hidden"
-              onClick={() => setMobileOpen(true)}
-            />
+            {/* Right Icons */}
+            <div className={`flex items-center gap-6 ${textColor}`}>
+              <Search
+                className="cursor-pointer hover:scale-110 transition"
+                onClick={() => setSearchOpen(true)}
+              />
+
+              <Link href="/cart" className="relative cursor-pointer">
+                <ShoppingBag className="hover:scale-110 transition" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 text-xs px-1.5 rounded-full bg-white text-black">
+                    {cartCount}
+                  </span>
+                )}
+              </Link>
+
+              {/* User Menu */}
+              <div className="relative">
+                <User
+                  className="cursor-pointer hover:scale-110 transition"
+                  onClick={handleUserClick}
+                />
+
+                {isAuthenticated && profileOpen && (
+                  <ProfileMenu open={profileOpen} />
+                )}
+
+                {!isAuthenticated && authMenuOpen && (
+                  <AuthDropdown onClose={() => setAuthMenuOpen(false)} />
+                )}
+              </div>
+
+              <Menu
+                className="cursor-pointer lg:hidden"
+                onClick={() => setMobileOpen(true)}
+              />
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      )}
 
       <SearchModal open={searchOpen} setOpen={setSearchOpen} />
       <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
