@@ -44,7 +44,8 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, authLoading } = useAuthStore();
+
   const [authMenuOpen, setAuthMenuOpen] = useState(false);
   const cartCount = useCartStore((s) => s.getTotalItems());
 
@@ -115,19 +116,24 @@ export default function Navbar() {
             </Link>
 
             <div className="relative">
-              <User
-                className="cursor-pointer hover:scale-110 transition"
-                onClick={handleUserClick}
-              />
+              {authLoading ? (
+                // Optional: skeleton / nothing
+                <User className="opacity-50" />
+              ) : (
+                <>
+                  <User
+                    className="cursor-pointer hover:scale-110 transition"
+                    onClick={handleUserClick}
+                  />
 
-              {/* Logged-in user menu */}
-              {isAuthenticated && profileOpen && (
-                <ProfileMenu open={profileOpen} />
-              )}
+                  {isAuthenticated && profileOpen && (
+                    <ProfileMenu open={profileOpen} />
+                  )}
 
-              {/* Guest user menu */}
-              {!isAuthenticated && authMenuOpen && (
-                <AuthDropdown onClose={() => setAuthMenuOpen(false)} />
+                  {!isAuthenticated && authMenuOpen && (
+                    <AuthDropdown onClose={() => setAuthMenuOpen(false)} />
+                  )}
+                </>
               )}
             </div>
 
