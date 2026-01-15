@@ -220,70 +220,131 @@ export default function Footer() {
         </div>
 
         {/* ============================
-            MOBILE (2 Column Layout)
-        ============================= */}
-        <div className="md:hidden grid grid-cols-2 gap-8 mb-12">
-          {/* Left Column */}
+    MOBILE (STACKED – SAME AS DESKTOP)
+============================= */}
+        <div className="md:hidden space-y-10 mb-12">
+          {/* Products */}
           <div>
-            <h3 className="font-semibold mb-3">Products</h3>
+            <h3 className="font-semibold text-lg mb-3">Products</h3>
             <ul className="space-y-2 text-white/80">
-              <li>Rudraksha</li>
-              <li>Karungali</li>
-              <li>Moonga</li>
-              <li>Hybrid mala</li>
-              <li>Bracelet</li>
-            </ul>
-
-            <h3 className="font-semibold mt-6 mb-3">Legal</h3>
-            <ul className="space-y-2 text-white/80">
-              <li>Privacy Policy</li>
-              <li>Terms & Condition</li>
-              <li>Cookie Policy</li>
+              <li>
+                <Link href="/products?category=rudraksha%20malas">
+                  Rudraksha malas
+                </Link>
+              </li>
+              <li>
+                <Link href="/products?category=wearables">Wearables</Link>
+              </li>
+              <li>
+                <Link href="/products?category=rudraksha%20beads">
+                  Rudraksha Beads
+                </Link>
+              </li>
+              <li>
+                <Link href="/products?category=puja%20essentials">
+                  Puja essentials
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Right Column */}
+          {/* Company */}
           <div>
-            <h3 className="font-semibold mb-3">Company</h3>
+            <h3 className="font-semibold text-lg mb-3">Company</h3>
             <ul className="space-y-2 text-white/80">
-              <li>About Us</li>
-              {/* <li>Our Story</li> */}
-              <li>Lab Testing</li>
-            </ul>
-
-            <h3 className="font-semibold mt-6 mb-3">Support</h3>
-            <ul className="space-y-2 text-white/80">
-              <li>Contact Us</li>
-              <li>FAQs</li>
-              {/* <li>Track Order</li> */}
+              <li>
+                <Link href="/about">About Us</Link>
+              </li>
+              <li>
+                <Link href="#lab-testing">Lab Testing</Link>
+              </li>
             </ul>
           </div>
-        </div>
 
-        {/* Contact + Socials for mobile */}
-        <div className="md:hidden mb-12">
-          <h3 className="font-semibold mb-3">Contact Us</h3>
-          <ul className="space-y-3 text-white/80 mb-6">
-            <li className="flex gap-2 items-start">
-              <MapPin size={18} />
-              Shiv shakti sadhna stha, Makanpur
-              <br />
-              Ghaziabad, Uttar Pradesh 201020
-            </li>
-            <li className="flex gap-2 items-center">
-              <Phone size={18} />
-              +91 88824 70657
-            </li>
-            <li className="flex gap-2 items-center">
-              <Mail size={18} /> akhandbhaktiofficial@gmail.com
-            </li>
-          </ul>
+          {/* Customer Support */}
+          <div>
+            <h3 className="font-semibold text-lg mb-3">Customer Support</h3>
+            <ul className="space-y-2 text-white/80">
+              <li>
+                <Link href="/contact">Contact Us</Link>
+              </li>
+              <li>
+                <Link href="/payment-options">Payment Option</Link>
+              </li>
+            </ul>
+          </div>
 
-          <h3 className="font-semibold mb-3">Follow us</h3>
-          <div className="flex gap-4">
-            <Facebook size={26} />
-            <Instagram size={26} />
-            <Youtube size={26} />
+          {/* Legal */}
+          <div>
+            <h3 className="font-semibold text-lg mb-3">Legal</h3>
+            <ul className="space-y-2 text-white/80">
+              <li>
+                <Link href="/privacy-policy">Privacy Policy</Link>
+              </li>
+              <li>
+                <Link href="/terms">Terms & Condition</Link>
+              </li>
+              <li>
+                <Link href="/cookie-policy">Cookie Policy</Link>
+              </li>
+              <li>
+                <Link href="/shipping">Shipping Policy</Link>
+              </li>
+              <li>
+                <Link href="/return">Return & Refund Policy</Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="font-semibold text-lg mb-3">Contact Us</h3>
+            <ul className="space-y-3 text-white/80">
+              <li className="flex gap-2 items-start">
+                <MapPin size={20} />
+                <Link href="https://maps.app.goo.gl/zuCrcR6aiqg8u1iZA">
+                  Shiv shakti sadhna stha, Makanpur <br />
+                  Ghaziabad, Uttar Pradesh 201020
+                </Link>
+              </li>
+              <li className="flex gap-2 items-center">
+                <Phone size={18} /> +91 88824 70657
+              </li>
+              <li className="flex gap-2 items-center">
+                <Mail size={18} />
+                <Link href="mailto:akhandbhaktiofficial@gmail.com">
+                  care@akhandbhakti.com
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Socials */}
+          <div>
+            <h3 className="font-semibold text-lg mb-3">Follow us</h3>
+            <div className="flex gap-5">
+              <a
+                href="https://www.facebook.com/akhandbhaktiofficial"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Facebook size={26} />
+              </a>
+              <a
+                href="https://www.instagram.com/akhandbhaktiofficial"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Instagram size={26} />
+              </a>
+              <a
+                href="https://www.youtube.com/@akhandbhaktiofficial"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Youtube size={26} />
+              </a>
+            </div>
           </div>
         </div>
 

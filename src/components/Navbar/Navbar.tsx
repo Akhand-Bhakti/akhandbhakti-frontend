@@ -94,7 +94,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex">
+          <div className="hidden lg:flex">
             <NavLinks isScrolled={!isHome || isScrolled} />
           </div>
 
@@ -132,7 +132,7 @@ export default function Navbar() {
             </div>
 
             <Menu
-              className="cursor-pointer md:hidden"
+              className="cursor-pointer lg:hidden"
               onClick={() => setMobileOpen(true)}
             />
           </div>
@@ -140,7 +140,7 @@ export default function Navbar() {
       </nav>
 
       <SearchModal open={searchOpen} setOpen={setSearchOpen} />
-      <MobileMenu open={mobileOpen} setOpen={setMobileOpen} />
+      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
     </>
   );
 }
