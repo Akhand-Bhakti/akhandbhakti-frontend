@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 import Script from "next/script";
 import ScrollToTop from "@/components/ScroolToTop";
+import AuthInitializer from "@/components/auth/AuthInitializer";
 
 export const metadata: Metadata = {
   title: "Akhand Bhakti",
@@ -28,6 +29,7 @@ export default function RootLayout({
               <Navbar />
             </header>
             <ScrollToTop />
+            <AuthInitializer />
             {children}
             <Toaster richColors position="bottom-right" />
             <Script

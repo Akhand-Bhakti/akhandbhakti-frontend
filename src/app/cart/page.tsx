@@ -3,14 +3,9 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
-import RequireAuth from "@/components/auth/RequireAuth";
 
 export default function CartPage() {
-  return (
-    <RequireAuth>
-      <CartContent />
-    </RequireAuth>
-  );
+  return <CartContent />;
 }
 
 function CartContent() {
