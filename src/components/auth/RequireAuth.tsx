@@ -18,15 +18,14 @@ export default function RequireAuth({
     }
   }, [authLoading, isAuthenticated, router]);
 
-  if (authLoading) {
+  // 🔒 Always render something — NEVER return null here
+  if (authLoading || !isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Checking authentication…</p>
+        <p className="text-gray-500">Redirecting…</p>
       </div>
     );
   }
-
-  if (!isAuthenticated) return null;
 
   return <>{children}</>;
 }
