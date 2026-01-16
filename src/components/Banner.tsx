@@ -202,6 +202,7 @@ export default function Banner() {
               <button
                 key={item.id}
                 onClick={() => setActive(i)}
+                title={item.title}
                 className={`
         flex-shrink-0
         rounded-lg
