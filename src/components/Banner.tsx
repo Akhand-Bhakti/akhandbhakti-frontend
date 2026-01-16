@@ -183,19 +183,17 @@ export default function Banner() {
           {/* BOTTOM BAR — centered and compact */}
           <div
             className="
-    relative z-20 mx-auto mt-4
-    bg-orange-200 rounded-2xl shadow-xl
-    px-3 py-2
+    relative z-20 mx-auto mt-3
+    bg-orange-200 rounded-xl shadow-md
+    px-2 py-2
 
-    flex items-center gap-3
+    flex items-center gap-2
     overflow-x-auto
 
     max-w-full
-    md:max-w-4xl
-    lg:max-w-5xl
+    md:max-w-3xl
 
     scrollbar-hide
-    snap-x snap-mandatory
   "
           >
             {products.map((item, i) => (
@@ -203,22 +201,23 @@ export default function Banner() {
                 key={item.id}
                 onClick={() => setActive(i)}
                 className={`
-        snap-start
         flex-shrink-0
+        rounded-lg
+        transition-all duration-150
 
-        rounded-xl transition-all duration-200
-        ${active === i ? "bg-orange-300 scale-105" : "bg-white"}
+        ${active === i ? "bg-orange-300 scale-[1.06]" : "bg-white"}
 
-        px-3 py-2
-        sm:px-4 sm:py-3
+        px-2 py-2
+        sm:px-3 sm:py-2
+        md:px-3 md:py-3
 
-        min-w-[64px]
-        sm:min-w-[90px]
-        md:min-w-[140px]
+        min-w-[52px]
+        sm:min-w-[72px]
+        md:min-w-[110px]
       `}
               >
                 {/* image */}
-                <div className="relative w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 mx-auto">
+                <div className="relative w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 mx-auto">
                   <Image
                     src={item.thumb}
                     alt={item.title}
@@ -227,16 +226,16 @@ export default function Banner() {
                   />
                 </div>
 
-                {/* title — show progressively */}
+                {/* title — minimal */}
                 <p
                   className="
-        mt-2
-        text-[10px] sm:text-xs
-        font-semibold
-        text-gray-800
-        text-center
-        line-clamp-2
-      "
+          mt-1
+          text-[9px] sm:text-[10px] md:text-xs
+          font-medium
+          text-gray-800
+          text-center
+          truncate
+        "
                 >
                   {item.title}
                 </p>
