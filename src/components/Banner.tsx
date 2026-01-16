@@ -232,11 +232,11 @@ export default function Banner() {
                 <p
                   className="
           mt-1
-          text-[9px] sm:text-[10px] md:text-xs
-          font-medium
-          text-gray-800
-          text-center
-          truncate
+    text-[9px] sm:text-[10px] md:text-xs
+    font-medium
+    text-gray-800
+    text-center
+    line-clamp-2
         "
                 >
                   {item.title}
