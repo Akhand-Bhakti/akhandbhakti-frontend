@@ -204,20 +204,21 @@ export default function Banner() {
                 onClick={() => setActive(i)}
                 title={item.title}
                 className={`
-        flex-shrink-0
-        rounded-lg
-        transition-all duration-150
+    group
+    flex-shrink-0
+    rounded-lg
+    transition-all duration-150
 
-        ${active === i ? "bg-orange-300 scale-[1.06]" : "bg-white"}
+    ${active === i ? "bg-orange-300 scale-[1.06]" : "bg-white"}
 
-        px-2 py-2
-        sm:px-3 sm:py-2
-        md:px-3 md:py-3
+    px-2 py-2
+    sm:px-3 sm:py-2
+    md:px-3 md:py-3
 
-        min-w-[52px]
-        sm:min-w-[72px]
-        md:min-w-[110px]
-      `}
+    min-w-[52px]
+    sm:min-w-[72px]
+    md:min-w-[110px]
+  `}
               >
                 {/* image */}
                 <div className="relative w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 mx-auto">
@@ -242,9 +243,8 @@ export default function Banner() {
     sm:max-w-[68px]
     md:max-w-[100px]
 
-    overflow-hidden
-    whitespace-nowrap
-    text-ellipsis
+    truncate
+  
         "
                 >
                   {item.title}
