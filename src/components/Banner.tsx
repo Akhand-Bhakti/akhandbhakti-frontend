@@ -183,31 +183,42 @@ export default function Banner() {
           {/* BOTTOM BAR — centered and compact */}
           <div
             className="
-  relative z-20 mx-auto mt-4
-  bg-orange-200 rounded-2xl shadow-xl
-  px-3 py-2
-  flex gap-3
-  overflow-x-auto
-  max-w-full
-  md:max-w-4xl
-"
+    relative z-20 mx-auto mt-4
+    bg-orange-200 rounded-2xl shadow-xl
+    px-3 py-2
+
+    flex items-center gap-3
+    overflow-x-auto
+
+    max-w-full
+    md:max-w-4xl
+    lg:max-w-5xl
+
+    scrollbar-hide
+    snap-x snap-mandatory
+  "
           >
             {products.map((item, i) => (
               <button
                 key={item.id}
                 onClick={() => setActive(i)}
                 className={`
-        shrink-0
-        rounded-xl transition-all
+        snap-start
+        flex-shrink-0
+
+        rounded-xl transition-all duration-200
         ${active === i ? "bg-orange-300 scale-105" : "bg-white"}
-        p-2
-        md:p-3
-        w-16
-        md:w-[150px]
+
+        px-3 py-2
+        sm:px-4 sm:py-3
+
+        min-w-[64px]
+        sm:min-w-[90px]
+        md:min-w-[140px]
       `}
               >
                 {/* image */}
-                <div className="relative w-8 h-8 md:w-10 md:h-10 mx-auto">
+                <div className="relative w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 mx-auto">
                   <Image
                     src={item.thumb}
                     alt={item.title}
@@ -216,18 +227,19 @@ export default function Banner() {
                   />
                 </div>
 
-                {/* title & price — desktop only */}
-                <div className="hidden md:block">
-                  <p className="text-xs font-semibold mt-2 text-gray-800 text-center">
-                    {item.title.length > 22
-                      ? item.title.slice(0, 22) + "..."
-                      : item.title}
-                  </p>
-
-                  <p className="text-xs font-bold text-gray-800 text-center mt-1">
-                    {item.price}
-                  </p>
-                </div>
+                {/* title — show progressively */}
+                <p
+                  className="
+        mt-2
+        text-[10px] sm:text-xs
+        font-semibold
+        text-gray-800
+        text-center
+        line-clamp-2
+      "
+                >
+                  {item.title}
+                </p>
               </button>
             ))}
           </div>
