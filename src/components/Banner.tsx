@@ -175,10 +175,10 @@ export default function Banner() {
           <div className="bg-white p-6 rounded-2xl shadow-xl -mt-10 max-w-md text-center w-105">
             <h3 className="text-lg font-bold">{activeProduct.title}</h3>
 
-            <div className="mt-4 flex items-center justify-between">
-              <div className="text-yellow-500">★★★★☆</div>
-              <span className="text-lg font-bold">{activeProduct.price}</span>
-            </div>
+            {/* <div className="mt-4 flex items-center justify-between"> */}
+            {/* <div className="text-yellow-500">★★★★☆</div> */}
+            {/* <span className="text-lg font-bold">{activeProduct.price}</span> */}
+            {/* </div> */}
           </div>
           {/* BOTTOM BAR — centered and compact */}
           <div
