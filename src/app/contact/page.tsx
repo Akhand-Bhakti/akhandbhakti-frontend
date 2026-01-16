@@ -74,7 +74,7 @@ export default function ContactPage() {
               <div>
                 <p className="font-semibold text-gray-700">Email Us</p>
                 <p className="text-gray-600 text-sm break-all">
-                  akhandbhaktioffical@gmail.com
+                  care@akhandbhakti.com
                 </p>
                 <p className="text-gray-400 text-xs">
                   We respond within 24 hours
