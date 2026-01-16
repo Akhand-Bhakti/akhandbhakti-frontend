@@ -172,8 +172,10 @@ export default function Banner() {
           </div>
 
           {/* product card */}
-          <div className="bg-white p-6 rounded-2xl shadow-xl -mt-10 max-w-md text-center w-105">
-            <h3 className="text-lg font-bold">{activeProduct.title}</h3>
+          <div className="bg-white rounded-xl shadow-md -mt-8 mx-auto px-3 py-3 sm:px-4 sm:py-3 md:px-5 md:py-4 max-w-[90%] sm:max-w-sm md:max-w-md text-center">
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-900 leading-tight">
+              {activeProduct.title}
+            </h3>
 
             {/* <div className="mt-4 flex items-center justify-between"> */}
             {/* <div className="text-yellow-500">★★★★☆</div> */}
