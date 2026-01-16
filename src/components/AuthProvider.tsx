@@ -8,7 +8,7 @@ export default function AuthProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const loadUser = useAuthStore((state) => state.loadUser);
+  const loadUser = useAuthStore((s) => s.loadUser);
 
   useEffect(() => {
     loadUser();
