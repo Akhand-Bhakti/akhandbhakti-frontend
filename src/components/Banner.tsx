@@ -236,7 +236,14 @@ export default function Banner() {
     font-medium
     text-gray-800
     text-center
-    line-clamp-2
+
+    max-w-[48px]
+    sm:max-w-[68px]
+    md:max-w-[100px]
+
+    overflow-hidden
+    whitespace-nowrap
+    text-ellipsis
         "
                 >
                   {item.title}
