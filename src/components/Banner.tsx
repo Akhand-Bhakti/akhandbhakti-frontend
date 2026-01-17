@@ -58,9 +58,19 @@ export default function Banner() {
       className="relative -mt-16 px-6 lg:px-16 py-12 w-full overflow-hidden min-h-screen flex items-center"
       style={{ background: p.bg }}
     >
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('/home/bg-pattern.png')",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          opacity: 0.45, // adjust as needed
+        }}
+      />
       {/* static background texture */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-20 mix-blend-overlay"
+        className="absolute inset-0 pointer-events-none opacity-50 mix-blend-overlay"
         style={{
           backgroundImage: "url('/home/bg-texture.png')",
           backgroundRepeat: "no-repeat",
@@ -104,23 +114,6 @@ export default function Banner() {
           <p className="text-white/85 mt-2 max-w-sm">
             Bringing peace , growth and spritual connection to your life
           </p>
-
-          {/* <div className="flex gap-12 mt-1 text-white">
-            <div className="text-center">
-              <h3 className="text-2xl font-bold">10+</h3>
-              <p className="text-sm text-white/75">Years</p>
-            </div>
-
-            <div className="text-center">
-              <h3 className="text-2xl font-bold">80k+</h3>
-              <p className="text-sm text-white/75">Devotees</p>
-            </div>
-
-            <div className="text-center">
-              <h3 className="text-2xl font-bold">100+</h3>
-              <p className="text-sm text-white/75">Blessings</p>
-            </div>
-          </div> */}
         </div>
 
         {/* RIGHT COLUMN — fully centered */}
@@ -176,10 +169,6 @@ export default function Banner() {
             <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-900 leading-tight">
               {activeProduct.title}
             </h3>
-
-            {/* <div className="mt-4 flex items-center justify-between"> */}
-            {/* <div className="text-yellow-500">★★★★☆</div> */}
-            {/* <span className="text-lg font-bold">{activeProduct.price}</span> */}
             {/* </div> */}
           </div>
           {/* BOTTOM BAR — centered and compact */}
@@ -205,7 +194,7 @@ export default function Banner() {
                 title={item.title}
                 className={`
     group
-    flex-shrink-0
+    shrink-0
     rounded-lg
     transition-all duration-150
 
@@ -239,7 +228,7 @@ export default function Banner() {
     text-gray-800
     text-center
 
-    max-w-[48px]
+    max-w-12
     sm:max-w-[68px]
     md:max-w-[100px]
 
