@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 import Script from "next/script";
 import ScrollToTop from "@/components/ScroolToTop";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Akhand Bhakti",
@@ -31,6 +32,7 @@ export default function RootLayout({
             <ScrollToTop />
             {children}
             <Analytics />
+            <SpeedInsights />
             <Toaster richColors position="bottom-right" />
             <Script
               id="tawk-to"
