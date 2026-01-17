@@ -4,9 +4,11 @@ html {
   scroll-behavior: smooth;
 }
 
-html,
 body {
   width: 100%;
+}
+
+main {
   overflow-x: hidden;
 }
 
