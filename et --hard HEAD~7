@@ -1,0 +1,97 @@
+[33mb946df6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m update loading logic
+[33mce544d0[m up
+[33m5a66ae0[m upd
+[33m651f96d[m updated
+[33mcd4af5d[m fixed country price logic
+[33m7fce803[m created frontend middlewearer
+[33mdb67e2c[m product updated
+[33me785458[m gap decreased
+[33me79b671[m size increased of icon
+[33m9e5c568[m update
+[33m2849e81[m chatbox fixed
+[33m3934842[m responsive
+[33m3c513ac[m fixed homepage responsivness
+[33me4b66d1[m updated hoem page ui
+[33me078d99[m Added speed analytics
+[33m16a34c3[m added vercel analytics
+[33m2c08351[m added vercel analytics
+[33mf4ca7c4[m image upd
+[33m5928fbc[m updated image
+[33mae6c731[m logo image changed
+[33md810539[m email updated
+[33mbd3457d[m jhj
+[33ma38c8c2[m ss
+[33m0a4765a[m aa
+[33m048761c[m sda
+[33ma09d605[m sd
+[33m19d6262[m sd
+[33m7994d24[m improved home page
+[33m2f89291[m removed price from banner products
+[33m10dac41[m added callabck
+[33mdddbfb4[m update
+[33mcaed392[m update
+[33m2c9aa6e[m fixed navbar login
+[33m396bc9e[m ficxed google login
+[33m0409a81[m fixed
+[33m10a51ab[m chjecking
+[33m4d49f49[m fixed /cart
+[33m97af69d[m ui ux update
+[33m41e62db[m updated adress
+[33mf8a6384[m updated scroll behaviour
+[33m7b0f1d7[m added chat box
+[33m9788bb5[m fixed crashed
+[33ma7c303c[m created live chat box
+[33m4a250d9[m updates design
+[33m0a7f5f3[m updated color
+[33mb9a8c6b[m updated box colour
+[33m0e8a0bc[m updated about section
+[33m94bce31[m guruji suggestion
+[33m9ca922a[m updated contact section
+[33m6a57d3e[m updated public images
+[33mbe99576[m iamge updated
+[33m7b50f55[m image link fixed
+[33mf42e534[m Upgrade Next.js for security fix
+[33m2301d22[m Fix Suspense boundary for products page
+[33m80e37a3[m deleted admin/login
+[33m4e596af[m Restore login page
+[33m926b0c1[m updated code
+[33m8e04cfa[m Connect frontend to production backend
+[33me3cd605[m updated product cart ux
+[33mdbcf31f[m updated price logic for foregin
+[33m0f04c4e[m updated contact page and added contact section on admin page
+[33mb2f0ff4[m updated ui
+[33m2f9b469[m updated product images
+[33m5fbfd71[m updated about section
+[33m7952150[m added and fixed gallery page image
+[33m49ced98[m created dashboard
+[33mca88442[m updated product section ui
+[33md35a28f[m updated product
+[33md48523e[m updated product
+[33med3e2bf[m updated product specific page
+[33m6c3ded4[m created admin page and built admin product section
+[33ma88daf6[m Merge pull request #1 from Akhand-Bhakti/feature/akki-changes
+[33mf8b808e[m[33m ([m[1;31morigin/feature/akki-changes[m[33m)[m Akaarshit added footer details
+[33ma69307f[m updated footer
+[33m6cc4294[m node update
+[33m7f9c136[m updated contact page
+[33m4906f90[m updated testimonial
+[33m9ba02a1[m Improved about section
+[33m0fa586c[m updated ui
+[33mc06e8a6[m updated ui
+[33m59467a4[m ui update
+[33m7aabda9[m updated ui
+[33m706236d[m Improved ui and ux design part-1
+[33ma00027f[m created cart page
+[33m89c3731[m error solving
+[33m8acf261[m didi ux design for auth page
+[33m0138c08[m authenticationa updated
+[33m59eeb46[m Built authentication
+[33m7fcb980[m created search modal and category filteration
+[33mf085fe9[m improved ux design
+[33m8d5c812[m create single product section
+[33mea859b0[m Created Home page remaing elements
+[33m27cc85b[m Build hero section
+[33md070d26[m Created navbar
+[33m6c9e262[m deleted old file structure
+[33m966e1a6[m Created File Structure
+[33m9e52bca[m Initial commit
