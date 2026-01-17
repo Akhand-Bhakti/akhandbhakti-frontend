@@ -109,11 +109,11 @@ export default function Navbar() {
                 onClick={() => setSearchOpen(true)}
                 className="p-1.5 sm:p-2 hover:scale-110 transition"
               >
-                <Search size={20} />
+                <Search size={24} />
               </button>
 
               <Link href="/cart" className="relative p-1.5 sm:p-2">
-                <ShoppingBag size={20} />
+                <ShoppingBag size={24} />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 text-[10px] sm:text-xs px-1.5 rounded-full bg-white text-black">
                     {cartCount}
@@ -127,7 +127,7 @@ export default function Navbar() {
                   onClick={handleUserClick}
                   className="p-1.5 sm:p-2 hover:scale-110 transition"
                 >
-                  <User size={20} />
+                  <User size={24} />
                 </button>
 
                 {isAuthenticated && profileOpen && (
