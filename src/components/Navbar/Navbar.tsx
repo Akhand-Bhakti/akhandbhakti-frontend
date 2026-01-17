@@ -14,17 +14,17 @@ import { useCartStore } from "@/store/cartStore";
 
 function AuthDropdown({ onClose }: { onClose: () => void }) {
   return (
-    <div className="absolute right-0 mt-3 w-40 bg-white text-black rounded-xl shadow-lg overflow-hidden">
+    <div className="absolute right-0 mt-3 w-44 bg-white text-black rounded-xl shadow-lg overflow-hidden">
       <Link
         href="/login"
-        className="block px-4 py-2 hover:bg-gray-100"
+        className="block px-4 py-2 text-sm hover:bg-gray-100"
         onClick={onClose}
       >
         Login
       </Link>
       <Link
         href="/register"
-        className="block px-4 py-2 hover:bg-gray-100"
+        className="block px-4 py-2 text-sm hover:bg-gray-100"
         onClick={onClose}
       >
         Register
@@ -46,10 +46,8 @@ export default function Navbar() {
   const { isAuthenticated, authLoading } = useAuthStore();
   const cartCount = useCartStore((s) => s.getTotalItems());
 
-  /* Scroll behavior */
   useEffect(() => {
     if (!isHome) return;
-
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -57,10 +55,10 @@ export default function Navbar() {
 
   const handleUserClick = () => {
     if (isAuthenticated) {
-      setProfileOpen((prev) => !prev);
+      setProfileOpen((p) => !p);
       setAuthMenuOpen(false);
     } else {
-      setAuthMenuOpen((prev) => !prev);
+      setAuthMenuOpen((p) => !p);
       setProfileOpen(false);
     }
   };
@@ -71,58 +69,66 @@ export default function Navbar() {
       : "bg-transparent"
     : "bg-[#C47A2C] shadow-md";
 
-  const textColor = "text-white";
-
   return (
     <>
-      {/* 🔒 Block navbar UI until auth is resolved (HOOK SAFE) */}
       {authLoading ? null : (
         <nav
           className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${navbarBg}`}
         >
-          <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
+          <div
+            className="
+              mx-auto w-full
+              max-w-6xl 2xl:max-w-[1400px]
+              h-16 sm:h-18 lg:h-20
+              px-4 sm:px-6 lg:px-8
+              flex items-center justify-between
+            "
+          >
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3">
               <Image
                 src="/logo.png"
                 alt="Akhand Bhakti Logo"
-                width={88}
-                height={58}
+                width={72}
+                height={48}
+                className="sm:w-[88px] sm:h-[58px]"
               />
-              <h1
-                className={`font-semibold text-lg tracking-wide ${textColor}`}
-              >
+              <h1 className="font-semibold text-sm sm:text-base lg:text-lg tracking-wide text-white">
                 अखंड BHAKTI
               </h1>
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden lg:flex">
+            <div className="hidden xl:flex">
               <NavLinks isScrolled={!isHome || isScrolled} />
             </div>
 
             {/* Right Icons */}
-            <div className={`flex items-center gap-6 ${textColor}`}>
-              <Search
-                className="cursor-pointer hover:scale-110 transition"
+            <div className="flex items-center gap-3 sm:gap-4 lg:gap-6 text-white">
+              <button
                 onClick={() => setSearchOpen(true)}
-              />
+                className="p-1.5 sm:p-2 hover:scale-110 transition"
+              >
+                <Search size={20} />
+              </button>
 
-              <Link href="/cart" className="relative cursor-pointer">
-                <ShoppingBag className="hover:scale-110 transition" />
+              <Link href="/cart" className="relative p-1.5 sm:p-2">
+                <ShoppingBag size={20} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 text-xs px-1.5 rounded-full bg-white text-black">
+                  <span className="absolute -top-1 -right-1 text-[10px] sm:text-xs px-1.5 rounded-full bg-white text-black">
                     {cartCount}
                   </span>
                 )}
               </Link>
 
-              {/* User Menu */}
+              {/* User */}
               <div className="relative">
-                <User
-                  className="cursor-pointer hover:scale-110 transition"
+                <button
                   onClick={handleUserClick}
-                />
+                  className="p-1.5 sm:p-2 hover:scale-110 transition"
+                >
+                  <User size={20} />
+                </button>
 
                 {isAuthenticated && profileOpen && (
                   <ProfileMenu open={profileOpen} />
@@ -133,10 +139,13 @@ export default function Navbar() {
                 )}
               </div>
 
-              <Menu
-                className="cursor-pointer lg:hidden"
+              {/* Mobile Menu */}
+              <button
+                className="xl:hidden p-1.5 sm:p-2"
                 onClick={() => setMobileOpen(true)}
-              />
+              >
+                <Menu size={22} />
+              </button>
             </div>
           </div>
         </nav>

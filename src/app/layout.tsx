@@ -26,11 +26,11 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <CartProvider>
-            <header className="sticky top-0 h-16 bg-transparent z-50">
+            <header className="relative z-50">
               <Navbar />
             </header>
             <ScrollToTop />
-            {children}
+            <main className="pt-16 sm:pt-16 lg:pt-16">{children}</main>
             <Analytics />
             <SpeedInsights />
             <Toaster richColors position="bottom-right" />
