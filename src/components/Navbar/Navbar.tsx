@@ -104,7 +104,7 @@ export default function Navbar() {
             </div>
 
             {/* Right Icons */}
-            <div className="flex items-center gap-3 sm:gap-4 lg:gap-6 text-white">
+            <div className="flex items-center gap-1 sm:gap-2 lg:gap-4 text-white">
               <button
                 onClick={() => setSearchOpen(true)}
                 className="p-1.5 sm:p-2 hover:scale-110 transition"
