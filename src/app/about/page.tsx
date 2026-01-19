@@ -44,14 +44,14 @@ export default function AboutPage() {
           </h1>
 
           <p className="mt-4 text-lg text-white/85 max-w-3xl mx-auto">
-            AkhandBhakti is a sacred spiritual platform devoted to preserving
+            Akhand Bhakti is a sacred spiritual platform devoted to preserving
             and sharing the timeless wisdom of Sanatana Dharma through authentic
             spiritual products, disciplined practices, and conscious devotion.
           </p>
 
           <p className="mt-4 text-white/80 max-w-3xl mx-auto leading-relaxed">
             Founded with the belief that true spirituality is continuous, pure,
-            and intentional — AkhandBhakti stands for unbroken faith, where
+            and intentional — Akhand Bhakti stands for unbroken faith, where
             devotion is not occasional, but a way of life.
           </p>
         </div>
@@ -66,7 +66,7 @@ export default function AboutPage() {
             </h2>
 
             <p className="mt-4 text-gray-700 leading-relaxed">
-              AkhandBhakti represents devotion that is continuous, disciplined,
+              Akhand Bhakti represents devotion that is continuous, disciplined,
               and rooted in consciousness — a spiritual path where faith is not
               driven by trend or convenience, but by dedication and inner
               awareness.
@@ -238,19 +238,19 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-gray-900">Our Mission</h2>
 
           <p className="mt-4 text-gray-700 leading-relaxed">
-            AkhandBhakti serves seekers across the world — connecting ancient
+            Akhand Bhakti serves seekers across the world — connecting ancient
             Indian traditions with the modern spiritual aspirant through a
             secure and accessible platform.
           </p>
 
           <p className="mt-4 text-gray-700 leading-relaxed">
-            Beyond commerce, AkhandBhakti is a space for learning, guidance, and
-            spiritual awareness — helping seekers understand the true
+            Beyond commerce, Akhand Bhakti is a space for learning, guidance,
+            and spiritual awareness — helping seekers understand the true
             significance of what they wear, worship, and believe.
           </p>
 
           <p className="mt-6 font-semibold text-gray-900">
-            AkhandBhakti is not built on promises, but on purpose. <br />
+            Akhand Bhakti is not built on promises, but on purpose. <br />
             Not on superstition, but on tradition. <br />
             Not on trends, but on truth.
           </p>
