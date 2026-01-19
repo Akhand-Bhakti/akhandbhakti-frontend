@@ -122,7 +122,7 @@ export default function Banner() {
           <div className="relative mt-6 w-64 sm:w-72 md:w-80 h-44 sm:h-52 bg-white/15 rounded-full" />
 
           {/* Product */}
-          <div className="relative -mt-46 sm:-mt-50 md:-mt-54 flex flex-col items-center">
+          <div className="relative -mt-46 sm:-mt-50 md:-mt-58 flex flex-col items-center">
             <div className="relative w-56 h-56 sm:w-60 sm:h-60 2xl:w-72 2xl:h-72">
               <Image
                 src={product.image}
