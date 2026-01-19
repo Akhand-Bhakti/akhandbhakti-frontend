@@ -169,7 +169,7 @@ export default function Footer() {
                   href="https://maps.app.goo.gl/zuCrcR6aiqg8u1iZA"
                   className="hover:text-white"
                 >
-                  Shiv shakti sadhna stha, Makanpur
+                  Shiv shakti sadhna sthal, Makanpur
                   <br />
                   Ghaziabad, Uttar Pradesh 201020
                 </Link>
@@ -303,7 +303,7 @@ export default function Footer() {
               <li className="flex gap-2 items-start">
                 <MapPin size={20} />
                 <Link href="https://maps.app.goo.gl/zuCrcR6aiqg8u1iZA">
-                  Shiv shakti sadhna stha, Makanpur <br />
+                  Shiv shakti sadhna sthal, Makanpur <br />
                   Ghaziabad, Uttar Pradesh 201020
                 </Link>
               </li>

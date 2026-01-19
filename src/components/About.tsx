@@ -11,7 +11,7 @@ export default function About() {
             "Shivotsav," attributing it to the grace of Lord Shiva. Consider
             this Shagun's second birth; such a profound transformation is
             impossible without the blessings of Lord Shiva.
-            That an ordinary man can sit for 10 to 12 hours at a time and
+            That an ordinary man can sit for 12 to 16 hours at a time and
             perform such elaborate worship of Lord Shiva is only possible
             through the powers bestowed upon him by the Lord. Witnessing such a
             grand program of worship and rigorous spiritual practice in village
