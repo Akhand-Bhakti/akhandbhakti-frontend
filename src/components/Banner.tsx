@@ -89,8 +89,8 @@ export default function Banner() {
             className="
               relative mt-10 rounded-full overflow-hidden
               ring-10 ring-white/15
-              w-64 h-64 sm:w-72 sm:h-72
-              2xl:w-[420px] 2xl:h-[420px]
+              w-72 h-72 sm:w-80 sm:h-80
+    2xl:w-[460px] 2xl:h-[460px]
             "
           >
             <Image
