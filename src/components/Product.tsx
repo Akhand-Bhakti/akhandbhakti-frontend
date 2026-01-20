@@ -119,7 +119,7 @@ export default function ProductSection() {
               href={`/product/${product.slug}`}
               className="block"
             >
-              <div className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition relative cursor-pointer">
+              <div className="bg-white shadow-amber-600 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition relative cursor-pointer">
                 {/* Wishlist */}
                 {/* <button
                   onClick={(e) => e.preventDefault()}
