@@ -56,19 +56,36 @@ export default function EditProductPage() {
 
   /* ---------- Helpers ---------- */
 
+  const getRegion = (
+    pricing: Pricing | undefined,
+    key: keyof Pricing["regions"],
+  ) => {
+    const regions: any = pricing?.regions;
+
+    // Case 1: plain object
+    if (regions && regions[key]) return regions[key];
+
+    // Case 2: MongoDB Map
+    if (regions && typeof regions.get === "function") {
+      return regions.get(key);
+    }
+
+    return undefined;
+  };
+
   const normalizePricing = (pricing?: Pricing): Pricing => ({
     regions: {
-      INDIA: pricing?.regions?.INDIA ?? { price: 0, currency: "INR" },
-      EUROPE: pricing?.regions?.EUROPE ?? { price: 0, currency: "EUR" },
-      MIDDLE_EAST: pricing?.regions?.MIDDLE_EAST ?? {
+      INDIA: getRegion(pricing, "INDIA") ?? { price: 0, currency: "INR" },
+      EUROPE: getRegion(pricing, "EUROPE") ?? { price: 0, currency: "EUR" },
+      MIDDLE_EAST: getRegion(pricing, "MIDDLE_EAST") ?? {
         price: 0,
         currency: "AED",
       },
-      NORTH_AMERICA: pricing?.regions?.NORTH_AMERICA ?? {
+      NORTH_AMERICA: getRegion(pricing, "NORTH_AMERICA") ?? {
         price: 0,
         currency: "USD",
       },
-      REST_OF_WORLD: pricing?.regions?.REST_OF_WORLD ?? {
+      REST_OF_WORLD: getRegion(pricing, "REST_OF_WORLD") ?? {
         price: 0,
         currency: "USD",
       },
