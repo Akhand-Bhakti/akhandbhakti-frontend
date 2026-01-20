@@ -5,12 +5,16 @@ const API_BASE_URL =
 export async function fetchProducts(params?: {
   keyword?: string;
   category?: string;
+  limit?: number;
 }) {
   const query = new URLSearchParams();
 
   if (params?.keyword) query.append("keyword", params.keyword);
   if (params?.category && params.category !== "all") {
     query.append("category", params.category);
+  }
+  if (params?.limit) {
+    query.append("limit", String(params.limit));
   }
 
   const res = await fetch(`${API_BASE_URL}/v1/products?${query.toString()}`);

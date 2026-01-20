@@ -65,7 +65,7 @@ export default function ProductsClient() {
     const loadProducts = async () => {
       setLoading(true);
       try {
-        const data = await fetchProducts({ keyword, category });
+        const data = await fetchProducts({ keyword, category, limit: 50 });
         setProducts(data.products);
       } finally {
         setLoading(false);
