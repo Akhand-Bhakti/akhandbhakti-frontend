@@ -102,7 +102,7 @@ export default function TestimonialCarousel() {
         </div>
 
         {/* Arrows */}
-        {/* <button
+        <button
           onClick={prev}
           className="absolute left-0 top-2/3 -translate-y-1/2 bg-white shadow-md p-2 rounded-full z-10"
         >
@@ -152,7 +152,7 @@ export default function TestimonialCarousel() {
               </div>
             ))}
           </div>
-        </div> */}
+        </div>
       </div>
     </section>
   );
