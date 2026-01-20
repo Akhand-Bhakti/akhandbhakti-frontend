@@ -20,6 +20,8 @@ interface Product {
   ratings: number;
   numOfReviews: number;
   category: string;
+  stock: number;
+  inStock: boolean;
 }
 
 export default function ProductsClient() {
@@ -51,7 +53,7 @@ export default function ProductsClient() {
       price: product.price,
       currency: product.currency,
       quantity: 1,
-      stock: 10,
+      stock: product.stock ?? 0,
     });
 
     toast.success("Added to cart 🛒", {
@@ -92,7 +94,7 @@ export default function ProductsClient() {
               router.push(
                 `/products?category=${encodeURIComponent(btn)}${
                   keyword ? `&keyword=${keyword}` : ""
-                }`
+                }`,
               );
             }}
             className={`px-4 py-1.5 rounded-full text-sm transition ${
@@ -125,8 +127,10 @@ export default function ProductsClient() {
             >
               <div className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition relative cursor-pointer">
                 <button
+                  disabled={product.stock === 0}
                   onClick={(e) => handleAddToCart(e, product)}
-                  className="absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10"
+                  className={`absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10
+    ${product.stock === 0 ? "opacity-40 cursor-not-allowed" : ""}`}
                 >
                   <ShoppingCart size={20} />
                 </button>
