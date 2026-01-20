@@ -97,7 +97,7 @@ export default function EditProductPage() {
 
   const fetchProduct = async () => {
     try {
-      const { data } = await api.get(`/v1/product/${id}`);
+      const { data } = await api.get(`/v1/admin/product/${id}`);
       const product: Product = data.product;
 
       product.pricing = normalizePricing(product.pricing);
