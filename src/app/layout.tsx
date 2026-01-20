@@ -10,6 +10,18 @@ import ScrollToTop from "@/components/ScroolToTop";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import BackToTop from "@/components/BackToTop";
+import { Yatra_One, Noto_Serif_Devanagari } from "next/font/google";
+
+const yatra = Yatra_One({
+  subsets: ["devanagari"],
+  weight: "400",
+  variable: "--font-yatra",
+});
+const noto = Noto_Serif_Devanagari({
+  subsets: ["devanagari"],
+  weight: ["400", "700"],
+  variable: "--font-noto",
+});
 
 export const metadata: Metadata = {
   title: "Akhand Bhakti",
@@ -23,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html className={`${yatra.variable} ${noto.variable}`} lang="en">
       <body>
         <AuthProvider>
           <CartProvider>

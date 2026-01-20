@@ -93,9 +93,16 @@ export default function Navbar() {
                 height={78}
                 className="h-auto w-auto max-w-[120px]"
               />
-              <h1 className="font-semibold tracking-wide text-white text-xs sm:text-base lg:text-lg leading-tight">
-                <span className="block sm:inline">अखंड</span>
-                <span className="block sm:inline sm:ml-1">BHAKTI</span>
+              <h1
+                className="
+    text-white leading-tight
+    text-sm sm:text-lg lg:text-xl
+    tracking-wider
+  "
+                style={{ fontFamily: "var(--font-yatra)" }}
+              >
+                <span className="block sm:inline text-orange-300">अखंड</span>
+                <span className="block sm:inline sm:ml-2">BHAKTI</span>
               </h1>
             </Link>
 
