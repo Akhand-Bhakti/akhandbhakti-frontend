@@ -29,6 +29,9 @@ export default function MobileMenu({ open, onClose }: MobileMenuProps) {
 
         {/* Links */}
         <div className="flex flex-col gap-4 text-gray-700">
+          <Link href="/" onClick={onClose}>
+            Home
+          </Link>
           <Link href="/products" onClick={onClose}>
             Products
           </Link>
