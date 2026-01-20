@@ -19,6 +19,8 @@ interface Product {
   ratings: number;
   numOfReviews: number;
   category: string;
+  stock: number;
+  inStock: boolean;
 }
 
 export default function ProductSection() {
@@ -46,7 +48,7 @@ export default function ProductSection() {
       price: product.price,
       currency: product.currency,
       quantity: 1,
-      stock: 10, // ideally pass real stock if available
+      stock: product.stock ?? 0, // ideally pass real stock if available
     });
     toast.success("Added to cart 🛒", {
       description: product.name,
@@ -126,8 +128,10 @@ export default function ProductSection() {
                   <HeartIcon size={16} />
                 </button> */}
                 <button
+                  disabled={product.stock === 0}
                   onClick={(e) => handleAddToCart(e, product)}
-                  className="absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10"
+                  className={`absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10
+    ${product.stock === 0 ? "opacity-40 cursor-not-allowed" : ""}`}
                 >
                   <ShoppingCart size={20} />
                 </button>
