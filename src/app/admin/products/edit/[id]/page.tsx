@@ -19,34 +19,13 @@ interface ImageField {
 
 interface Pricing {
   regions: {
-    INDIA?: {
-      price: number;
-      currency: "INR";
-    };
-    EUROPE?: {
-      price: number;
-      currency: "EUR";
-    };
-    MIDDLE_EAST?: {
-      price: number;
-      currency: "AED";
-    };
-    NORTH_AMERICA?: {
-      price: number;
-      currency: "USD";
-    };
-    REST_OF_WORLD?: {
-      price: number;
-      currency: "USD";
-    };
+    INDIA?: { price: number; currency: "INR" };
+    EUROPE?: { price: number; currency: "EUR" };
+    MIDDLE_EAST?: { price: number; currency: "AED" };
+    NORTH_AMERICA?: { price: number; currency: "USD" };
+    REST_OF_WORLD?: { price: number; currency: "USD" };
   };
-  countries: Record<
-    string,
-    {
-      price: number;
-      currency: string;
-    }
-  >;
+  countries: Record<string, { price: number; currency: string }>;
 }
 
 interface Product {
@@ -62,6 +41,8 @@ interface Product {
   pricing: Pricing;
 }
 
+const MAX_GALLERY_IMAGES = 5;
+
 /* ---------------- Component ---------------- */
 
 export default function EditProductPage() {
@@ -71,8 +52,29 @@ export default function EditProductPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [tagInput, setTagInput] = useState("");
-
   const [form, setForm] = useState<Product | null>(null);
+
+  /* ---------- Helpers ---------- */
+
+  const normalizePricing = (pricing?: Pricing): Pricing => ({
+    regions: {
+      INDIA: pricing?.regions?.INDIA ?? { price: 0, currency: "INR" },
+      EUROPE: pricing?.regions?.EUROPE ?? { price: 0, currency: "EUR" },
+      MIDDLE_EAST: pricing?.regions?.MIDDLE_EAST ?? {
+        price: 0,
+        currency: "AED",
+      },
+      NORTH_AMERICA: pricing?.regions?.NORTH_AMERICA ?? {
+        price: 0,
+        currency: "USD",
+      },
+      REST_OF_WORLD: pricing?.regions?.REST_OF_WORLD ?? {
+        price: 0,
+        currency: "USD",
+      },
+    },
+    countries: pricing?.countries ?? {},
+  });
 
   /* ---------- Fetch product ---------- */
 
@@ -81,11 +83,11 @@ export default function EditProductPage() {
       const { data } = await api.get(`/v1/product/${id}`);
       const product: Product = data.product;
 
-      // Ensure pricing structure exists
-      product.pricing = product.pricing || {
-        regions: {},
-        countries: {},
-      };
+      product.pricing = normalizePricing(product.pricing);
+      product.gallery =
+        product.gallery && product.gallery.length > 0
+          ? product.gallery
+          : [{ public_id: "", url: "" }];
 
       setForm(product);
     } catch (error) {
@@ -104,62 +106,41 @@ export default function EditProductPage() {
     return <p className="text-gray-500">Loading product...</p>;
   }
 
-  /* ---------- Helpers ---------- */
+  /* ---------- Pricing ---------- */
 
   const updateRegionPrice = (
     region: keyof Pricing["regions"],
-    field: "price",
-    value: number
+    value: number,
   ) => {
-    setForm((prev) => {
-      if (!prev) return prev;
-
-      return {
-        ...prev,
-        pricing: {
-          ...prev.pricing,
-          regions: {
-            ...prev.pricing.regions,
-            [region]: {
-              ...(prev.pricing.regions[region] || {
-                currency:
-                  region === "EUROPE"
-                    ? "EUR"
-                    : region === "MIDDLE_EAST"
-                    ? "AED"
-                    : region === "NORTH_AMERICA"
-                    ? "USD"
-                    : region === "REST_OF_WORLD"
-                    ? "USD"
-                    : "INR",
-              }),
-              [field]: value,
+    setForm((prev) =>
+      prev
+        ? {
+            ...prev,
+            pricing: {
+              ...prev.pricing,
+              regions: {
+                ...prev.pricing.regions,
+                [region]: {
+                  ...prev.pricing.regions[region]!,
+                  price: value,
+                },
+              },
             },
-          },
-        },
-      };
-    });
+          }
+        : prev,
+    );
   };
 
   /* ---------- Tags ---------- */
 
   const addTag = () => {
-    if (!tagInput.trim()) return;
-    if (form.tags.includes(tagInput.trim())) return;
-
-    setForm({
-      ...form,
-      tags: [...form.tags, tagInput.trim()],
-    });
-
+    if (!tagInput.trim() || form.tags.includes(tagInput.trim())) return;
+    setForm({ ...form, tags: [...form.tags, tagInput.trim()] });
     setTagInput("");
   };
 
   const removeTag = (tag: string) => {
-    setForm({
-      ...form,
-      tags: form.tags.filter((t) => t !== tag),
-    });
+    setForm({ ...form, tags: form.tags.filter((t) => t !== tag) });
   };
 
   /* ---------- Gallery ---------- */
@@ -167,20 +148,15 @@ export default function EditProductPage() {
   const updateGallery = (
     index: number,
     field: keyof ImageField,
-    value: string
+    value: string,
   ) => {
     const updated = [...form.gallery];
-    updated[index] = {
-      ...updated[index],
-      [field]: value,
-    };
-
+    updated[index] = { ...updated[index], [field]: value };
     setForm({ ...form, gallery: updated });
   };
 
   const addGalleryImage = () => {
-    if (form.gallery.length >= 5) return;
-
+    if (form.gallery.length >= MAX_GALLERY_IMAGES) return;
     setForm({
       ...form,
       gallery: [...form.gallery, { public_id: "", url: "" }],
@@ -189,7 +165,6 @@ export default function EditProductPage() {
 
   const removeGalleryImage = (index: number) => {
     if (form.gallery.length <= 1) return;
-
     setForm({
       ...form,
       gallery: form.gallery.filter((_, i) => i !== index),
@@ -201,13 +176,13 @@ export default function EditProductPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!form.pricing?.regions?.INDIA?.price) {
+    if (!form.pricing.regions.INDIA?.price) {
       alert("India price is mandatory");
       return;
     }
 
-    if (!form.pricing?.regions?.REST_OF_WORLD?.price) {
-      alert("Default International (USD) price is mandatory");
+    if (!form.pricing.regions.REST_OF_WORLD?.price) {
+      alert("International price is mandatory");
       return;
     }
 
@@ -216,7 +191,6 @@ export default function EditProductPage() {
       await api.put(`/v1/admin/product/${id}`, form);
       router.push("/admin/products");
     } catch (error) {
-      console.error(error);
       alert("Failed to update product");
     } finally {
       setSaving(false);
@@ -277,95 +251,82 @@ export default function EditProductPage() {
           className="input"
         />
 
-        {/* ---------------- Pricing Section ---------------- */}
-
+        {/* Pricing */}
         <div className="space-y-4">
           <h3 className="font-semibold">Region Pricing</h3>
 
-          {/* INDIA */}
-          <div>
-            <label className="text-sm font-medium">
-              India (INR) — Required
-            </label>
-            <input
-              type="number"
-              value={form.pricing.regions.INDIA?.price || ""}
-              onChange={(e) =>
-                updateRegionPrice("INDIA", "price", Number(e.target.value))
-              }
-              className="input"
-              required
-            />
-          </div>
-
-          {/* EUROPE */}
-          <div>
-            <label className="text-sm font-medium">Europe (EUR)</label>
-            <input
-              type="number"
-              value={form.pricing.regions.EUROPE?.price || ""}
-              onChange={(e) =>
-                updateRegionPrice("EUROPE", "price", Number(e.target.value))
-              }
-              className="input"
-            />
-          </div>
-
-          {/* MIDDLE EAST */}
-          <div>
-            <label className="text-sm font-medium">Middle East (AED)</label>
-            <input
-              type="number"
-              value={form.pricing.regions.MIDDLE_EAST?.price || ""}
-              onChange={(e) =>
-                updateRegionPrice(
-                  "MIDDLE_EAST",
-                  "price",
-                  Number(e.target.value)
-                )
-              }
-              className="input"
-            />
-          </div>
-
-          {/* NORTH AMERICA */}
-          <div>
-            <label className="text-sm font-medium">North America (USD)</label>
-            <input
-              type="number"
-              value={form.pricing.regions.NORTH_AMERICA?.price || ""}
-              onChange={(e) =>
-                updateRegionPrice(
-                  "NORTH_AMERICA",
-                  "price",
-                  Number(e.target.value)
-                )
-              }
-              className="input"
-            />
-          </div>
-          {/* REST OF WORLD */}
-          <div>
-            <label className="text-sm font-medium">
-              Default International (USD)
-            </label>
-            <input
-              type="number"
-              value={form.pricing.regions.REST_OF_WORLD?.price || ""}
-              onChange={(e) =>
-                updateRegionPrice(
-                  "REST_OF_WORLD",
-                  "price",
-                  Number(e.target.value)
-                )
-              }
-              className="input"
-            />
-          </div>
+          {(
+            [
+              ["INDIA", "India (INR)"],
+              ["EUROPE", "Europe (EUR)"],
+              ["MIDDLE_EAST", "Middle East (AED)"],
+              ["NORTH_AMERICA", "North America (USD)"],
+              ["REST_OF_WORLD", "International (USD)"],
+            ] as const
+          ).map(([key, label]) => (
+            <div key={key}>
+              <label className="text-sm font-medium">{label}</label>
+              <input
+                type="number"
+                value={form.pricing.regions[key]?.price || ""}
+                onChange={(e) => updateRegionPrice(key, Number(e.target.value))}
+                className="input"
+              />
+            </div>
+          ))}
         </div>
 
-        {/* ---------------- Tags ---------------- */}
+        {/* Gallery (same as Create) */}
+        <div>
+          <h3 className="font-semibold mb-2">Gallery Images</h3>
 
+          <div className="space-y-3">
+            {form.gallery.map((img, index) => (
+              <div
+                key={index}
+                className="grid md:grid-cols-2 gap-3 items-center"
+              >
+                <input
+                  placeholder="Public ID"
+                  value={img.public_id}
+                  onChange={(e) =>
+                    updateGallery(index, "public_id", e.target.value)
+                  }
+                  className="input"
+                />
+
+                <input
+                  placeholder="Image URL"
+                  value={img.url}
+                  onChange={(e) => updateGallery(index, "url", e.target.value)}
+                  className="input"
+                />
+
+                {form.gallery.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeGalleryImage(index)}
+                    className="text-red-600 text-sm"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {form.gallery.length < MAX_GALLERY_IMAGES && (
+            <button
+              type="button"
+              onClick={addGalleryImage}
+              className="mt-3 text-sm text-blue-600"
+            >
+              + Add Image
+            </button>
+          )}
+        </div>
+
+        {/* Tags */}
         <div>
           <h3 className="font-semibold mb-2">Tags</h3>
 
@@ -394,13 +355,12 @@ export default function EditProductPage() {
           />
         </div>
 
-        {/* ---------------- Actions ---------------- */}
-
+        {/* Actions */}
         <div className="flex gap-3 pt-4">
           <button
             type="submit"
             disabled={saving}
-            className="bg-orange-600 text-white px-6 py-2 rounded-lg text-sm hover:bg-orange-700 disabled:opacity-60"
+            className="bg-orange-600 text-white px-6 py-2 rounded-lg text-sm"
           >
             {saving ? "Saving..." : "Save Changes"}
           </button>
