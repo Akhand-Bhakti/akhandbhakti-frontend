@@ -139,7 +139,10 @@ export default function Navbar() {
                 </button>
 
                 {isAuthenticated && profileOpen && (
-                  <ProfileMenu open={profileOpen} />
+                  <ProfileMenu
+                    open={profileOpen}
+                    onClose={() => setProfileOpen(false)}
+                  />
                 )}
 
                 {!isAuthenticated && authMenuOpen && (
