@@ -9,6 +9,7 @@ import Script from "next/script";
 import ScrollToTop from "@/components/ScroolToTop";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import BackToTop from "@/components/BackToTop";
 
 export const metadata: Metadata = {
   title: "Akhand Bhakti",
@@ -31,6 +32,7 @@ export default function RootLayout({
             </header>
             <ScrollToTop />
             <main className="pt-16 sm:pt-16 lg:pt-16">{children}</main>
+            <BackToTop />
             <Analytics />
             <SpeedInsights />
             <Toaster richColors position="bottom-right" />
