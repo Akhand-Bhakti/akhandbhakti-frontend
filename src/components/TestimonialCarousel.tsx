@@ -64,19 +64,19 @@ export default function TestimonialCarousel() {
   };
 
   // ✅ Reset smoothly for infinite loop
-  // useEffect(() => {
-  //   if (index === testimonials.length) {
-  //     setTimeout(() => {
-  //       sliderRef.current!.style.transition = "none";
-  //       setIndex(0);
-  //       sliderRef.current!.style.transform = `translateX(0px)`;
+  useEffect(() => {
+    if (index === testimonials.length) {
+      setTimeout(() => {
+        sliderRef.current!.style.transition = "none";
+        setIndex(0);
+        sliderRef.current!.style.transform = `translateX(0px)`;
 
-  //       setTimeout(() => {
-  //         sliderRef.current!.style.transition = "transform 0.6s ease";
-  //       }, 50);
-  //     }, 600);
-  //   }
-  // }, [index]);
+        setTimeout(() => {
+          sliderRef.current!.style.transition = "transform 0.6s ease";
+        }, 50);
+      }, 600);
+    }
+  }, [index]);
 
   return (
     <section className="w-full py-20 bg-[#FFF8EA] overflow-hidden">
