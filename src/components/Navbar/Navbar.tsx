@@ -101,7 +101,7 @@ export default function Navbar() {
   "
                 style={{ fontFamily: "var(--font-yatra)" }}
               >
-                <span className="block sm:inline text-orange-300">अखंड</span>
+                <span className="block sm:inline text-orange-500">अखंड</span>
                 <span className="block sm:inline sm:ml-2">BHAKTI</span>
               </h1>
             </Link>
