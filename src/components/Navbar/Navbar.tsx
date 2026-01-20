@@ -89,9 +89,9 @@ export default function Navbar() {
               <Image
                 src="/logo.png"
                 alt="Akhand Bhakti Logo"
-                width={90}
-                height={60}
-                className="w-20 h-[52px] sm:w-[100px] sm:h-[66px] lg:w-[120px] lg:h-[78px]"
+                width={120}
+                height={78}
+                className="h-auto w-auto max-w-[120px]"
               />
               <h1 className="font-semibold tracking-wide text-white text-xs sm:text-base lg:text-lg leading-tight">
                 <span className="block sm:inline">अखंड</span>
