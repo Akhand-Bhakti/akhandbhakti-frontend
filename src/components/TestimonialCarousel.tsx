@@ -91,7 +91,7 @@ export default function TestimonialCarousel() {
         <p className="text-center text-gray-600 mb-4">
           with thousands of 5-star reviews
         </p>
-        <div className="flex justify-center gap-1 mb-2">
+        <div className="flex justify-center gap-1 mb-5">
           {[...Array(5)].map((_, idx) => (
             <Star
               key={idx}
