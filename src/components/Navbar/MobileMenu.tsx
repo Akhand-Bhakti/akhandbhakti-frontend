@@ -35,8 +35,8 @@ export default function MobileMenu({ open, onClose }: MobileMenuProps) {
           <Link href="/products" onClick={onClose}>
             Products
           </Link>
-          <Link href="/category/rudraksha" onClick={onClose}>
-            Rudraksha
+          <Link href="/products?category=rudraksha%20beads" onClick={onClose}>
+            1-21 beads
           </Link>
           <Link href="/gallery" onClick={onClose}>
             Gallery
