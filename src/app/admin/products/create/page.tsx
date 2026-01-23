@@ -30,10 +30,12 @@ interface CreateProductPayload {
     regions: {
       INDIA: {
         price: number;
+        originalPrice?: number;
         currency: "INR";
       };
       REST_OF_WORLD: {
         price: number;
+        originalPrice?: number;
         currency: "USD";
       };
     };
@@ -65,8 +67,12 @@ const generateSlug = (value: string) =>
 export default function CreateProductPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  // Prices
   const [price, setPrice] = useState<number | "">("");
+  const [originalPrice, setOriginalPrice] = useState<number | "">("");
   const [usdPrice, setUsdPrice] = useState<number | "">("");
+  const [usdOriginalPrice, setUsdOriginalPrice] = useState<number | "">("");
 
   const [tagInput, setTagInput] = useState("");
 
@@ -81,12 +87,7 @@ export default function CreateProductPage() {
       public_id: "",
       url: "",
     },
-    gallery: [
-      {
-        public_id: "",
-        url: "",
-      },
-    ],
+    gallery: [{ public_id: "", url: "" }],
     pricing: {
       regions: {
         INDIA: {
@@ -107,7 +108,7 @@ export default function CreateProductPage() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
 
@@ -148,19 +149,15 @@ export default function CreateProductPage() {
   const updateGallery = (
     index: number,
     field: keyof ImageField,
-    value: string
+    value: string,
   ) => {
     const updated = [...form.gallery];
-    updated[index] = {
-      ...updated[index],
-      [field]: value,
-    };
+    updated[index] = { ...updated[index], [field]: value };
     setForm((prev) => ({ ...prev, gallery: updated }));
   };
 
   const addGalleryImage = () => {
     if (form.gallery.length >= MAX_GALLERY_IMAGES) return;
-
     setForm((prev) => ({
       ...prev,
       gallery: [...prev.gallery, { public_id: "", url: "" }],
@@ -169,7 +166,6 @@ export default function CreateProductPage() {
 
   const removeGalleryImage = (index: number) => {
     if (form.gallery.length <= 1) return;
-
     setForm((prev) => ({
       ...prev,
       gallery: form.gallery.filter((_, i) => i !== index),
@@ -187,7 +183,7 @@ export default function CreateProductPage() {
     }
 
     if (price === "" || usdPrice === "") {
-      alert("Please enter both INR and USD prices");
+      alert("Please enter both INR and USD selling prices");
       return;
     }
 
@@ -197,10 +193,14 @@ export default function CreateProductPage() {
         regions: {
           INDIA: {
             price: Number(price),
+            originalPrice:
+              originalPrice === "" ? undefined : Number(originalPrice),
             currency: "INR",
           },
           REST_OF_WORLD: {
             price: Number(usdPrice),
+            originalPrice:
+              usdOriginalPrice === "" ? undefined : Number(usdOriginalPrice),
             currency: "USD",
           },
         },
@@ -232,211 +232,101 @@ export default function CreateProductPage() {
       >
         {/* Basic Fields */}
         <div className="grid md:grid-cols-2 gap-5">
-          <div>
-            <h3 className="font-semibold mb-2">Product Name</h3>
-            <input
-              name="name"
-              placeholder="Product Name"
-              value={form.name}
-              onChange={handleChange}
-              required
-              className="input"
-            />
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-2">Slug</h3>
-            <input
-              name="slug"
-              placeholder="Slug"
-              value={form.slug}
-              onChange={handleChange}
-              required
-              className="input bg-gray-50"
-            />
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-2">Category</h3>
-            <select
-              name="category"
-              value={form.category}
-              onChange={handleChange}
-              className="input"
-            >
-              {CATEGORIES.map((cat) => (
-                <option key={cat}>{cat}</option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <h3 className="font-semibold mb-2">Stock Quantity</h3>
-            <input
-              type="number"
-              min={0}
-              value={form.stock}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  stock: Number(e.target.value),
-                }))
-              }
-              placeholder="Stock"
-              className="input"
-            />
-          </div>
-        </div>
-
-        <div>
-          <h3 className="font-semibold mb-2">Description</h3>
-          <textarea
-            name="description"
-            value={form.description}
+          <input
+            name="name"
+            placeholder="Product Name"
+            value={form.name}
             onChange={handleChange}
-            rows={5}
-            placeholder="Description"
             required
             className="input"
           />
-        </div>
-
-        {/* Main Image */}
-        <div>
-          <h3 className="font-semibold mb-2">Main Image</h3>
-          <div className="grid md:grid-cols-2 gap-3">
-            <input
-              placeholder="Public ID"
-              value={form.mainImage.public_id}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  mainImage: {
-                    ...prev.mainImage,
-                    public_id: e.target.value,
-                  },
-                }))
-              }
-              className="input"
-            />
-
-            <input
-              placeholder="Image URL"
-              value={form.mainImage.url}
-              onChange={(e) =>
-                setForm((prev) => ({
-                  ...prev,
-                  mainImage: {
-                    ...prev.mainImage,
-                    url: e.target.value,
-                  },
-                }))
-              }
-              className="input"
-            />
-          </div>
-        </div>
-
-        {/* Gallery */}
-        <div>
-          <h3 className="font-semibold mb-2">Gallery Images</h3>
-
-          <div className="space-y-3">
-            {form.gallery.map((img, index) => (
-              <div
-                key={index}
-                className="grid md:grid-cols-2 gap-3 items-center"
-              >
-                <input
-                  placeholder="Public ID"
-                  value={img.public_id}
-                  onChange={(e) =>
-                    updateGallery(index, "public_id", e.target.value)
-                  }
-                  className="input"
-                />
-
-                <input
-                  placeholder="Image URL"
-                  value={img.url}
-                  onChange={(e) => updateGallery(index, "url", e.target.value)}
-                  className="input"
-                />
-
-                {form.gallery.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removeGalleryImage(index)}
-                    className="text-red-600 text-sm"
-                  >
-                    Remove
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {form.gallery.length < MAX_GALLERY_IMAGES && (
-            <button
-              type="button"
-              onClick={addGalleryImage}
-              className="mt-3 text-sm text-blue-600"
-            >
-              + Add Image
-            </button>
-          )}
-        </div>
-
-        {/* Tags */}
-        <div>
-          <h3 className="font-semibold mb-2">Tags</h3>
-
-          <div className="flex flex-wrap gap-2 mb-2">
-            {form.tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs flex items-center gap-1"
-              >
-                {tag}
-                <button type="button" onClick={() => removeTag(tag)}>
-                  ×
-                </button>
-              </span>
-            ))}
-          </div>
 
           <input
-            value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
-            onKeyDown={(e) =>
-              e.key === "Enter" && (e.preventDefault(), addTag())
+            name="slug"
+            placeholder="Slug"
+            value={form.slug}
+            onChange={handleChange}
+            required
+            className="input bg-gray-50"
+          />
+
+          <select
+            name="category"
+            value={form.category}
+            onChange={handleChange}
+            className="input"
+          >
+            {CATEGORIES.map((cat) => (
+              <option key={cat}>{cat}</option>
+            ))}
+          </select>
+
+          <input
+            type="number"
+            min={0}
+            value={form.stock}
+            onChange={(e) =>
+              setForm((prev) => ({
+                ...prev,
+                stock: Number(e.target.value),
+              }))
             }
-            placeholder="Type tag and press Enter"
             className="input"
           />
         </div>
 
-        {/* Price */}
-        <div>
-          <h3 className="font-semibold mb-2">Base Price – India (INR)</h3>
+        <textarea
+          name="description"
+          value={form.description}
+          onChange={handleChange}
+          rows={5}
+          placeholder="Description"
+          required
+          className="input"
+        />
+
+        {/* Pricing */}
+        <div className="grid md:grid-cols-2 gap-5">
           <input
             type="number"
+            placeholder="Selling Price – India (INR)"
             value={price}
             onChange={(e) =>
               setPrice(e.target.value === "" ? "" : Number(e.target.value))
             }
             className="input"
           />
-        </div>
-        <div>
-          <h3 className="font-semibold mb-2">
-            Default International Price – USD
-          </h3>
+
           <input
             type="number"
+            placeholder="Original Price – India (Optional)"
+            value={originalPrice}
+            onChange={(e) =>
+              setOriginalPrice(
+                e.target.value === "" ? "" : Number(e.target.value),
+              )
+            }
+            className="input"
+          />
+
+          <input
+            type="number"
+            placeholder="Selling Price – International (USD)"
             value={usdPrice}
             onChange={(e) =>
               setUsdPrice(e.target.value === "" ? "" : Number(e.target.value))
+            }
+            className="input"
+          />
+
+          <input
+            type="number"
+            placeholder="Original Price – International (Optional)"
+            value={usdOriginalPrice}
+            onChange={(e) =>
+              setUsdOriginalPrice(
+                e.target.value === "" ? "" : Number(e.target.value),
+              )
             }
             className="input"
           />

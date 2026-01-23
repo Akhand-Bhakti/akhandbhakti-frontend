@@ -17,13 +17,19 @@ interface ImageField {
   url: string;
 }
 
+interface RegionPrice {
+  price: number;
+  originalPrice?: number;
+  currency: string;
+}
+
 interface Pricing {
   regions: {
-    INDIA?: { price: number; currency: "INR" };
-    EUROPE?: { price: number; currency: "EUR" };
-    MIDDLE_EAST?: { price: number; currency: "AED" };
-    NORTH_AMERICA?: { price: number; currency: "USD" };
-    REST_OF_WORLD?: { price: number; currency: "USD" };
+    INDIA?: RegionPrice;
+    EUROPE?: RegionPrice;
+    MIDDLE_EAST?: RegionPrice;
+    NORTH_AMERICA?: RegionPrice;
+    REST_OF_WORLD?: RegionPrice;
   };
   countries: Record<string, { price: number; currency: string }>;
 }
@@ -62,38 +68,45 @@ export default function EditProductPage() {
   ) => {
     const regions: any = pricing?.regions;
 
-    // Case 1: plain object
     if (regions && regions[key]) return regions[key];
-
-    // Case 2: MongoDB Map
     if (regions && typeof regions.get === "function") {
       return regions.get(key);
     }
-
     return undefined;
   };
 
   const normalizePricing = (pricing?: Pricing): Pricing => ({
     regions: {
-      INDIA: getRegion(pricing, "INDIA") ?? { price: 0, currency: "INR" },
-      EUROPE: getRegion(pricing, "EUROPE") ?? { price: 0, currency: "EUR" },
+      INDIA: getRegion(pricing, "INDIA") ?? {
+        price: 0,
+        originalPrice: undefined,
+        currency: "INR",
+      },
+      EUROPE: getRegion(pricing, "EUROPE") ?? {
+        price: 0,
+        originalPrice: undefined,
+        currency: "EUR",
+      },
       MIDDLE_EAST: getRegion(pricing, "MIDDLE_EAST") ?? {
         price: 0,
+        originalPrice: undefined,
         currency: "AED",
       },
       NORTH_AMERICA: getRegion(pricing, "NORTH_AMERICA") ?? {
         price: 0,
+        originalPrice: undefined,
         currency: "USD",
       },
       REST_OF_WORLD: getRegion(pricing, "REST_OF_WORLD") ?? {
         price: 0,
+        originalPrice: undefined,
         currency: "USD",
       },
     },
     countries: pricing?.countries ?? {},
   });
 
-  /* ---------- Fetch product ---------- */
+  /* ---------- Fetch ---------- */
 
   const fetchProduct = async () => {
     try {
@@ -102,12 +115,12 @@ export default function EditProductPage() {
 
       product.pricing = normalizePricing(product.pricing);
       product.gallery =
-        product.gallery && product.gallery.length > 0
+        product.gallery?.length > 0
           ? product.gallery
           : [{ public_id: "", url: "" }];
 
       setForm(product);
-    } catch (error) {
+    } catch {
       alert("Failed to load product");
       router.push("/admin/products");
     } finally {
@@ -140,6 +153,29 @@ export default function EditProductPage() {
                 [region]: {
                   ...prev.pricing.regions[region]!,
                   price: value,
+                },
+              },
+            },
+          }
+        : prev,
+    );
+  };
+
+  const updateRegionOriginalPrice = (
+    region: keyof Pricing["regions"],
+    value: number | "",
+  ) => {
+    setForm((prev) =>
+      prev
+        ? {
+            ...prev,
+            pricing: {
+              ...prev.pricing,
+              regions: {
+                ...prev.pricing.regions,
+                [region]: {
+                  ...prev.pricing.regions[region]!,
+                  originalPrice: value === "" ? undefined : value,
                 },
               },
             },
@@ -207,7 +243,7 @@ export default function EditProductPage() {
       setSaving(true);
       await api.put(`/v1/admin/product/${id}`, form);
       router.push("/admin/products");
-    } catch (error) {
+    } catch {
       alert("Failed to update product");
     } finally {
       setSaving(false);
@@ -281,19 +317,42 @@ export default function EditProductPage() {
               ["REST_OF_WORLD", "International (USD)"],
             ] as const
           ).map(([key, label]) => (
-            <div key={key}>
-              <label className="text-sm font-medium">{label}</label>
-              <input
-                type="number"
-                value={form.pricing.regions[key]?.price || ""}
-                onChange={(e) => updateRegionPrice(key, Number(e.target.value))}
-                className="input"
-              />
+            <div key={key} className="grid md:grid-cols-2 gap-3">
+              <div>
+                <label className="text-sm font-medium">
+                  Selling Price – {label}
+                </label>
+                <input
+                  type="number"
+                  value={form.pricing.regions[key]?.price || ""}
+                  onChange={(e) =>
+                    updateRegionPrice(key, Number(e.target.value))
+                  }
+                  className="input"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-gray-600">
+                  Original Price – {label}
+                </label>
+                <input
+                  type="number"
+                  value={form.pricing.regions[key]?.originalPrice ?? ""}
+                  onChange={(e) =>
+                    updateRegionOriginalPrice(
+                      key,
+                      e.target.value === "" ? "" : Number(e.target.value),
+                    )
+                  }
+                  className="input"
+                />
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Gallery (same as Create) */}
+        {/* Gallery */}
         <div>
           <h3 className="font-semibold mb-2">Gallery Images</h3>
 

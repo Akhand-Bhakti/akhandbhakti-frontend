@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { HeartIcon, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { fetchProducts } from "@/services/productService";
 import StarRating from "@/StarRating";
 import { useCartStore } from "@/store/cartStore";
@@ -21,6 +21,8 @@ interface Product {
   category: string;
   stock: number;
   inStock: boolean;
+  // originalPrice is optional (comes from backend)
+  originalPrice?: number;
 }
 
 export default function ProductSection() {
@@ -35,11 +37,12 @@ export default function ProductSection() {
     "rudraksha beads",
     "puja essentials",
   ];
+
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = (e: React.MouseEvent, product: Product) => {
-    e.preventDefault(); // prevents Link navigation
-    e.stopPropagation(); // prevents bubbling
+    e.preventDefault();
+    e.stopPropagation();
 
     addItem({
       productId: product._id,
@@ -48,8 +51,9 @@ export default function ProductSection() {
       price: product.price,
       currency: product.currency,
       quantity: 1,
-      stock: product.stock ?? 0, // ideally pass real stock if available
+      stock: product.stock ?? 0,
     });
+
     toast.success("Added to cart 🛒", {
       description: product.name,
     });
@@ -113,57 +117,82 @@ export default function ProductSection() {
             No products found.
           </p>
         ) : (
-          visibleProducts.map((product) => (
-            <Link
-              key={product._id}
-              href={`/product/${product.slug}`}
-              className="block"
-            >
-              <div className="bg-white shadow-orange-400 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition relative cursor-pointer">
-                {/* Wishlist */}
-                {/* <button
-                  onClick={(e) => e.preventDefault()}
-                  className="absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10"
-                >
-                  <HeartIcon size={16} />
-                </button> */}
-                <button
-                  disabled={product.stock === 0}
-                  onClick={(e) => handleAddToCart(e, product)}
-                  className={`absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10
-    ${product.stock === 0 ? "opacity-40 cursor-not-allowed" : ""}`}
-                >
-                  <ShoppingCart size={20} />
-                </button>
+          visibleProducts.map((product) => {
+            const originalPrice = Number(product.originalPrice);
 
-                {/* Image */}
-                <div className="relative w-full aspect-square bg-gray-50 flex items-center justify-center">
-                  <Image
-                    src={product.mainImage?.url || "/placeholder.png"}
-                    alt={product.name}
-                    fill
-                    className="object-cover rounded-4xl p-4"
-                  />
+            const hasDiscount =
+              Number.isFinite(originalPrice) && originalPrice > product.price;
+
+            const discountPercent = hasDiscount
+              ? Math.round(
+                  ((originalPrice - product.price) / originalPrice) * 100,
+                )
+              : 0;
+
+            return (
+              <Link
+                key={product._id}
+                href={`/product/${product.slug}`}
+                className="block"
+              >
+                <div className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl hover:-translate-y-1 transition relative cursor-pointer">
+                  {/* Add to cart */}
+                  <button
+                    disabled={product.stock === 0}
+                    onClick={(e) => handleAddToCart(e, product)}
+                    className={`absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10 ${
+                      product.stock === 0 ? "opacity-40 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    <ShoppingCart size={20} />
+                  </button>
+
+                  {/* Image */}
+                  <div className="relative w-full aspect-square bg-gray-50 flex items-center justify-center">
+                    <Image
+                      src={product.mainImage?.url || "/placeholder.png"}
+                      alt={product.name}
+                      fill
+                      className="object-cover p-4"
+                    />
+                  </div>
+
+                  {/* Details */}
+                  <div className="p-4">
+                    <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 min-h-10">
+                      {product.name}
+                    </h3>
+
+                    {/* Price */}
+                    <div className="mt-2 space-y-0.5">
+                      {hasDiscount && (
+                        <p className="text-xs text-gray-500 line-through">
+                          {product.currency} {originalPrice}
+                        </p>
+                      )}
+
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold text-gray-800">
+                          {product.currency} {product.price}
+                        </p>
+
+                        {hasDiscount && (
+                          <span className="text-[10px] font-semibold bg-black text-white px-1.5 py-0.5 rounded">
+                            {discountPercent}% OFF
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <StarRating
+                      rating={product.ratings}
+                      totalReviews={product.numOfReviews}
+                    />
+                  </div>
                 </div>
-
-                {/* Details */}
-                <div className="p-4">
-                  <h3 className="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 min-h-10">
-                    {product.name}
-                  </h3>
-
-                  <p className="mt-2 font-bold text-gray-800">
-                    {product.currency} {product.price}
-                  </p>
-
-                  <StarRating
-                    rating={product.ratings}
-                    totalReviews={product.numOfReviews}
-                  />
-                </div>
-              </div>
-            </Link>
-          ))
+              </Link>
+            );
+          })
         )}
       </div>
 

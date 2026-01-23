@@ -17,7 +17,9 @@ export async function fetchProducts(params?: {
     query.append("limit", String(params.limit));
   }
 
-  const res = await fetch(`${API_BASE_URL}/v1/products?${query.toString()}`);
+  const res = await fetch(`${API_BASE_URL}/v1/products?${query.toString()}`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) throw new Error("Failed to fetch products");
   return res.json();
@@ -25,7 +27,9 @@ export async function fetchProducts(params?: {
 
 /* Fetch single product by slug */
 export async function fetchProductBySlug(slug: string) {
-  const res = await fetch(`${API_BASE_URL}/v1/product/slug/${slug}`);
+  const res = await fetch(`${API_BASE_URL}/v1/product/slug/${slug}`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     throw new Error(`Product not found (${res.status})`);

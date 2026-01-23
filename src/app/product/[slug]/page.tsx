@@ -92,6 +92,9 @@ export default function ProductPage() {
 
   const stock = product?.stock ?? 0;
   const outOfStock = stock === 0;
+  const hasDiscount =
+    typeof product?.originalPrice === "number" &&
+    product.originalPrice > product.price;
 
   return (
     <section className="bg-[#FAF7F2] pt-18 pb-24">
@@ -139,9 +142,30 @@ export default function ProductPage() {
               Lab tested, authentic & energized
             </p>
 
-            <p className="mt-6 text-2xl font-semibold text-orange-600">
-              {product.currency} {product.price}
-            </p>
+            <div className="mt-6 space-y-1">
+              {hasDiscount && (
+                <p className="text-sm text-gray-500 line-through">
+                  {product.currency} {product.originalPrice}
+                </p>
+              )}
+
+              <div className="flex items-center gap-3">
+                <p className="text-2xl font-semibold text-orange-600">
+                  {product.currency} {product.price}
+                </p>
+
+                {hasDiscount && (
+                  <span className="text-xs font-bold bg-black text-white px-2 py-1 rounded">
+                    {Math.round(
+                      ((product.originalPrice - product.price) /
+                        product.originalPrice) *
+                        100,
+                    )}
+                    % OFF
+                  </span>
+                )}
+              </div>
+            </div>
 
             {/* EXISTING DESCRIPTION COPY – UNTOUCHED */}
             <div className="mt-6 text-sm text-gray-600 leading-relaxed">
