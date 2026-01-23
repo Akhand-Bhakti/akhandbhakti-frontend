@@ -114,6 +114,13 @@ export default function EditProductPage() {
       const product: Product = data.product;
 
       product.pricing = normalizePricing(product.pricing);
+
+      // ✅ ADDITION 1: ensure mainImage exists
+      product.mainImage = product.mainImage ?? {
+        public_id: "",
+        url: "",
+      };
+
       product.gallery =
         product.gallery?.length > 0
           ? product.gallery
@@ -304,6 +311,42 @@ export default function EditProductPage() {
           className="input"
         />
 
+        {/* ✅ ADDITION 2: MAIN IMAGE (NOT REPLACING GALLERY) */}
+        <div>
+          <h3 className="font-semibold mb-2">Main Image</h3>
+          <div className="grid md:grid-cols-2 gap-3">
+            <input
+              placeholder="Public ID"
+              value={form.mainImage.public_id}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  mainImage: {
+                    ...form.mainImage,
+                    public_id: e.target.value,
+                  },
+                })
+              }
+              className="input"
+            />
+
+            <input
+              placeholder="Image URL"
+              value={form.mainImage.url}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  mainImage: {
+                    ...form.mainImage,
+                    url: e.target.value,
+                  },
+                })
+              }
+              className="input"
+            />
+          </div>
+        </div>
+
         {/* Pricing */}
         <div className="space-y-4">
           <h3 className="font-semibold">Region Pricing</h3>
@@ -432,6 +475,24 @@ export default function EditProductPage() {
         </div>
 
         {/* Actions */}
+        <div className="flex gap-3 pt-4">
+          <button
+            type="submit"
+            disabled={saving}
+            className="bg-orange-600 text-white px-6 py-2 rounded-lg text-sm"
+          >
+            {saving ? "Saving..." : "Save Changes"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="border px-6 py-2 rounded-lg text-sm"
+          >
+            Cancel
+          </button>
+        </div>
+
         <div className="flex gap-3 pt-4">
           <button
             type="submit"
