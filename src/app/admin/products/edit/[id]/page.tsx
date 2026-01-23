@@ -492,24 +492,6 @@ export default function EditProductPage() {
             Cancel
           </button>
         </div>
-
-        <div className="flex gap-3 pt-4">
-          <button
-            type="submit"
-            disabled={saving}
-            className="bg-orange-600 text-white px-6 py-2 rounded-lg text-sm"
-          >
-            {saving ? "Saving..." : "Save Changes"}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="border px-6 py-2 rounded-lg text-sm"
-          >
-            Cancel
-          </button>
-        </div>
       </form>
     </div>
   );
