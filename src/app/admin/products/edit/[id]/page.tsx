@@ -67,6 +67,7 @@ export default function EditProductPage() {
     key: keyof Pricing["regions"],
   ) => {
     const regions: any = pricing?.regions;
+
     if (regions && regions[key]) return regions[key];
     if (regions && typeof regions.get === "function") {
       return regions.get(key);
@@ -113,13 +114,6 @@ export default function EditProductPage() {
       const product: Product = data.product;
 
       product.pricing = normalizePricing(product.pricing);
-
-      // ✅ ENSURE MAIN IMAGE EXISTS (NEW)
-      product.mainImage = product.mainImage ?? {
-        public_id: "",
-        url: "",
-      };
-
       product.gallery =
         product.gallery?.length > 0
           ? product.gallery
@@ -235,12 +229,6 @@ export default function EditProductPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // ✅ MAIN IMAGE VALIDATION (NEW)
-    if (!form.mainImage.public_id || !form.mainImage.url) {
-      alert("Main image is required");
-      return;
-    }
-
     if (!form.pricing.regions.INDIA?.price) {
       alert("India price is mandatory");
       return;
@@ -316,42 +304,6 @@ export default function EditProductPage() {
           className="input"
         />
 
-        {/* ✅ MAIN IMAGE (ADDED, NO REMOVALS) */}
-        <div>
-          <h3 className="font-semibold mb-2">Main Image</h3>
-          <div className="grid md:grid-cols-2 gap-3">
-            <input
-              placeholder="Public ID"
-              value={form.mainImage.public_id}
-              onChange={(e) =>
-                setForm({
-                  ...form,
-                  mainImage: {
-                    ...form.mainImage,
-                    public_id: e.target.value,
-                  },
-                })
-              }
-              className="input"
-            />
-
-            <input
-              placeholder="Image URL"
-              value={form.mainImage.url}
-              onChange={(e) =>
-                setForm({
-                  ...form,
-                  mainImage: {
-                    ...form.mainImage,
-                    url: e.target.value,
-                  },
-                })
-              }
-              className="input"
-            />
-          </div>
-        </div>
-
         {/* Pricing */}
         <div className="space-y-4">
           <h3 className="font-semibold">Region Pricing</h3>
@@ -400,9 +352,86 @@ export default function EditProductPage() {
           ))}
         </div>
 
-        {/* Gallery, Tags, Actions – UNCHANGED */}
-        {/* ... */}
+        {/* Gallery */}
+        <div>
+          <h3 className="font-semibold mb-2">Gallery Images</h3>
 
+          <div className="space-y-3">
+            {form.gallery.map((img, index) => (
+              <div
+                key={index}
+                className="grid md:grid-cols-2 gap-3 items-center"
+              >
+                <input
+                  placeholder="Public ID"
+                  value={img.public_id}
+                  onChange={(e) =>
+                    updateGallery(index, "public_id", e.target.value)
+                  }
+                  className="input"
+                />
+
+                <input
+                  placeholder="Image URL"
+                  value={img.url}
+                  onChange={(e) => updateGallery(index, "url", e.target.value)}
+                  className="input"
+                />
+
+                {form.gallery.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeGalleryImage(index)}
+                    className="text-red-600 text-sm"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {form.gallery.length < MAX_GALLERY_IMAGES && (
+            <button
+              type="button"
+              onClick={addGalleryImage}
+              className="mt-3 text-sm text-blue-600"
+            >
+              + Add Image
+            </button>
+          )}
+        </div>
+
+        {/* Tags */}
+        <div>
+          <h3 className="font-semibold mb-2">Tags</h3>
+
+          <div className="flex flex-wrap gap-2 mb-2">
+            {form.tags.map((tag) => (
+              <span
+                key={tag}
+                className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs flex items-center gap-1"
+              >
+                {tag}
+                <button type="button" onClick={() => removeTag(tag)}>
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+
+          <input
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            onKeyDown={(e) =>
+              e.key === "Enter" && (e.preventDefault(), addTag())
+            }
+            placeholder="Type tag and press Enter"
+            className="input"
+          />
+        </div>
+
+        {/* Actions */}
         <div className="flex gap-3 pt-4">
           <button
             type="submit"
