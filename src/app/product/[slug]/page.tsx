@@ -103,9 +103,9 @@ export default function ProductPage() {
   return (
     <section className="bg-[#FAF7F2] pt-18 pb-24">
       {/* TWO COLUMN LAYOUT */}
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
         {/* LEFT COLUMN */}
-        <div className="space-y-10">
+        <div className="space-y-10 order-1 lg:order-0">
           <div className="relative w-full max-w-[420px] mx-auto aspect-3/4 bg-white rounded-2xl shadow overflow-hidden">
             <Image
               src={activeImage || "/placeholder.png"}
@@ -131,7 +131,9 @@ export default function ProductPage() {
               </button>
             ))}
           </div>
+        </div>
 
+        <div className="space-y-10 order-3 lg:order-0">
           {howToUseSteps.length > 0 && (
             <div className="bg-white rounded-2xl p-6 shadow">
               <h3 className="font-semibold mb-4">How to Use</h3>
@@ -153,7 +155,7 @@ export default function ProductPage() {
                     className="flex justify-between py-2 text-gray-700"
                   >
                     <span className="font-medium">{item.label}</span>
-                    <span className="text-right max-w-[60%] break-words">
+                    <span className="text-right max-w-[60%] wrap-break-word">
                       {item.value}
                     </span>
                   </div>
@@ -164,7 +166,7 @@ export default function ProductPage() {
         </div>
 
         {/* RIGHT COLUMN */}
-        <div className="space-y-12">
+        <div className="space-y-12 order-2 lg:order-0">
           {/* Product Info */}
           <div>
             <h1 className="text-3xl font-bold">{product.name}</h1>
