@@ -90,6 +90,10 @@ export default function ProductPage() {
     { text: "Trusted by Devotees", img: "/icons/trusted.png" },
   ];
 
+  const howToUseSteps: string[] = product?.howToUse ?? [];
+  const keyFeatures: { label: string; value: string }[] =
+    product?.keyFeatures ?? [];
+
   const stock = product?.stock ?? 0;
   const outOfStock = stock === 0;
   const hasDiscount =
@@ -127,6 +131,36 @@ export default function ProductPage() {
               </button>
             ))}
           </div>
+
+          {howToUseSteps.length > 0 && (
+            <div className="bg-white rounded-2xl p-6 shadow">
+              <h3 className="font-semibold mb-4">How to Use</h3>
+              <ul className="space-y-2 text-sm text-gray-700 list-disc pl-5">
+                {howToUseSteps.map((step, i) => (
+                  <li key={i}>{step}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {keyFeatures.length > 0 && (
+            <div className="bg-white rounded-2xl p-6 shadow">
+              <h3 className="font-semibold mb-4">Key Features</h3>
+              <div className="divide-y text-sm">
+                {keyFeatures.map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-between py-2 text-gray-700"
+                  >
+                    <span className="font-medium">{item.label}</span>
+                    <span className="text-right max-w-[60%] break-words">
+                      {item.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* RIGHT COLUMN */}

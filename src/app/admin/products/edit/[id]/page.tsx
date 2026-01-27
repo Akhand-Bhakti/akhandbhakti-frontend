@@ -45,6 +45,8 @@ interface Product {
   mainImage: ImageField;
   gallery: ImageField[];
   pricing: Pricing;
+  howToUse: string[];
+  keyFeatures: { label: string; value: string }[];
 }
 
 const MAX_GALLERY_IMAGES = 5;
@@ -125,6 +127,9 @@ export default function EditProductPage() {
         product.gallery?.length > 0
           ? product.gallery
           : [{ public_id: "", url: "" }];
+
+      product.howToUse = product.howToUse ?? [];
+      product.keyFeatures = product.keyFeatures ?? [];
 
       setForm(product);
     } catch {
@@ -310,6 +315,91 @@ export default function EditProductPage() {
           rows={5}
           className="input"
         />
+
+        <div>
+          <h3 className="font-semibold mb-2">How To Use</h3>
+
+          {form.howToUse.map((step, index) => (
+            <div key={index} className="flex gap-2 mb-2">
+              <input
+                value={step}
+                onChange={(e) => {
+                  const updated = [...form.howToUse];
+                  updated[index] = e.target.value;
+                  setForm({ ...form, howToUse: updated });
+                }}
+                placeholder={`Step ${index + 1}`}
+                className="input flex-1"
+              />
+
+              <button
+                type="button"
+                onClick={() =>
+                  setForm({
+                    ...form,
+                    howToUse: form.howToUse.filter((_, i) => i !== index),
+                  })
+                }
+                className="text-red-500 px-2"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={() =>
+              setForm({ ...form, howToUse: [...form.howToUse, ""] })
+            }
+            className="text-sm text-blue-600"
+          >
+            + Add Step
+          </button>
+        </div>
+
+        <div>
+          <h3 className="font-semibold mb-2">Key Features</h3>
+
+          {form.keyFeatures.map((item, index) => (
+            <div key={index} className="grid grid-cols-2 gap-2 mb-2">
+              <input
+                placeholder="Feature (e.g. Ruling Deity)"
+                value={item.label}
+                onChange={(e) => {
+                  const updated = [...form.keyFeatures];
+                  updated[index].label = e.target.value;
+                  setForm({ ...form, keyFeatures: updated });
+                }}
+                className="input"
+              />
+
+              <input
+                placeholder="Value (e.g. Lord Shiva)"
+                value={item.value}
+                onChange={(e) => {
+                  const updated = [...form.keyFeatures];
+                  updated[index].value = e.target.value;
+                  setForm({ ...form, keyFeatures: updated });
+                }}
+                className="input"
+              />
+            </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={() =>
+              setForm({
+                ...form,
+                keyFeatures: [...form.keyFeatures, { label: "", value: "" }],
+              })
+            }
+            className="text-sm text-blue-600"
+          >
+            + Add Feature
+          </button>
+        </div>
 
         {/* ✅ ADDITION 2: MAIN IMAGE (NOT REPLACING GALLERY) */}
         <div>
