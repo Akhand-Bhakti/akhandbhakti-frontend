@@ -103,70 +103,74 @@ export default function ProductPage() {
   return (
     <section className="bg-[#FAF7F2] pt-18 pb-24">
       {/* TWO COLUMN LAYOUT */}
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col gap-16 lg:grid lg:grid-cols-2">
         {/* LEFT COLUMN */}
-        <div className="space-y-10 order-1 lg:order-0">
-          <div className="relative w-full max-w-[420px] mx-auto aspect-3/4 bg-white rounded-2xl shadow overflow-hidden">
-            <Image
-              src={activeImage || "/placeholder.png"}
-              alt={product.name}
-              fill
-              priority
-              className="object-cover transition-transform duration-300 hover:scale-105"
-            />
-          </div>
-
-          <div className="grid grid-cols-5 gap-4">
-            {galleryImages.map((img: any, index: number) => (
-              <button
-                key={index}
-                onClick={() => setActiveImage(img.url)}
-                className={`relative h-24 rounded-lg overflow-hidden border transition ${
-                  activeImage === img.url
-                    ? "border-orange-500"
-                    : "border-transparent"
-                }`}
-              >
-                <Image src={img.url} alt="" fill className="object-cover" />
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-10 order-3 lg:order-0">
-          {howToUseSteps.length > 0 && (
-            <div className="bg-white rounded-2xl p-6 shadow">
-              <h3 className="font-semibold mb-4">How to Use</h3>
-              <ul className="space-y-2 text-sm text-gray-700 list-disc pl-5">
-                {howToUseSteps.map((step, i) => (
-                  <li key={i}>{step}</li>
-                ))}
-              </ul>
+        <div className="space-y-10">
+          {/* IMAGE BLOCK */}
+          <div className="order-1 lg:order-1">
+            <div className="relative w-full max-w-[420px] mx-auto aspect-3/4 bg-white rounded-2xl shadow overflow-hidden">
+              <Image
+                src={activeImage || "/placeholder.png"}
+                alt={product.name}
+                fill
+                priority
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
             </div>
-          )}
 
-          {keyFeatures.length > 0 && (
-            <div className="bg-white rounded-2xl p-6 shadow">
-              <h3 className="font-semibold mb-4">Key Features</h3>
-              <div className="divide-y text-sm">
-                {keyFeatures.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex justify-between py-2 text-gray-700"
-                  >
-                    <span className="font-medium">{item.label}</span>
-                    <span className="text-right max-w-[60%] wrap-break-word">
-                      {item.value}
-                    </span>
-                  </div>
-                ))}
+            <div className="grid grid-cols-5 gap-4 mt-6">
+              {galleryImages.map((img: any, index: number) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveImage(img.url)}
+                  className={`relative h-24 rounded-lg overflow-hidden border ${
+                    activeImage === img.url
+                      ? "border-orange-500"
+                      : "border-transparent"
+                  }`}
+                >
+                  <Image src={img.url} alt="" fill className="object-cover" />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* HOW TO USE + FEATURES */}
+          <div className="space-y-10 hidden lg:block">
+            {howToUseSteps.length > 0 && (
+              <div className="bg-white rounded-2xl p-6 shadow">
+                <h3 className="font-semibold mb-4">How to Use</h3>
+                <ul className="space-y-2 text-sm text-gray-700 list-disc pl-5">
+                  {howToUseSteps.map((step, i) => (
+                    <li key={i}>{step}</li>
+                  ))}
+                </ul>
               </div>
-            </div>
-          )}
+            )}
+
+            {keyFeatures.length > 0 && (
+              <div className="bg-white rounded-2xl p-6 shadow">
+                <h3 className="font-semibold mb-4">Key Features</h3>
+                <div className="divide-y text-sm">
+                  {keyFeatures.map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex justify-between py-2 text-gray-700"
+                    >
+                      <span className="font-medium">{item.label}</span>
+                      <span className="text-right max-w-[60%] break-words">
+                        {item.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* RIGHT COLUMN */}
-        <div className="space-y-12 order-2 lg:order-0">
+        <div className="space-y-12 order-2 lg:order-2">
           {/* Product Info */}
           <div>
             <h1 className="text-3xl font-bold">{product.name}</h1>
@@ -308,6 +312,39 @@ export default function ProductPage() {
             </p>
           </div>
         </div>
+      </div>
+
+      {/* HOW TO USE + FEATURES (MOBILE ONLY) */}
+      <div className="space-y-10 lg:hidden px-6 mt-16">
+        {howToUseSteps.length > 0 && (
+          <div className="bg-white rounded-2xl p-6 shadow">
+            <h3 className="font-semibold mb-4">How to Use</h3>
+            <ul className="space-y-2 text-sm text-gray-700 list-disc pl-5">
+              {howToUseSteps.map((step, i) => (
+                <li key={i}>{step}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {keyFeatures.length > 0 && (
+          <div className="bg-white rounded-2xl p-6 shadow">
+            <h3 className="font-semibold mb-4">Key Features</h3>
+            <div className="divide-y text-sm">
+              {keyFeatures.map((item, i) => (
+                <div
+                  key={i}
+                  className="flex justify-between py-2 text-gray-700"
+                >
+                  <span className="font-medium">{item.label}</span>
+                  <span className="text-right max-w-[60%] break-words">
+                    {item.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* REVIEWS – ONLY SECTION VISUALLY CHANGED */}
