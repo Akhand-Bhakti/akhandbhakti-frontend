@@ -62,6 +62,11 @@ function CheckoutContent() {
       return;
     }
 
+    if (getTotalPrice() <= 0) {
+      setError("Invalid cart total. Please refresh and try again.");
+      return;
+    }
+
     try {
       // 1️⃣ Create Razorpay order (backend)
       const { data } = await api.post(
