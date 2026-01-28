@@ -48,6 +48,8 @@ export default function RootLayout({
             <Analytics />
             <SpeedInsights />
             <Toaster richColors position="bottom-right" />
+            {/* Razorpay Checkout Script */}
+            <Script src="https://checkout.razorpay.com/v1/checkout.js" async />
             <Script
               id="tawk-to"
               strategy="afterInteractive"

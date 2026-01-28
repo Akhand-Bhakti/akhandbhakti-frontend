@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import RequireAuth from "@/components/auth/RequireAuth";
 import { useCartStore } from "@/store/cartStore";
+import api from "@/lib/api";
 
 export default function CheckoutPage() {
   return (
@@ -51,8 +52,8 @@ function CheckoutContent() {
     return null;
   };
 
-  /* ================= PLACE ORDER (NO API YET) ================= */
-  const placeOrderHandler = () => {
+  /* ================= PLACE ORDER (RAZORPAY STEP) ================= */
+  const placeOrderHandler = async () => {
     setError("");
 
     const errorMsg = validateShipping();
@@ -61,8 +62,52 @@ function CheckoutContent() {
       return;
     }
 
-    // NEXT STEP: API call will go here
-    console.log("Address OK, ready to create order");
+    try {
+      // 1️⃣ Create Razorpay order (backend)
+      const { data } = await api.post(
+        "/payment/create-order",
+        {
+          amount: getTotalPrice(), // backend expects amount
+        },
+        { withCredentials: true },
+      );
+
+      if (!data?.success) {
+        throw new Error("Failed to initiate payment");
+      }
+
+      // 2️⃣ Open Razorpay Checkout
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: data.order.amount,
+        currency: "INR",
+        name: "Akhand Bhakti",
+        description: "Spiritual Products Order",
+        order_id: data.order.id,
+
+        handler: function (response: any) {
+          console.log("Payment Success:", response);
+
+          // ⚠️ DO NOT create order here yet
+          // This will be done in Phase 3.3 after verification
+        },
+
+        prefill: {
+          name: shippingInfo.fullName,
+          contact: shippingInfo.phone,
+        },
+
+        theme: {
+          color: "#C47A2C",
+        },
+      };
+
+      const razorpay = new (window as any).Razorpay(options);
+      razorpay.open();
+    } catch (err: any) {
+      console.error(err);
+      setError("Payment initiation failed. Please try again.");
+    }
   };
 
   return (
