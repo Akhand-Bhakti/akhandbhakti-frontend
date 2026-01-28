@@ -85,13 +85,13 @@ export default function Navbar() {
             "
           >
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3">
+            <Link href="/" className="flex items-center gap-1 sm:gap-3">
               <Image
                 src="/logo.png"
                 alt="Akhand Bhakti Logo"
-                width={120}
-                height={78}
-                className="h-auto w-auto max-w-[120px]"
+                width={200}
+                height={90}
+                className="h-auto w-auto max-w-40"
               />
               <h1
                 className="
