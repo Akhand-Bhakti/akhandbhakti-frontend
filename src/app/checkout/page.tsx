@@ -90,11 +90,20 @@ function CheckoutContent() {
         description: "Spiritual Products Order",
         order_id: data.order.id,
 
-        handler: function (response: any) {
-          console.log("Payment Success:", response);
+        handler: async function (response: any) {
+          await api.post("/payment/verify-payment", {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
 
-          // ⚠️ DO NOT create order here yet
-          // This will be done in Phase 3.3 after verification
+            shippingInfo,
+            orderItems: items,
+            totalPrice: getTotalPrice(),
+          });
+
+          // clear cart + redirect
+          useCartStore.getState().clearCart();
+          router.push("/order-success");
         },
 
         prefill: {
