@@ -5,21 +5,21 @@ import Image from "next/image";
 import { X } from "lucide-react";
 
 const images = [
-  "/gallery/h1.JPG",
-  "/gallery/h2.JPG",
-  "/gallery/h3.JPG",
-  "/gallery/h4.JPG",
-  "/gallery/h5.JPG",
-  "/gallery/h6.JPG",
-  "/gallery/v1.JPG",
-  "/gallery/v2.JPG",
-  "/gallery/v3.JPG",
-  "/gallery/v4.JPG",
-  "/gallery/v5.JPG",
-  "/gallery/v6.JPG",
-  "/gallery/v7.jpg",
-  "/gallery/v8.jpg",
-  "/gallery/v9.jpg",
+  "/gallery/h1.jpeg",
+  "/gallery/h2.jpeg",
+  "/gallery/h3.jpeg",
+  "/gallery/h4.jpeg",
+  "/gallery/h5.jpeg",
+  "/gallery/h6.jpeg",
+  "/gallery/v1.jpeg",
+  "/gallery/v2.jpeg",
+  "/gallery/v3.jpeg",
+  "/gallery/v4.jpeg",
+  "/gallery/v5.jpeg",
+  "/gallery/v6.jpeg",
+  "/gallery/v7.jpeg",
+  "/gallery/v8.jpeg",
+  "/gallery/v9.jpeg",
 ];
 
 export default function GalleryPage() {
