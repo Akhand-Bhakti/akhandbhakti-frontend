@@ -31,6 +31,7 @@ function CheckoutContent() {
 
   const [error, setError] = useState("");
   const [orderPlaced, setOrderPlaced] = useState(false);
+  const [paying, setPaying] = useState(false);
 
   useEffect(() => {
     if (items.length === 0 && !orderPlaced) {
@@ -54,16 +55,20 @@ function CheckoutContent() {
 
   /* ================= PLACE ORDER (RAZORPAY STEP) ================= */
   const placeOrderHandler = async () => {
+    if (paying) return;
+    setPaying(true);
     setError("");
 
     const errorMsg = validateShipping();
     if (errorMsg) {
       setError(errorMsg);
+      setPaying(false);
       return;
     }
 
     if (getTotalPrice() <= 0) {
       setError("Invalid cart total. Please refresh and try again.");
+      setPaying(false);
       return;
     }
 
@@ -116,6 +121,7 @@ function CheckoutContent() {
             if (res.data.success) {
               const orderId = res.data.order._id;
               setOrderPlaced(true);
+              setPaying(false);
               router.replace(`/order/${orderId}`);
 
               // clear cart AFTER navigation
@@ -126,7 +132,14 @@ function CheckoutContent() {
           } catch (err) {
             console.error(err);
             setError("Payment verification failed");
+            setPaying(false);
           }
+        },
+
+        modal: {
+          ondismiss: function () {
+            setPaying(false); // user closed Razorpay popup
+          },
         },
       };
 
@@ -135,6 +148,7 @@ function CheckoutContent() {
     } catch (err: any) {
       console.error(err);
       setError("Payment initiation failed. Please try again.");
+      setPaying(false);
     }
   };
 
@@ -259,9 +273,10 @@ function CheckoutContent() {
 
           <button
             onClick={placeOrderHandler}
-            className="mt-6 w-full py-3 rounded-lg bg-[#C47A2C] text-white font-medium"
+            disabled={paying}
+            className="mt-6 w-full py-3 rounded-lg bg-[#C47A2C] text-white font-medium disabled:opacity-60"
           >
-            Place Order
+            {paying ? "Processing..." : "Place Order"}
           </button>
         </div>
       </div>
