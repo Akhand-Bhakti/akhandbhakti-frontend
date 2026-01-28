@@ -17,7 +17,7 @@ export default function CheckoutPage() {
 
 function CheckoutContent() {
   const router = useRouter();
-  const { items, getTotalPrice } = useCartStore();
+  const { items, getTotalPrice, clearCart } = useCartStore();
 
   const [shippingInfo, setShippingInfo] = useState({
     fullName: "",
@@ -91,28 +91,37 @@ function CheckoutContent() {
         order_id: data.order.id,
 
         handler: async function (response: any) {
-          await api.post("/payment/verify-payment", {
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature,
+          try {
+            const payload = {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
 
-            shippingInfo,
-            orderItems: items,
-            totalPrice: getTotalPrice(),
-          });
+              shippingInfo,
+              orderItems: items.map((item) => ({
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity,
+                image: item.image,
+                product: item.productId,
+              })),
 
-          // clear cart + redirect
-          useCartStore.getState().clearCart();
-          router.push("/order-success");
-        },
+              totalPrice: getTotalPrice(),
+            };
 
-        prefill: {
-          name: shippingInfo.fullName,
-          contact: shippingInfo.phone,
-        },
+            const { data } = await api.post(
+              "/payment/verify-payment",
+              payload,
+              { withCredentials: true },
+            );
 
-        theme: {
-          color: "#C47A2C",
+            if (data.success) {
+              clearCart(); // 🧹 clear cart
+              router.push(`/order/${data.order._id}`); // 🎉 success page
+            }
+          } catch (err) {
+            setError("Payment verification failed");
+          }
         },
       };
 
