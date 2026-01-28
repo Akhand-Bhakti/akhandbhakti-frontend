@@ -30,13 +30,13 @@ function CheckoutContent() {
   });
 
   const [error, setError] = useState("");
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
   useEffect(() => {
-    if (items.length === 0) {
+    if (items.length === 0 && !orderPlaced) {
       router.push("/cart");
     }
-  }, [items.length, router]);
-
+  }, [items.length, orderPlaced, router]);
   if (items.length === 0) return null;
 
   /* ================= VALIDATION ================= */
@@ -112,17 +112,16 @@ function CheckoutContent() {
             const res = await api.post("/payment/verify-payment", payload, {
               withCredentials: true,
             });
-            console.log("VERIFY RESPONSE 👉", res.data);
-            if (data.success) {
-              console.log("ORDER ID 👉", res.data.order?._id);
-              clearCart(); // 🧹 clear cart
-              const orderId = res.data.order._id;
 
-              if (orderId) {
-                router.replace(`/order/${orderId}`);
-              } else {
-                router.push("/orders");
-              }
+            if (res.data.success) {
+              const orderId = res.data.order._id;
+              setOrderPlaced(true);
+              router.replace(`/order/${orderId}`);
+
+              // clear cart AFTER navigation
+              setTimeout(() => {
+                clearCart();
+              }, 100);
             }
           } catch (err) {
             console.error(err);
