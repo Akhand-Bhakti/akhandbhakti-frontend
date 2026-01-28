@@ -116,7 +116,13 @@ function CheckoutContent() {
             if (data.success) {
               console.log("ORDER ID 👉", res.data.order?._id);
               clearCart(); // 🧹 clear cart
-              router.push(`/order/${data.order._id}`); // 🎉 success page
+              const orderId = res.data.order._id;
+
+              if (orderId) {
+                router.replace(`/order/${orderId}`);
+              } else {
+                router.push("/orders");
+              }
             }
           } catch (err) {
             console.error(err);
