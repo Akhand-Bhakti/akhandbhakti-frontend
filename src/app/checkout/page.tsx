@@ -109,17 +109,17 @@ function CheckoutContent() {
               totalPrice: getTotalPrice(),
             };
 
-            const { data } = await api.post(
-              "/payment/verify-payment",
-              payload,
-              { withCredentials: true },
-            );
-
+            const res = await api.post("/payment/verify-payment", payload, {
+              withCredentials: true,
+            });
+            console.log("VERIFY RESPONSE 👉", res.data);
             if (data.success) {
+              console.log("ORDER ID 👉", res.data.order?._id);
               clearCart(); // 🧹 clear cart
               router.push(`/order/${data.order._id}`); // 🎉 success page
             }
           } catch (err) {
+            console.error(err);
             setError("Payment verification failed");
           }
         },
