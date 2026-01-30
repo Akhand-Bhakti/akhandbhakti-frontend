@@ -132,17 +132,21 @@ function OrderContent() {
           )}
 
           {/* FUTURE: Delhivery link */}
-          {order.trackingId && (
-            <button
-              className="mt-2 w-full py-2 rounded-lg border border-gray-300 text-sm hover:bg-gray-100 transition"
-              onClick={() => {
-                // placeholder for Delhivery tracking
-                alert("Tracking integration coming soon");
-              }}
-            >
-              Track Shipment
-            </button>
-          )}
+          {order.trackingId &&
+            (order.orderStatus === "Shipped" ||
+              order.orderStatus === "Delivered") && (
+              <button
+                className="mt-2 w-full py-2 rounded-lg bg-black text-white text-sm hover:bg-gray-900 transition"
+                onClick={() => {
+                  window.open(
+                    `https://www.delhivery.com/track/package/${order.trackingId}`,
+                    "_blank",
+                  );
+                }}
+              >
+                Track Shipment
+              </button>
+            )}
         </div>
 
         {/* Actions */}
