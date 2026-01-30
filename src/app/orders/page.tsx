@@ -19,6 +19,12 @@ function OrdersContent() {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const statusColor = (status: string) => {
+    if (status === "Delivered") return "text-green-600";
+    if (status === "Shipped") return "text-orange-600";
+    return "text-gray-600";
+  };
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -80,18 +86,29 @@ function OrdersContent() {
 
                 <p className="text-sm text-gray-600">
                   Status:{" "}
-                  <span className="font-medium text-green-600">
-                    {order.isPaid ? "Paid" : "Pending"}
+                  <span
+                    className={`font-medium ${statusColor(order.orderStatus)}`}
+                  >
+                    {order.orderStatus}
                   </span>
                 </p>
 
                 {/* Future-ready */}
-                {order.trackingId && (
-                  <p className="text-sm text-gray-600 mt-1">
-                    Tracking ID:{" "}
-                    <span className="font-medium">{order.trackingId}</span>
-                  </p>
-                )}
+                {order.trackingId &&
+                  (order.orderStatus === "Shipped" ||
+                    order.orderStatus === "Delivered") && (
+                    <button
+                      className="text-sm underline text-gray-600"
+                      onClick={() =>
+                        window.open(
+                          `https://www.delhivery.com/track/package/${order.trackingId}`,
+                          "_blank",
+                        )
+                      }
+                    >
+                      Track Shipment
+                    </button>
+                  )}
               </div>
 
               {/* Right */}
