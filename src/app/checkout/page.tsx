@@ -66,7 +66,9 @@ function CheckoutContent() {
       return;
     }
 
-    if (getTotalPrice() <= 0) {
+    const total = getTotalPrice();
+
+    if (total <= 0) {
       setError("Invalid cart total. Please refresh and try again.");
       setPaying(false);
       return;
@@ -81,7 +83,6 @@ function CheckoutContent() {
             productId: item.productId,
             quantity: item.quantity,
           })),
-          currency: items[0].currency, // single currency per order
         },
         { withCredentials: true },
       );
