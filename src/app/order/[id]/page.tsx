@@ -40,48 +40,87 @@ function OrderContent() {
     fetchOrder();
   }, [id, router]);
 
-  if (loading) return <p className="pt-32 text-center">Loading order…</p>;
+  if (loading)
+    return (
+      <p className="pt-32 text-center text-gray-500">
+        Fetching your order details…
+      </p>
+    );
+
   if (!order) return null;
 
   return (
-    <div className="min-h-screen pt-28 px-4 bg-linear-to-b from-[#f8efe4] to-white">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl p-6 shadow">
-        <h1 className="text-2xl font-semibold text-green-600 mb-4">
-          🎉 Order Placed Successfully
-        </h1>
+    <div className="min-h-screen pt-28 px-4 bg-gradient-to-b from-[#f8efe4] to-white">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-2xl md:text-3xl font-semibold text-green-600">
+            🙏 Order Confirmed
+          </h1>
+          <p className="text-sm text-gray-600 mt-1">
+            Thank you for your purchase. Your devotion is on its way.
+          </p>
+        </div>
 
-        <p className="text-sm text-gray-600 mb-6">
-          Order ID: <span className="font-medium">{order._id}</span>
-        </p>
+        {/* Order Meta */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm bg-[#faf7f2] rounded-xl p-4 mb-6">
+          <div>
+            <p className="text-gray-500">Order ID</p>
+            <p className="font-medium break-all">{order._id}</p>
+          </div>
+          <div>
+            <p className="text-gray-500">Payment Status</p>
+            <p className="font-medium text-green-600">Paid</p>
+          </div>
+        </div>
 
-        <div className="space-y-3 text-sm">
+        {/* Items */}
+        <div className="space-y-4">
           {order.orderItems.map((item: any, idx: number) => (
-            <div key={idx} className="flex justify-between">
-              <span>
-                {item.name} × {item.quantity}
-              </span>
-              <span>
+            <div
+              key={idx}
+              className="flex justify-between items-start border-b pb-3"
+            >
+              <div>
+                <p className="font-medium text-gray-800">{item.name}</p>
+                <p className="text-sm text-gray-500">
+                  Quantity: {item.quantity}
+                </p>
+              </div>
+
+              <p className="font-medium">
                 {currencySymbol(order.currency)}
                 {item.price * item.quantity}
-              </span>
+              </p>
             </div>
           ))}
         </div>
 
-        <div className="border-t mt-4 pt-4 flex justify-between font-semibold">
-          <span>Total</span>
+        {/* Total */}
+        <div className="mt-6 flex justify-between text-lg font-semibold border-t pt-4">
+          <span>Total Amount</span>
           <span>
             {currencySymbol(order.currency)}
             {order.totalPrice}
           </span>
         </div>
 
-        <button
-          onClick={() => router.push("/orders")}
-          className="mt-6 w-full py-3 rounded-lg bg-[#C47A2C] text-white"
-        >
-          View All Orders
-        </button>
+        {/* Actions */}
+        <div className="mt-8 space-y-3">
+          <button
+            onClick={() => router.push("/orders")}
+            className="w-full py-3 rounded-xl bg-[#C47A2C] text-white font-medium hover:bg-[#b06d26] transition"
+          >
+            View All Orders
+          </button>
+
+          <button
+            onClick={() => router.push("/")}
+            className="w-full py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+          >
+            Continue Shopping
+          </button>
+        </div>
       </div>
     </div>
   );
