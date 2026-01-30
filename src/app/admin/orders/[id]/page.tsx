@@ -9,6 +9,9 @@ export default function AdminOrderDetails() {
   const router = useRouter();
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [status, setStatus] = useState("");
+  const [trackingId, setTrackingId] = useState("");
+  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -19,6 +22,8 @@ export default function AdminOrderDetails() {
           withCredentials: true,
         });
         setOrder(data.order);
+        setStatus(data.order.orderStatus);
+        setTrackingId(data.order.trackingId || "");
       } catch (err) {
         console.error(err);
         router.push("/admin/orders");
@@ -79,12 +84,72 @@ export default function AdminOrderDetails() {
       </div>
 
       {/* Order Status + Future Tracking */}
-      <div className="bg-white p-4 rounded-xl border">
-        <h2 className="font-semibold mb-2">Order Status</h2>
-        <p>Current: {order.orderStatus}</p>
+      {/* Order Fulfilment */}
+      <div className="bg-white p-4 rounded-xl border space-y-4">
+        <h2 className="font-semibold">Order Fulfilment</h2>
 
-        {/* FUTURE: trackingId input */}
-        {/* <input placeholder="Enter Tracking ID" /> */}
+        {/* Status */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Order Status</label>
+          <select
+            value={status}
+            disabled={order.orderStatus === "Delivered"}
+            onChange={(e) => setStatus(e.target.value)}
+            className="w-full border rounded-lg px-3 py-2 text-sm disabled:bg-gray-100"
+          >
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+          </select>
+        </div>
+
+        {/* Tracking ID */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Tracking ID</label>
+          <input
+            value={trackingId}
+            disabled={order.orderStatus === "Delivered"}
+            onChange={(e) => setTrackingId(e.target.value)}
+            placeholder="Enter tracking ID"
+            className="w-full border rounded-lg px-3 py-2 text-sm disabled:bg-gray-100"
+          />
+        </div>
+
+        {/* Save Button */}
+        <button
+          disabled={updating || order.orderStatus === "Delivered"}
+          onClick={async () => {
+            try {
+              setUpdating(true);
+
+              const { data } = await api.put(
+                `/orders/admin/orders/${order._id}`,
+                {
+                  orderStatus: status,
+                  trackingId,
+                },
+                { withCredentials: true },
+              );
+
+              setOrder(data.order);
+              alert("Order updated successfully");
+            } catch (err) {
+              console.error(err);
+              alert("Failed to update order");
+            } finally {
+              setUpdating(false);
+            }
+          }}
+          className="w-full py-2 rounded-lg bg-black text-white disabled:opacity-50"
+        >
+          {updating ? "Updating..." : "Save Changes"}
+        </button>
+
+        {order.orderStatus === "Delivered" && (
+          <p className="text-sm text-green-600">
+            ✅ Order delivered and locked
+          </p>
+        )}
       </div>
 
       <button
