@@ -94,7 +94,7 @@ export default function Banner() {
             "
           >
             <Image
-              src="/home/guru.png"
+              src="/home/guru.PNG"
               alt="Guru"
               fill
               className="object-cover object-[center_20%]"
