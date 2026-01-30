@@ -77,7 +77,11 @@ function CheckoutContent() {
       const { data } = await api.post(
         "/payment/create-order",
         {
-          amount: getTotalPrice(), // backend expects amount
+          items: items.map((item) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+          })),
+          currency: items[0].currency, // single currency per order
         },
         { withCredentials: true },
       );
@@ -90,7 +94,7 @@ function CheckoutContent() {
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: data.order.amount,
-        currency: "INR",
+        currency: data.order.currency,
         name: "Akhand Bhakti",
         description: "Spiritual Products Order",
         order_id: data.order.id,
@@ -110,8 +114,6 @@ function CheckoutContent() {
                 image: item.image,
                 product: item.productId,
               })),
-
-              totalPrice: getTotalPrice(),
             };
 
             const res = await api.post("/payment/verify-payment", payload, {

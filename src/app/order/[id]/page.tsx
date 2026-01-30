@@ -4,6 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import RequireAuth from "@/components/auth/RequireAuth";
+import { currencySymbol } from "../../../../utils/currency";
 
 export default function OrderPage() {
   return (
@@ -59,14 +60,20 @@ function OrderContent() {
               <span>
                 {item.name} × {item.quantity}
               </span>
-              <span>₹{item.price * item.quantity}</span>
+              <span>
+                {currencySymbol(order.currency)}
+                {item.price * item.quantity}
+              </span>
             </div>
           ))}
         </div>
 
         <div className="border-t mt-4 pt-4 flex justify-between font-semibold">
           <span>Total</span>
-          <span>₹{order.totalPrice}</span>
+          <span>
+            {currencySymbol(order.currency)}
+            {order.totalPrice}
+          </span>
         </div>
 
         <button
