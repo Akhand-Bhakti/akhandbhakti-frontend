@@ -22,7 +22,7 @@ function OrdersContent() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const { data } = await api.get("/orders", {
+        const { data } = await api.get("/orders/myOrders/user", {
           withCredentials: true,
         });
         setOrders(data.orders || []);
