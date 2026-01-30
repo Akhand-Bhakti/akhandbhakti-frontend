@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function AboutPage() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
   const steps = [
     {
@@ -127,24 +127,28 @@ export default function AboutPage() {
 
             {/* Fixed Description Area */}
             <div className="mt-10 bg-white border rounded-2xl p-8 shadow-md max-w-3xl mx-auto">
-              <p className="text-gray-700 text-lg leading-relaxed">
-                {steps[activeIndex].desc}
-              </p>
+              {activeIndex !== null && (
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  {steps[activeIndex].desc}
+                </p>
+              )}
             </div>
           </div>
 
           {/* ================= MOBILE VIEW ================= */}
           <div className="block lg:hidden mt-12 space-y-5 text-left">
             {steps.map((step, index) => {
+              if (!step || !step.desc) return null;
+
               const isOpen = index === activeIndex;
 
               return (
                 <div
-                  key={step.title}
+                  key={step.title || index}
                   className="bg-[#C47A2C] rounded-2xl overflow-hidden border"
                 >
                   <button
-                    onClick={() => setActiveIndex(isOpen ? -1 : index)}
+                    onClick={() => setActiveIndex(isOpen ? null : index)}
                     className="w-full p-6 flex justify-between items-center text-white font-semibold"
                   >
                     {step.title}
@@ -157,11 +161,7 @@ export default function AboutPage() {
 
                   <div
                     className={`px-6 text-white/90 text-sm transition-all duration-300 overflow-hidden
-                    ${
-                      isOpen
-                        ? "max-h-40 pb-6 opacity-100"
-                        : "max-h-0 pb-0 opacity-0"
-                    }`}
+        ${isOpen ? "max-h-40 pb-6 opacity-100" : "max-h-0 pb-0 opacity-0"}`}
                   >
                     {step.desc}
                   </div>
