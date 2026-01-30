@@ -40,6 +40,12 @@ function OrderContent() {
     fetchOrder();
   }, [id, router]);
 
+  const statusColor = (status: string) => {
+    if (status === "Delivered") return "text-green-600";
+    if (status === "Shipped") return "text-orange-600";
+    return "text-gray-600";
+  };
+
   if (loading)
     return (
       <p className="pt-32 text-center text-gray-500">
@@ -103,6 +109,40 @@ function OrderContent() {
             {currencySymbol(order.currency)}
             {order.totalPrice}
           </span>
+        </div>
+
+        {/* Order Status & Tracking */}
+        <div className="mt-6 bg-[#faf7f2] rounded-xl p-4 space-y-3">
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-500">Order Status</span>
+            <span className={`font-medium ${statusColor(order.orderStatus)}`}>
+              {order.orderStatus}
+            </span>
+          </div>
+
+          {order.trackingId ? (
+            <div className="flex justify-between items-center text-sm">
+              <span className="text-gray-500">Tracking ID</span>
+              <span className="font-medium">{order.trackingId}</span>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500">
+              🚚 Tracking details will be shared once your order is shipped.
+            </p>
+          )}
+
+          {/* FUTURE: Delhivery link */}
+          {order.trackingId && (
+            <button
+              className="mt-2 w-full py-2 rounded-lg border border-gray-300 text-sm hover:bg-gray-100 transition"
+              onClick={() => {
+                // placeholder for Delhivery tracking
+                alert("Tracking integration coming soon");
+              }}
+            >
+              Track Shipment
+            </button>
+          )}
         </div>
 
         {/* Actions */}
