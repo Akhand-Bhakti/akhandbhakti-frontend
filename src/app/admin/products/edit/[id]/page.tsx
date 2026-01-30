@@ -41,6 +41,7 @@ interface Product {
   description: string;
   category: Category;
   stock: number;
+  displayOrder?: number;
   tags: string[];
   mainImage: ImageField;
   gallery: ImageField[];
@@ -304,6 +305,20 @@ export default function EditProductPage() {
             value={form.stock}
             onChange={(e) =>
               setForm({ ...form, stock: Number(e.target.value) })
+            }
+            className="input"
+          />
+
+          <input
+            type="number"
+            placeholder="Display Order (e.g. 1 = first)"
+            value={form.displayOrder ?? ""}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                displayOrder:
+                  e.target.value === "" ? undefined : Number(e.target.value),
+              })
             }
             className="input"
           />

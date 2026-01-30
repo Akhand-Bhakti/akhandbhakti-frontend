@@ -22,6 +22,7 @@ interface CreateProductPayload {
   slug: string;
   description: string;
   category: Category;
+  displayOrder?: number;
   stock: number;
   tags: string[];
   mainImage: ImageField;
@@ -77,6 +78,7 @@ export default function CreateProductPage() {
   const [usdOriginalPrice, setUsdOriginalPrice] = useState<number | "">("");
 
   const [tagInput, setTagInput] = useState("");
+  const [displayOrder, setDisplayOrder] = useState<number | "">("");
 
   const [form, setForm] = useState<CreateProductPayload>({
     name: "",
@@ -193,6 +195,7 @@ export default function CreateProductPage() {
 
     const payload: CreateProductPayload = {
       ...form,
+      displayOrder: displayOrder === "" ? undefined : displayOrder,
       pricing: {
         regions: {
           INDIA: {
@@ -274,6 +277,18 @@ export default function CreateProductPage() {
                 ...prev,
                 stock: Number(e.target.value),
               }))
+            }
+            className="input"
+          />
+
+          <input
+            type="number"
+            placeholder="Display Order (e.g. 1 = first)"
+            value={displayOrder}
+            onChange={(e) =>
+              setDisplayOrder(
+                e.target.value === "" ? "" : Number(e.target.value),
+              )
             }
             className="input"
           />
