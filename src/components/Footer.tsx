@@ -177,15 +177,6 @@ export default function Footer() {
               <li className="flex gap-2 items-center">
                 <Phone size={18} /> +91 88824 70657
               </li>
-              <li className="flex gap-2 items-center">
-                <Mail size={22} className="text-white shrink-0" />
-                <Link
-                  href="mailto:akhandbhaktiofficial@gmail.com"
-                  className="hover:text-white"
-                >
-                  care@akhandbhakti.com
-                </Link>
-              </li>
             </ul>
 
             {/* Social Icons */}
@@ -309,12 +300,6 @@ export default function Footer() {
               </li>
               <li className="flex gap-2 items-center">
                 <Phone size={18} /> +91 88824 70657
-              </li>
-              <li className="flex gap-2 items-center">
-                <Mail size={18} />
-                <Link href="mailto:akhandbhaktiofficial@gmail.com">
-                  care@akhandbhakti.com
-                </Link>
               </li>
             </ul>
           </div>

@@ -119,38 +119,47 @@ export default function TestimonialCarousel() {
         <div className="overflow-hidden">
           <div
             ref={sliderRef}
-            className="flex gap-6 transition-transform duration-700 ease-in-out"
+            className="flex gap-6 transition-transform duration-700 ease-in-out mb-5"
             style={{
               transform: `translateX(-${index * 280}px)`,
             }}
           >
-            {infiniteData.map((item, i) => (
-              <div
-                key={i}
-                className="min-w-[260px] bg-white rounded-2xl p-5 text-center shadow-md"
-              >
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  width={100}
-                  height={100}
-                  className="mx-auto rounded-xl mb-3"
-                />
+            {infiniteData.map((item, i) => {
+              const firstLetter = item?.name?.charAt(0)?.toUpperCase() || "?";
 
-                <div className="flex justify-center gap-1 mb-2">
-                  {[...Array(5)].map((_, idx) => (
-                    <Star
-                      key={idx}
-                      size={14}
-                      className="fill-yellow-400 text-yellow-400"
-                    />
-                  ))}
+              return (
+                <div
+                  key={i}
+                  className="min-w-[260px] bg-white rounded-2xl p-5 text-center shadow-md"
+                >
+                  {/* Avatar */}
+                  <div className="w-14 h-14 mx-auto mb-3 flex items-center justify-center rounded-full bg-orange-100 text-orange-700 font-semibold text-lg border border-orange-200">
+                    {firstLetter}
+                  </div>
+
+                  {/* Rating */}
+                  <div className="flex justify-center gap-1 mb-2">
+                    {[...Array(5)].map((_, idx) => (
+                      <Star
+                        key={idx}
+                        size={14}
+                        className="fill-yellow-400 text-yellow-400"
+                      />
+                    ))}
+                  </div>
+
+                  {/* Name */}
+                  <h4 className="font-semibold text-sm text-gray-800">
+                    {item.name}
+                  </h4>
+
+                  {/* Review */}
+                  <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                    {item.text}
+                  </p>
                 </div>
-
-                <h4 className="font-semibold text-sm">{item.name}</h4>
-                <p className="text-xs text-gray-500 mt-1">{item.text}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
