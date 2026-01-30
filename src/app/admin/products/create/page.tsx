@@ -374,6 +374,41 @@ export default function CreateProductPage() {
           </button>
         </div>
 
+        <div>
+          <h3 className="font-semibold mb-2">Main Image</h3>
+          <div className="grid md:grid-cols-2 gap-3">
+            <input
+              placeholder="Public ID"
+              value={form.mainImage.public_id}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  mainImage: {
+                    ...form.mainImage,
+                    public_id: e.target.value,
+                  },
+                })
+              }
+              className="input"
+            />
+
+            <input
+              placeholder="Image URL"
+              value={form.mainImage.url}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  mainImage: {
+                    ...form.mainImage,
+                    url: e.target.value,
+                  },
+                })
+              }
+              className="input"
+            />
+          </div>
+        </div>
+
         {/* Pricing */}
         <div className="grid md:grid-cols-2 gap-5">
           <input
