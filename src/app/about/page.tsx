@@ -10,19 +10,19 @@ export default function AboutPage() {
   const steps = [
     {
       title: "Vedic Rituals",
-      desc: "Each item undergoes authentic Vedic rituals conducted as per scriptures, ensuring spiritual purity and sanctity.",
+      desc: "Vedic rituals are sacred spiritual practices rooted in the ancient Vedas, performed to maintain harmony between humans, nature, and the divine. They involve precise chanting of mantras, offerings (ahuti), abhishek, and disciplined procedures guided by Vedic principles. These rituals invoke cosmic energies to purify the mind, body, and environment, remove obstacles, and attract peace, prosperity, and spiritual growth. Performed with faith, purity, and correct pronunciation, Vedic rituals strengthen dharma, enhance positive vibrations, and deepen the connection with higher consciousness. They are conducted for worship, healing, protection, gratitude, and important life events, preserving timeless spiritual wisdom and divine balance passed down through generations.",
     },
     {
       title: "Namak-Chamak Rudrabhishek",
-      desc: "A powerful Rudrabhishek performed with Namak and Chamak to invoke Lord Shiva’s blessings.",
+      desc: "Namak Chamak Rudrabhishek is a highly revered Vedic ritual dedicated to Lord Shiva, performed by chanting the sacred Namakam and Chamakam hymns from the Shukla Yajurveda. During this abhishek, the Shivling is bathed with pure water, milk, honey, ghee, and sandalwood while mantras are recited continuously. This powerful worship helps remove negative energies, doshas, and obstacles, and brings peace, mental clarity, health, prosperity, and spiritual growth. It is especially auspicious on Mondays, during Shravan month, Pradosh, and Maha Shivratri, and is ideal for seeking divine grace, protection, and fulfillment of righteous desires.",
     },
     {
       title: "12–16 Hours Shiv Sadhna",
-      desc: "Extended Shiv Sadhna performed with discipline and devotion to energize the sacred item.",
+      desc: "Shiv Sadhana of 12–16 hours is an intense spiritual practice dedicated to Lord Shiva, performed with continuous mantra japa, dhyan (meditation), abhishek, and silence. The sadhak remains focused, disciplined, and detached from worldly distractions, often observing fasting and purity. This prolonged sadhana helps dissolve negative karmas, awaken inner consciousness, and deepen devotion. Continuous chanting of Shiva mantras like Om Namah Shivaya creates powerful spiritual vibrations, bringing mental clarity, inner peace, and divine grace. Such extended Shiv Sadhana is considered highly transformative and is usually undertaken on auspicious days like Maha Shivratri or during the Shravan month.",
     },
     {
       title: "Mantra & Sankalp",
-      desc: "Personalized mantra chanting and sankalp aligned with the seeker’s spiritual intent.",
+      desc: "Mantra and Sankalp are the foundation of all Vedic rituals and spiritual practices. A mantra is a sacred sound vibration chanted to invoke divine energy, purify the mind, and focus consciousness. A sankalp is a clear, heartfelt intention taken before the ritual, stating the purpose of worship. Together, they align thought, speech, and action, making the ritual spiritually effective. While mantras activate cosmic energies through sound, sankalp directs those energies toward a specific goal such as peace, health, prosperity, or spiritual growth. When performed with faith, discipline, and purity, mantra and sankalp transform worship into a powerful spiritual process, ensuring divine blessings and fulfillment of righteous desires.",
     },
   ];
   return (
