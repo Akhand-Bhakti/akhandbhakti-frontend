@@ -45,6 +45,13 @@ function CheckoutContent() {
       router.push("/cart");
     }
   }, [items.length, orderPlaced, router]);
+
+  useEffect(() => {
+    if (items.length > 0) {
+      fetchPricing();
+    }
+  }, [items]);
+
   if (items.length === 0) return null;
 
   /* ================= VALIDATION ================= */
@@ -58,6 +65,27 @@ function CheckoutContent() {
     if (!/^\d{6}$/.test(shippingInfo.pincode))
       return "Enter a valid 6-digit pincode";
     return null;
+  };
+
+  const fetchPricing = async () => {
+    try {
+      const { data } = await api.post(
+        "/payment/create-order",
+        {
+          items: items.map((item) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+          })),
+        },
+        { withCredentials: true },
+      );
+
+      if (data?.success) {
+        setPricing(data.pricing);
+      }
+    } catch (err) {
+      console.error("Pricing fetch failed", err);
+    }
   };
 
   /* ================= PLACE ORDER (RAZORPAY STEP) ================= */
@@ -89,7 +117,6 @@ function CheckoutContent() {
       if (!data?.success) {
         throw new Error("Failed to initiate payment");
       }
-      setPricing(data.pricing);
 
       // 2️⃣ Open Razorpay Checkout
       const options = {
