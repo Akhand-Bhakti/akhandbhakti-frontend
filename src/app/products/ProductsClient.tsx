@@ -23,6 +23,7 @@ interface Product {
   category: string;
   stock: number;
   inStock: boolean;
+  purchasable: boolean;
 }
 
 export default function ProductsClient() {
@@ -46,6 +47,11 @@ export default function ProductsClient() {
   const handleAddToCart = (e: React.MouseEvent, product: Product) => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (!product.purchasable) {
+      toast.error("This product is not available in your region");
+      return;
+    }
 
     addItem({
       productId: product._id,
@@ -141,10 +147,12 @@ export default function ProductsClient() {
                 <div className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-xl hover:-translate-y-1 transition relative cursor-pointer">
                   {/* Add to cart */}
                   <button
-                    disabled={product.stock === 0}
+                    disabled={product.stock === 0 || !product.purchasable}
                     onClick={(e) => handleAddToCart(e, product)}
                     className={`absolute top-3 right-3 bg-white p-2 rounded-full shadow z-10 ${
-                      product.stock === 0 ? "opacity-40 cursor-not-allowed" : ""
+                      product.stock === 0 || !product.purchasable
+                        ? "opacity-40 cursor-not-allowed"
+                        : ""
                     }`}
                   >
                     <ShoppingCart size={20} />
