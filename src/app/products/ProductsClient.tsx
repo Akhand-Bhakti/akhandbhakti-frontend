@@ -43,9 +43,16 @@ export default function ProductsClient() {
   const category = searchParams.get("category") || "all";
   const addItem = useCartStore((state) => state.addItem);
 
+  const userIsInternational = products.some((p) => p.currency !== "INR");
+
   const handleAddToCart = (e: React.MouseEvent, product: Product) => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (product.currency === "INR" && userIsInternational) {
+      toast.error("This product is not available in your region");
+      return;
+    }
 
     addItem({
       productId: product._id,
