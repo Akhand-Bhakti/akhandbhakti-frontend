@@ -293,6 +293,12 @@ function CheckoutContent() {
             ))}
           </div>
 
+          {!pricing && (
+            <div className="border-t mt-6 pt-4 text-sm text-gray-500 italic">
+              Calculating order total…
+            </div>
+          )}
+
           {pricing && (
             <div className="border-t mt-6 pt-4 space-y-2 text-sm">
               <div className="flex justify-between">
@@ -330,7 +336,7 @@ function CheckoutContent() {
 
           <button
             onClick={placeOrderHandler}
-            disabled={paying}
+            disabled={paying || !pricing}
             className="mt-6 w-full py-3 rounded-lg bg-[#C47A2C] text-white font-medium disabled:opacity-60"
           >
             {paying ? "Processing..." : "Place Order"}
