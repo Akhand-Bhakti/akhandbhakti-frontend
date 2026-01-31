@@ -17,7 +17,7 @@ export default function CheckoutPage() {
 
 function CheckoutContent() {
   const router = useRouter();
-  const { items, getTotalPrice, clearCart } = useCartStore();
+  const { items, clearCart } = useCartStore();
 
   const [shippingInfo, setShippingInfo] = useState({
     fullName: "",
@@ -32,6 +32,13 @@ function CheckoutContent() {
   const [error, setError] = useState("");
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [paying, setPaying] = useState(false);
+
+  const [pricing, setPricing] = useState<null | {
+    subtotal: number;
+    shipping: number;
+    total: number;
+    currency: string;
+  }>(null);
 
   useEffect(() => {
     if (items.length === 0 && !orderPlaced) {
@@ -66,14 +73,6 @@ function CheckoutContent() {
       return;
     }
 
-    const total = getTotalPrice();
-
-    if (total <= 0) {
-      setError("Invalid cart total. Please refresh and try again.");
-      setPaying(false);
-      return;
-    }
-
     try {
       // 1️⃣ Create Razorpay order (backend)
       const { data } = await api.post(
@@ -90,6 +89,7 @@ function CheckoutContent() {
       if (!data?.success) {
         throw new Error("Failed to initiate payment");
       }
+      setPricing(data.pricing);
 
       // 2️⃣ Open Razorpay Checkout
       const options = {
@@ -267,12 +267,40 @@ function CheckoutContent() {
             ))}
           </div>
 
-          <div className="border-t mt-6 pt-4 flex justify-between text-base font-semibold">
-            <span>Total</span>
-            <span>
-              {items[0]?.currency} {getTotalPrice()}
-            </span>
-          </div>
+          {pricing && (
+            <div className="border-t mt-6 pt-4 space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span>
+                  {pricing.currency} {pricing.subtotal}
+                </span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>Delivery</span>
+
+                {pricing.shipping === 0 ? (
+                  <span className="text-green-600 font-medium">
+                    <span className="line-through text-gray-400 mr-2">
+                      {pricing.currency} 50
+                    </span>
+                    FREE
+                  </span>
+                ) : (
+                  <span>
+                    {pricing.currency} {pricing.shipping}
+                  </span>
+                )}
+              </div>
+
+              <div className="border-t pt-3 flex justify-between text-base font-semibold">
+                <span>Total</span>
+                <span>
+                  {pricing.currency} {pricing.total}
+                </span>
+              </div>
+            </div>
+          )}
 
           <button
             onClick={placeOrderHandler}
