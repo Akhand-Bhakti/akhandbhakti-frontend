@@ -314,7 +314,7 @@ function CheckoutContent() {
                 {pricing.shipping === 0 ? (
                   <span className="text-green-600 font-medium">
                     <span className="line-through text-gray-400 mr-2">
-                      {pricing.currency} 100
+                      {pricing.currency} 199
                     </span>
                     FREE
                   </span>
