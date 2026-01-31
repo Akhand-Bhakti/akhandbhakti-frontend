@@ -9,6 +9,7 @@ interface Product {
   name: string;
   category: string;
   status: "active" | "hidden";
+  internationalVisibility: boolean;
   pricing: {
     regions: {
       INDIA?: {
@@ -65,8 +66,8 @@ export default function ProductsPage() {
       // optimistic UI update
       setProducts((prev) =>
         prev.map((p) =>
-          p._id === product._id ? { ...p, status: newStatus } : p
-        )
+          p._id === product._id ? { ...p, status: newStatus } : p,
+        ),
       );
 
       await api.put(`/v1/admin/product/${product._id}`, {
@@ -78,8 +79,38 @@ export default function ProductsPage() {
       // rollback if failed
       setProducts((prev) =>
         prev.map((p) =>
-          p._id === product._id ? { ...p, status: product.status } : p
-        )
+          p._id === product._id ? { ...p, status: product.status } : p,
+        ),
+      );
+    }
+  };
+
+  const toggleInternationalVisibility = async (product: Product) => {
+    const newValue = !product.internationalVisibility;
+
+    try {
+      // optimistic UI
+      setProducts((prev) =>
+        prev.map((p) =>
+          p._id === product._id
+            ? { ...p, internationalVisibility: newValue }
+            : p,
+        ),
+      );
+
+      await api.put(`/v1/admin/product/${product._id}`, {
+        internationalVisibility: newValue,
+      });
+    } catch (error) {
+      alert("Failed to update international visibility");
+
+      // rollback
+      setProducts((prev) =>
+        prev.map((p) =>
+          p._id === product._id
+            ? { ...p, internationalVisibility: product.internationalVisibility }
+            : p,
+        ),
       );
     }
   };
@@ -125,6 +156,7 @@ export default function ProductsPage() {
                 <th className="text-left px-4 py-3">Status</th>
                 <th className="text-left px-4 py-3">Created</th>
                 <th className="text-right px-4 py-3">Actions</th>
+                <th className="text-left px-4 py-3">International</th>
               </tr>
             </thead>
 
@@ -162,6 +194,22 @@ export default function ProductsPage() {
                         `}
                       >
                         {product.status === "active" ? "Active" : "Hidden"}
+                      </button>
+                    </td>
+                    <td className="px-4 py-3">
+                      <button
+                        onClick={() => toggleInternationalVisibility(product)}
+                        className={`px-3 py-1 rounded-full text-xs font-medium transition
+      ${
+        product.internationalVisibility
+          ? "bg-blue-100 text-blue-700 hover:bg-blue-200"
+          : "bg-orange-100 text-orange-700 hover:bg-orange-200"
+      }
+    `}
+                      >
+                        {product.internationalVisibility
+                          ? "International"
+                          : "India Only"}
                       </button>
                     </td>
 

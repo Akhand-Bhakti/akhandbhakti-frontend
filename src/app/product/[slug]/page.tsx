@@ -34,15 +34,22 @@ export default function ProductPage() {
         const data = await fetchProductBySlug(slug as string);
         setProduct(data.product);
         setActiveImage(data.product.mainImage?.url);
-      } catch (err) {
-        console.error(err);
+      } catch (err: any) {
+        const message = err?.response?.data?.message || "Product not available";
+
+        toast.error(message);
+
+        // optional redirect after short delay
+        setTimeout(() => {
+          router.replace("/products");
+        }, 1500);
       } finally {
         setLoading(false);
       }
     };
 
     loadProduct();
-  }, [slug]);
+  }, [slug, router]);
 
   useEffect(() => {
     if (product?.stock && qty > product.stock) {
@@ -75,7 +82,12 @@ export default function ProductPage() {
   };
 
   if (loading) return <p className="text-center py-32">Loading product…</p>;
-  if (!product) return <p className="text-center py-32">Product not found</p>;
+  if (!product)
+    return (
+      <p className="text-center py-32 text-gray-600">
+        This product is not available in your region.
+      </p>
+    );
 
   const galleryImages = [product.mainImage, ...(product.gallery || [])].filter(
     Boolean,
@@ -99,6 +111,8 @@ export default function ProductPage() {
   const hasDiscount =
     typeof product?.originalPrice === "number" &&
     product.originalPrice > product.price;
+
+  const disableActions = loading || outOfStock;
 
   return (
     <section className="bg-[#FAF7F2] pt-18 pb-24">
@@ -158,7 +172,7 @@ export default function ProductPage() {
                       className="flex justify-between py-2 text-gray-700"
                     >
                       <span className="font-medium">{item.label}</span>
-                      <span className="text-right max-w-[60%] break-words">
+                      <span className="text-right max-w-[60%] wrap-break-word">
                         {item.value}
                       </span>
                     </div>
@@ -238,7 +252,7 @@ export default function ProductPage() {
 
               <button
                 onClick={handleAddToCart}
-                disabled={outOfStock}
+                disabled={disableActions}
                 className={`w-full py-3 rounded-lg font-semibold transition ${
                   outOfStock
                     ? "bg-gray-300 cursor-not-allowed"
@@ -251,7 +265,7 @@ export default function ProductPage() {
 
             <button
               onClick={handleBuyNow}
-              disabled={outOfStock}
+              disabled={disableActions}
               className={`mt-4 w-full py-3 rounded-lg font-semibold transition ${
                 outOfStock
                   ? "bg-gray-300 cursor-not-allowed"
@@ -337,7 +351,7 @@ export default function ProductPage() {
                   className="flex justify-between py-2 text-gray-700"
                 >
                   <span className="font-medium">{item.label}</span>
-                  <span className="text-right max-w-[60%] break-words">
+                  <span className="text-right max-w-[60%] wrap-break-word">
                     {item.value}
                   </span>
                 </div>
@@ -353,7 +367,7 @@ export default function ProductPage() {
           Reviews ({product.numOfReviews})
         </h2>
 
-        {product.reviews.length === 0 ? (
+        {(product.reviews?.length ?? 0) === 0 ? (
           <p className="text-gray-500">
             No reviews yet. Be the first to review this product.
           </p>
