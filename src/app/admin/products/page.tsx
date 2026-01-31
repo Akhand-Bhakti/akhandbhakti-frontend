@@ -154,9 +154,9 @@ export default function ProductsPage() {
                 <th className="text-left px-4 py-3">Category</th>
                 <th className="text-left px-4 py-3">Price</th>
                 <th className="text-left px-4 py-3">Status</th>
+                <th className="text-left px-4 py-3">International</th>
                 <th className="text-left px-4 py-3">Created</th>
                 <th className="text-right px-4 py-3">Actions</th>
-                <th className="text-left px-4 py-3">International</th>
               </tr>
             </thead>
 
