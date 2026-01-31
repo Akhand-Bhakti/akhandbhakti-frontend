@@ -62,7 +62,7 @@ export default function ProductSection() {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const data = await fetchProducts();
+        const data = await fetchProducts({ limit: 100 });
         setProducts(data.products);
       } catch (err) {
         console.error("Failed to load products", err);
