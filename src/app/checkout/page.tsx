@@ -46,27 +46,6 @@ function CheckoutContent() {
     }
   }, [items.length, orderPlaced, router]);
 
-  useEffect(() => {
-    if (items.length > 0) {
-      fetchPricing();
-    }
-  }, [items]);
-
-  if (items.length === 0) return null;
-
-  /* ================= VALIDATION ================= */
-  const validateShipping = () => {
-    if (!shippingInfo.fullName.trim()) return "Full name is required";
-    if (!/^[6-9]\d{9}$/.test(shippingInfo.phone))
-      return "Enter a valid 10-digit phone number";
-    if (!shippingInfo.address.trim()) return "Address is required";
-    if (!shippingInfo.city.trim()) return "City is required";
-    if (!shippingInfo.state.trim()) return "State is required";
-    if (!/^\d{6}$/.test(shippingInfo.pincode))
-      return "Enter a valid 6-digit pincode";
-    return null;
-  };
-
   const fetchPricing = async () => {
     try {
       const { data } = await api.post(
@@ -86,6 +65,26 @@ function CheckoutContent() {
     } catch (err) {
       console.error("Pricing fetch failed", err);
     }
+  };
+  useEffect(() => {
+    if (items.length > 0 && !pricing) {
+      fetchPricing();
+    }
+  }, [items]);
+
+  if (items.length === 0) return null;
+
+  /* ================= VALIDATION ================= */
+  const validateShipping = () => {
+    if (!shippingInfo.fullName.trim()) return "Full name is required";
+    if (!/^[6-9]\d{9}$/.test(shippingInfo.phone))
+      return "Enter a valid 10-digit phone number";
+    if (!shippingInfo.address.trim()) return "Address is required";
+    if (!shippingInfo.city.trim()) return "City is required";
+    if (!shippingInfo.state.trim()) return "State is required";
+    if (!/^\d{6}$/.test(shippingInfo.pincode))
+      return "Enter a valid 6-digit pincode";
+    return null;
   };
 
   /* ================= PLACE ORDER (RAZORPAY STEP) ================= */
