@@ -24,9 +24,12 @@ const noto = Noto_Serif_Devanagari({
 });
 
 export const metadata: Metadata = {
-  title: "Akhand Bhakti",
+  title: {
+    default: "AkhandBhakti – Authentic Rudraksha & Sacred Spiritual Products",
+    template: "%s | AkhandBhakti",
+  },
   description:
-    "Sacred Spiritual Products. Blessed items for divine protection, peace, and spiritual growth",
+    "AkhandBhakti offers authentic Rudraksha malas, beads, chandan, and sacred spiritual products. Blessed items for divine protection, peace, and spiritual growth.",
 };
 
 export default function RootLayout({

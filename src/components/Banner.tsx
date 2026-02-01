@@ -102,7 +102,7 @@ export default function Banner() {
           </div>
 
           <h2 className="text-3xl lg:text-4xl font-bold text-white mt-6">
-            A Step Towards Divine
+            AkhandBhakti – Authentic Sacred & Spiritual Products
           </h2>
           <p className="text-white/85 mt-2 max-w-sm">
             Bringing peace, growth and spiritual connection to your life
