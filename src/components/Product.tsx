@@ -148,12 +148,36 @@ export default function ProductSection() {
                   </button>
 
                   {/* Image */}
-                  <div className="relative w-full aspect-square bg-gray-50 flex items-center justify-center">
+                  <div className="relative w-full aspect-square bg-gray-50 flex items-center justify-center overflow-hidden">
+                    {hasDiscount && (
+                      <div className="absolute z-30 left-2 top-2 sm:left-3 sm:top-3">
+                        <span
+                          className="
+      flex items-center gap-1
+      bg-white/90 backdrop-blur-md text-orange-600
+      text-[9px] sm:text-[10px]
+      font-semibold
+      px-2 py-0.5 sm:px-3 sm:py-1
+      rounded-full
+      border border-orange-200
+      shadow-sm
+      max-w-[120px] sm:max-w-none
+      truncate
+    "
+                        >
+                          🕉️{" "}
+                          <span className="hidden sm:inline">
+                            Maha Shivratri Sale is Live
+                          </span>
+                          <span className="sm:hidden">Maha Shivratri Sale</span>
+                        </span>
+                      </div>
+                    )}
                     <Image
                       src={product.mainImage?.url || "/placeholder.png"}
                       alt={product.name}
                       fill
-                      className="object-cover p-4"
+                      className="object-cover p-4 z-0"
                     />
                   </div>
 
