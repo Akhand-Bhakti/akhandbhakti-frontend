@@ -105,7 +105,9 @@ export default function Banner() {
             AkhandBhakti – Authentic Sacred & Spiritual Products
           </h2>
           <p className="text-white/85 mt-2 max-w-sm">
-            Bringing peace, growth and spiritual connection to your life
+            AkhandBhakti is a trusted spiritual brand offering authentic
+            Rudraksha malas, sacred beads, chandan, and divinely blessed
+            products for seekers across India and worldwide.
           </p>
         </div>
 
