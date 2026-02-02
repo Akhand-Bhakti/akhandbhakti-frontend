@@ -9,6 +9,7 @@ import StarRating from "@/StarRating";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
 import { toast } from "sonner";
+import { formatPrice } from "../../../utils/formatPrice";
 
 interface Product {
   _id: string;
@@ -202,13 +203,15 @@ export default function ProductsClient() {
                     <div className="mt-2 space-y-0.5">
                       {hasDiscount && (
                         <p className="text-xs text-gray-500 line-through">
-                          {product.currency} {originalPrice}
+                          {product.currency}{" "}
+                          {formatPrice(originalPrice, product.currency)}
                         </p>
                       )}
 
                       <div className="flex items-center gap-2">
                         <p className="font-bold text-gray-800">
-                          {product.currency} {product.price}
+                          {product.currency}{" "}
+                          {formatPrice(product.price, product.currency)}
                         </p>
 
                         {hasDiscount && (

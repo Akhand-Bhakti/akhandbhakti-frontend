@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import RequireAuth from "@/components/auth/RequireAuth";
 import { useCartStore } from "@/store/cartStore";
 import api from "@/lib/api";
+import { formatPrice } from "../../../utils/formatPrice";
 
 export default function CheckoutPage() {
   return (
@@ -287,7 +288,8 @@ function CheckoutContent() {
                 </div>
 
                 <p className="text-sm font-medium">
-                  {item.currency} {item.price * item.quantity}
+                  {item.currency}{" "}
+                  {formatPrice(item.price * item.quantity, item.currency)}
                 </p>
               </div>
             ))}
@@ -304,7 +306,8 @@ function CheckoutContent() {
               <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span>
-                  {pricing.currency} {pricing.subtotal}
+                  {pricing.currency}{" "}
+                  {formatPrice(pricing.subtotal, pricing.currency)}
                 </span>
               </div>
 
@@ -314,13 +317,14 @@ function CheckoutContent() {
                 {pricing.shipping === 0 ? (
                   <span className="text-green-600 font-medium">
                     <span className="line-through text-gray-400 mr-2">
-                      {pricing.currency} 199
+                      {pricing.currency} {formatPrice(199, pricing.currency)}
                     </span>
                     FREE
                   </span>
                 ) : (
                   <span>
-                    {pricing.currency} {pricing.shipping}
+                    {pricing.currency}{" "}
+                    {formatPrice(pricing.shipping, pricing.currency)}
                   </span>
                 )}
               </div>
@@ -328,7 +332,8 @@ function CheckoutContent() {
               <div className="border-t pt-3 flex justify-between text-base font-semibold">
                 <span>Total</span>
                 <span>
-                  {pricing.currency} {pricing.total}
+                  {pricing.currency}{" "}
+                  {formatPrice(pricing.total, pricing.currency)}
                 </span>
               </div>
             </div>

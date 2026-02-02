@@ -8,6 +8,7 @@ import StarRating from "@/StarRating";
 import { useCartStore } from "@/store/cartStore";
 import Link from "next/link";
 import { toast } from "sonner";
+import { formatPrice } from "../../../../utils/formatPrice";
 
 /* ===== ONLY NEW TYPE (SAFE) ===== */
 interface Review {
@@ -199,13 +200,15 @@ export default function ProductPage() {
             <div className="mt-6 space-y-1">
               {hasDiscount && (
                 <p className="text-sm text-gray-500 line-through">
-                  {product.currency} {product.originalPrice}
+                  {product.currency}{" "}
+                  {formatPrice(product.originalPrice, product.currency)}
                 </p>
               )}
 
               <div className="flex items-center gap-3">
                 <p className="text-2xl font-semibold text-orange-600">
-                  {product.currency} {product.price}
+                  {product.currency}{" "}
+                  {formatPrice(product.price, product.currency)}
                 </p>
 
                 {hasDiscount && (

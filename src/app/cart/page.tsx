@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
+import { formatPrice } from "../../../utils/formatPrice";
 
 export default function CartPage() {
   return <CartContent />;
@@ -53,7 +54,8 @@ function CartContent() {
               <div className="flex-1">
                 <p className="font-medium text-gray-900">{item.name}</p>
                 <p className="text-sm text-gray-600 mt-1">
-                  {item.currency} {item.price} × {item.quantity}
+                  {item.currency} {formatPrice(item.price, item.currency)} ×{" "}
+                  {item.quantity}
                 </p>
 
                 {/* Quantity Control */}
@@ -95,7 +97,8 @@ function CartContent() {
                 </button>
 
                 <p className="font-semibold text-gray-900">
-                  {item.currency} {item.price} × {item.quantity}
+                  {item.currency}{" "}
+                  {formatPrice(item.price * item.quantity, item.currency)}
                 </p>
               </div>
             </div>
@@ -108,7 +111,8 @@ function CartContent() {
           flex flex-col sm:flex-row justify-between items-center gap-4 sticky bottom-4"
         >
           <p className="text-lg font-medium">
-            Subtotal: {items[0]?.currency} {getTotalPrice()}
+            Subtotal: {items[0]?.currency}{" "}
+            {formatPrice(getTotalPrice(), items[0]?.currency)}
           </p>
 
           <button
