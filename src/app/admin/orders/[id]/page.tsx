@@ -58,7 +58,7 @@ export default function AdminOrderDetails() {
           {order.shippingInfo.pincode}
         </p>
         <p>{order.shippingInfo.country}</p>
-        <p className="mt-1">📞 {order.shippingInfo.phoneNo}</p>
+        <p className="mt-1">📞 {order.shippingInfo.phone || "N/A"}</p>
       </div>
 
       {/* Items */}
