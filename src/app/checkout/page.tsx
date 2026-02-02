@@ -315,7 +315,6 @@ function CheckoutContent() {
                 <span>Delivery</span>
 
                 <div className="flex justify-between">
-                  <span>Delivery</span>
                   <span>
                     {pricing.currency}{" "}
                     {formatPrice(pricing.shipping, pricing.currency)}
