@@ -25,11 +25,12 @@ const noto = Noto_Serif_Devanagari({
 
 export const metadata: Metadata = {
   title: {
-    default: "AkhandBhakti – Authentic Rudraksha & Sacred Spiritual Products",
-    template: "%s | AkhandBhakti",
+    default:
+      "Akhand Bhakti® – Official Website | Authentic Rudraksha & Spiritual Products",
+    template: "%s | Akhand Bhakti",
   },
   description:
-    "AkhandBhakti offers authentic Rudraksha malas, beads, chandan, and sacred spiritual products. Blessed items for divine protection, peace, and spiritual growth.",
+    "Akhand Bhakti offers authentic Rudraksha malas, beads, chandan, and sacred spiritual products. Blessed items for divine protection, peace, and spiritual growth.",
 };
 
 export default function RootLayout({
@@ -39,6 +40,55 @@ export default function RootLayout({
 }>) {
   return (
     <html className={`${yatra.variable} ${noto.variable}`} lang="en">
+      <head>
+        {/* Organization Schema */}
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "@id": "https://akhandbhakti.com/#organization",
+              name: "Akhand Bhakti",
+              url: "https://akhandbhakti.com",
+              logo: "https://akhandbhakti.com/logo.png",
+              image: "https://akhandbhakti.com/logo.png",
+              description:
+                "Akhand Bhakti is an authentic spiritual ecommerce platform offering Rudraksha, malas, puja essentials, and devotional products.",
+              foundingCountry: "IN",
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer support",
+                email: "akhandbhaktiofficial@gmail.com",
+                availableLanguage: ["English", "Hindi"],
+              },
+              sameAs: [
+                "https://www.instagram.com/akhandbhaktiofficial",
+                "https://www.youtube.com/@akhandbhaktiofficial",
+                "https://www.facebook.com/akhandbhaktiofficial",
+              ],
+            }),
+          }}
+        />
+
+        {/* WebSite Schema */}
+        <Script
+          id="website-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              url: "https://akhandbhakti.com",
+              name: "Akhand Bhakti",
+              publisher: {
+                "@id": "https://akhandbhakti.com/#organization",
+              },
+            }),
+          }}
+        />
+      </head>
       <body>
         <AuthProvider>
           <CartProvider>
