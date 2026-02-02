@@ -314,19 +314,13 @@ function CheckoutContent() {
               <div className="flex justify-between">
                 <span>Delivery</span>
 
-                {pricing.shipping === 0 ? (
-                  <span className="text-green-600 font-medium">
-                    <span className="line-through text-gray-400 mr-2">
-                      {pricing.currency} {formatPrice(199, pricing.currency)}
-                    </span>
-                    FREE
-                  </span>
-                ) : (
+                <div className="flex justify-between">
+                  <span>Delivery</span>
                   <span>
                     {pricing.currency}{" "}
                     {formatPrice(pricing.shipping, pricing.currency)}
                   </span>
-                )}
+                </div>
               </div>
 
               <div className="border-t pt-3 flex justify-between text-base font-semibold">
