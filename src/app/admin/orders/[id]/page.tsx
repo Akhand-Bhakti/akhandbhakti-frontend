@@ -18,7 +18,7 @@ export default function AdminOrderDetails() {
 
     const fetchOrder = async () => {
       try {
-        const { data } = await api.get(`/admin/orders/${id}`, {
+        const { data } = await api.get(`/orders/admin/orders/${id}`, {
           withCredentials: true,
         });
         setOrder(data.order);
@@ -129,7 +129,7 @@ export default function AdminOrderDetails() {
               setUpdating(true);
 
               const { data } = await api.put(
-                `/admin/orders/${order._id}`,
+                `/orders/admin/orders/${order._id}`,
                 {
                   orderStatus: finalStatus,
                   trackingId,
