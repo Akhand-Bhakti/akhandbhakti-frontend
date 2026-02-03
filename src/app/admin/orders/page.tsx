@@ -18,6 +18,7 @@ interface Order {
   };
   orderStatus: string;
   createdAt: string;
+  delhiveryOrderId?: string;
 }
 
 /* ---------------- Component ---------------- */
@@ -71,6 +72,7 @@ export default function OrdersPage() {
                 <th className="text-left px-4 py-3">Payment</th>
                 <th className="text-left px-4 py-3">Status</th>
                 <th className="text-left px-4 py-3">Created</th>
+                <th className="text-left px-4 py-3">Delhivery ID</th>
                 <th className="text-right px-4 py-3">Action</th>
               </tr>
             </thead>
@@ -106,6 +108,15 @@ export default function OrdersPage() {
 
                   <td className="px-4 py-3 text-gray-500">
                     {new Date(order.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    {order.delhiveryOrderId ? (
+                      <span className="font-mono text-xs">
+                        {order.delhiveryOrderId}
+                      </span>
+                    ) : (
+                      <span className="text-gray-400 italic">Not assigned</span>
+                    )}
                   </td>
 
                   <td className="px-4 py-3 text-right">

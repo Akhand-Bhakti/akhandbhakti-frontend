@@ -12,6 +12,7 @@ export default function AdminOrderDetails() {
   const [status, setStatus] = useState("");
   const [trackingId, setTrackingId] = useState("");
   const [updating, setUpdating] = useState(false);
+  const [delhiveryOrderId, setDelhiveryOrderId] = useState("");
 
   useEffect(() => {
     if (!id) return;
@@ -24,6 +25,7 @@ export default function AdminOrderDetails() {
         setOrder(data.order);
         setStatus(data.order.orderStatus);
         setTrackingId(data.order.trackingId || "");
+        setDelhiveryOrderId(data.order.delhiveryOrderId || "");
       } catch (err) {
         console.error(err);
         router.push("/admin/orders");
@@ -40,7 +42,9 @@ export default function AdminOrderDetails() {
   if (loading) return <p>Loading order details...</p>;
   if (!order) return null;
   const isUnchanged =
-    status === order.orderStatus && trackingId === (order.trackingId || "");
+    status === order.orderStatus &&
+    trackingId === (order.trackingId || "") &&
+    delhiveryOrderId === (order.delhiveryOrderId || "");
 
   return (
     <div className="space-y-6">
@@ -118,6 +122,19 @@ export default function AdminOrderDetails() {
             className="w-full border rounded-lg px-3 py-2 text-sm disabled:bg-gray-100"
           />
         </div>
+        {/* Delhivery Order ID */}
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Delhivery Order ID
+          </label>
+          <input
+            value={delhiveryOrderId}
+            disabled={order.orderStatus === "Delivered"}
+            onChange={(e) => setDelhiveryOrderId(e.target.value)}
+            placeholder="Enter Delhivery Order ID"
+            className="w-full border rounded-lg px-3 py-2 text-sm disabled:bg-gray-100"
+          />
+        </div>
 
         {/* Save Button */}
         <button
@@ -133,6 +150,7 @@ export default function AdminOrderDetails() {
                 {
                   orderStatus: finalStatus,
                   trackingId,
+                  delhiveryOrderId,
                 },
                 { withCredentials: true },
               );
