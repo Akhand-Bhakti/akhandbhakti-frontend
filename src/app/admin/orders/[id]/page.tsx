@@ -37,11 +37,10 @@ export default function AdminOrderDetails() {
 
   const finalStatus = trackingId ? "Shipped" : status;
 
-  const isUnchanged =
-    status === order.orderStatus && trackingId === (order.trackingId || "");
-
   if (loading) return <p>Loading order details...</p>;
   if (!order) return null;
+  const isUnchanged =
+    status === order.orderStatus && trackingId === (order.trackingId || "");
 
   return (
     <div className="space-y-6">
