@@ -312,7 +312,7 @@ function CheckoutContent() {
               </div>
 
               <div className="flex justify-between">
-                <span>Delivery</span>
+                <span>Handling & Processing Charges</span>
 
                 <div className="flex justify-between">
                   <span>
