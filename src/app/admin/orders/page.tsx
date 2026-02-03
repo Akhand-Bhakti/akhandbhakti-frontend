@@ -30,7 +30,9 @@ export default function OrdersPage() {
 
   const fetchOrders = async () => {
     try {
-      const { data } = await api.get("/admin/allOrders");
+      const { data } = await api.get("/admin/allOrders", {
+        withCredentials: true,
+      });
       setOrders(data.orders);
     } catch (error) {
       console.error("Failed to fetch orders", error);
