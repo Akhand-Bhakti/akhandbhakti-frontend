@@ -18,7 +18,7 @@ export default function AdminOrderDetails() {
 
     const fetchOrder = async () => {
       try {
-        const { data } = await api.get(`/orders/admin/orders/${id}`, {
+        const { data } = await api.get(`/admin/orders/${id}`, {
           withCredentials: true,
         });
         setOrder(data.order);
@@ -34,6 +34,11 @@ export default function AdminOrderDetails() {
 
     fetchOrder();
   }, [id, router]);
+
+  const finalStatus = trackingId ? "Shipped" : status;
+
+  const isUnchanged =
+    status === order.orderStatus && trackingId === (order.trackingId || "");
 
   if (loading) return <p>Loading order details...</p>;
   if (!order) return null;
@@ -117,15 +122,17 @@ export default function AdminOrderDetails() {
 
         {/* Save Button */}
         <button
-          disabled={updating || order.orderStatus === "Delivered"}
+          disabled={
+            updating || order.orderStatus === "Delivered" || isUnchanged
+          }
           onClick={async () => {
             try {
               setUpdating(true);
 
               const { data } = await api.put(
-                `/orders/admin/orders/${order._id}`,
+                `/admin/orders/${order._id}`,
                 {
-                  orderStatus: status,
+                  orderStatus: finalStatus,
                   trackingId,
                 },
                 { withCredentials: true },
