@@ -83,8 +83,8 @@ function CheckoutContent() {
     if (!shippingInfo.address.trim()) return "Address is required";
     if (!shippingInfo.city.trim()) return "City is required";
     if (!shippingInfo.state.trim()) return "State is required";
-    if (!/^\d{2}$/.test(shippingInfo.pincode))
-      return "Enter a valid 6-digit pincode";
+    if (!/^\d{3,}$/.test(shippingInfo.pincode))
+      return "Pincode must be more than 2 digits";
     return null;
   };
 
