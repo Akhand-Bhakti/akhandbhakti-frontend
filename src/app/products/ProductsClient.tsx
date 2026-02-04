@@ -201,33 +201,25 @@ export default function ProductsClient() {
 
                     {/* Price */}
                     <div className="mt-2 space-y-0.5">
-                      {product.price === 1 ? (
-                        <p className="text-sm font-semibold text-red-600">
-                          Not available in your region
+                      {hasDiscount && (
+                        <p className="text-xs text-gray-500 line-through">
+                          {product.currency}{" "}
+                          {formatPrice(originalPrice, product.currency)}
                         </p>
-                      ) : (
-                        <>
-                          {hasDiscount && (
-                            <p className="text-xs text-gray-500 line-through">
-                              {product.currency}{" "}
-                              {formatPrice(originalPrice, product.currency)}
-                            </p>
-                          )}
-
-                          <div className="flex items-center gap-2">
-                            <p className="font-bold text-gray-800">
-                              {product.currency}{" "}
-                              {formatPrice(product.price, product.currency)}
-                            </p>
-
-                            {hasDiscount && (
-                              <span className="text-[10px] font-semibold bg-black text-white px-1.5 py-0.5 rounded">
-                                {discountPercent}% OFF
-                              </span>
-                            )}
-                          </div>
-                        </>
                       )}
+
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold text-gray-800">
+                          {product.currency}{" "}
+                          {formatPrice(product.price, product.currency)}
+                        </p>
+
+                        {hasDiscount && (
+                          <span className="text-[10px] font-semibold bg-black text-white px-1.5 py-0.5 rounded">
+                            {discountPercent}% OFF
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     <StarRating
