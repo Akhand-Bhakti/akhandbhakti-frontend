@@ -227,7 +227,8 @@ export default function ProductPage() {
               </div>
 
               <p className="text-xs text-gray-600">
-                Limited time offer · Feel the divine energy ✨
+                Limited time offer · Feel the divine energy ✨ <br />
+                It takes 7 days for the order to be delivered
               </p>
             </div>
 
