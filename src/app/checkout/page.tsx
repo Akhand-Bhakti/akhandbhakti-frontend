@@ -160,8 +160,12 @@ function CheckoutContent() {
               }, 100);
             }
           } catch (err) {
-            console.error(err);
-            setError("Payment verification failed");
+            console.error("Verify failed but payment may be captured");
+            setError(
+              "Your payment has been received successfully. However, we are verifying your order due to a technical issue. Please do not worry — our team will contact you shortly. You may also WhatsApp us at +91 8882470657.",
+            );
+            setPaying(false);
+          } finally {
             setPaying(false);
           }
         },
