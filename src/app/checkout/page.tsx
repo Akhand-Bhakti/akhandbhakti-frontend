@@ -73,6 +73,43 @@ function CheckoutContent() {
     }
   }, [items]);
 
+  useEffect(() => {
+    if (items.length === 0 && !orderPlaced) {
+      router.push("/cart");
+    }
+  }, [items.length, orderPlaced, router]);
+
+  useEffect(() => {
+    if (items.length > 0 && !pricing) {
+      fetchPricing();
+    }
+  }, [items]);
+
+  // ✅ ADD THIS RIGHT HERE
+  useEffect(() => {
+    const recoverPayment = async () => {
+      const lastPaymentId = localStorage.getItem("lastPaymentId");
+
+      if (!lastPaymentId) return;
+
+      try {
+        const { data } = await api.get(
+          `/payment/check-payment/${lastPaymentId}`,
+          { withCredentials: true },
+        );
+
+        if (data.success && data.order) {
+          localStorage.removeItem("lastPaymentId");
+          router.replace(`/order/${data.order._id}`);
+        }
+      } catch (err) {
+        console.log("Recovery check failed...");
+      }
+    };
+
+    recoverPayment();
+  }, []);
+
   if (items.length === 0) return null;
 
   /* ================= VALIDATION ================= */
@@ -150,21 +187,28 @@ function CheckoutContent() {
 
             if (res.data.success) {
               const orderId = res.data.order._id;
+
               setOrderPlaced(true);
-              setPaying(false);
               router.replace(`/order/${orderId}`);
 
-              // clear cart AFTER navigation
               setTimeout(() => {
                 clearCart();
               }, 100);
             }
           } catch (err) {
             console.error("Verify failed but payment may be captured");
+
+            // ✅ SAVE PAYMENT ID HERE (correct place)
+            if (response?.razorpay_payment_id) {
+              localStorage.setItem(
+                "lastPaymentId",
+                response.razorpay_payment_id,
+              );
+            }
+
             setError(
               "Your payment has been received successfully. However, we are verifying your order due to a technical issue. Please do not worry — our team will contact you shortly. You may also WhatsApp us at +91 8882470657.",
             );
-            setPaying(false);
           } finally {
             setPaying(false);
           }
@@ -172,7 +216,7 @@ function CheckoutContent() {
 
         modal: {
           ondismiss: function () {
-            setPaying(false); // user closed Razorpay popup
+            setPaying(false);
           },
         },
       };
@@ -180,7 +224,7 @@ function CheckoutContent() {
       const razorpay = new (window as any).Razorpay(options);
       razorpay.open();
     } catch (err: any) {
-      console.error(err);
+      console.error("Payment initiation failed:", err);
       setError("Payment initiation failed. Please try again.");
       setPaying(false);
     }
@@ -266,7 +310,20 @@ function CheckoutContent() {
             />
           </div>
 
-          {error && <p className="text-sm text-red-500 mt-4">{error}</p>}
+          {error && (
+            <div className="mt-4 p-4 bg-yellow-50 border border-yellow-300 rounded-lg">
+              <p className="text-sm text-gray-800">{error}</p>
+
+              <a
+                href="https://wa.me/918882470657"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-block bg-green-500 text-white px-4 py-2 rounded-md text-sm"
+              >
+                Contact on WhatsApp
+              </a>
+            </div>
+          )}
         </div>
 
         {/* ================= RIGHT ================= */}
