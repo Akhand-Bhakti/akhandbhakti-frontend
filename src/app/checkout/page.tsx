@@ -87,11 +87,13 @@ function CheckoutContent() {
 
   // ✅ ADD THIS RIGHT HERE
   useEffect(() => {
+    const lastPaymentId = localStorage.getItem("lastPaymentId");
+    if (!lastPaymentId) return;
+
+    let retryCount = 0;
+    const maxRetries = 6; // 6 × 5 sec = 30 seconds
+
     const recoverPayment = async () => {
-      const lastPaymentId = localStorage.getItem("lastPaymentId");
-
-      if (!lastPaymentId) return;
-
       try {
         const { data } = await api.get(
           `/payment/check-payment/${lastPaymentId}`,
@@ -100,14 +102,29 @@ function CheckoutContent() {
 
         if (data.success && data.order) {
           localStorage.removeItem("lastPaymentId");
+          clearInterval(intervalId);
           router.replace(`/order/${data.order._id}`);
         }
       } catch (err) {
         console.log("Recovery check failed...");
       }
+
+      retryCount++;
+
+      if (retryCount >= maxRetries) {
+        clearInterval(intervalId);
+        console.log("Stopped recovery attempts.");
+      }
     };
 
+    // 🔥 First immediate check
     recoverPayment();
+
+    // 🔥 Then retry every 5 seconds
+    const intervalId = setInterval(recoverPayment, 5000);
+
+    // ✅ Cleanup when component unmounts
+    return () => clearInterval(intervalId);
   }, []);
 
   if (items.length === 0) return null;
