@@ -222,9 +222,9 @@ export default function ProductPage() {
                   </span>
                 )}
               </div>
-              <div className="inline-flex items-center gap-2 bg-linear-to-r from-orange-500 to-yellow-400 text-white text-sm font-semibold px-4 py-1.5 rounded-full shadow-md w-fit">
+              {/* <div className="inline-flex items-center gap-2 bg-linear-to-r from-orange-500 to-yellow-400 text-white text-sm font-semibold px-4 py-1.5 rounded-full shadow-md w-fit">
                 🕉️ Maha Shivratri Sale is LIVE
-              </div>
+              </div> */}
 
               <p className="text-xs text-gray-600">
                 Limited time offer · Feel the divine energy ✨ <br />

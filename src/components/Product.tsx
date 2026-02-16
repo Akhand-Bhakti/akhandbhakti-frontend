@@ -167,10 +167,8 @@ export default function ProductSection() {
     "
                         >
                           🕉️{" "}
-                          <span className="hidden sm:inline">
-                            Maha Shivratri Sale is Live
-                          </span>
-                          <span className="sm:hidden">Maha Shivratri Sale</span>
+                          <span className="hidden sm:inline">Sale is Live</span>
+                          <span className="sm:hidden"> Sale</span>
                         </span>
                       </div>
                     )}
