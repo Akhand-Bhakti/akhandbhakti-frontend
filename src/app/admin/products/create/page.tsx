@@ -24,6 +24,7 @@ interface CreateProductPayload {
   category: Category;
   displayOrder?: number;
   stock: number;
+  weight: number;
   tags: string[];
   mainImage: ImageField;
   gallery: ImageField[];
@@ -86,6 +87,7 @@ export default function CreateProductPage() {
     description: "",
     category: "rudraksha malas",
     stock: 1,
+    weight: 200,
     tags: [],
     mainImage: {
       public_id: "",
@@ -193,6 +195,11 @@ export default function CreateProductPage() {
       return;
     }
 
+    if (!form.weight || form.weight <= 0) {
+      alert("Product weight must be greater than 0 grams");
+      return;
+    }
+
     const payload: CreateProductPayload = {
       ...form,
       displayOrder: displayOrder === "" ? undefined : displayOrder,
@@ -278,6 +285,21 @@ export default function CreateProductPage() {
                 stock: Number(e.target.value),
               }))
             }
+            className="input"
+          />
+
+          <input
+            type="number"
+            min={1}
+            placeholder="Weight (grams)"
+            value={form.weight}
+            onChange={(e) =>
+              setForm((prev) => ({
+                ...prev,
+                weight: Number(e.target.value),
+              }))
+            }
+            required
             className="input"
           />
 

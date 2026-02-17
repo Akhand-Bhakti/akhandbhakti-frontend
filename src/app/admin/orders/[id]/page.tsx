@@ -4,10 +4,19 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
 
+interface Delhivery {
+  status?: "pending" | "created" | "failed";
+  waybill?: string;
+  trackingUrl?: string;
+  error?: string;
+}
+
 export default function AdminOrderDetails() {
   const { id } = useParams();
   const router = useRouter();
-  const [order, setOrder] = useState<any>(null);
+  const [order, setOrder] = useState<(any & { delhivery?: Delhivery }) | null>(
+    null,
+  );
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState("");
   const [trackingId, setTrackingId] = useState("");
@@ -37,7 +46,12 @@ export default function AdminOrderDetails() {
     fetchOrder();
   }, [id, router]);
 
-  const finalStatus = trackingId ? "Shipped" : status;
+  const finalStatus =
+    order.delhivery?.status === "created"
+      ? "Shipped"
+      : trackingId
+        ? "Shipped"
+        : status;
 
   if (loading) return <p>Loading order details...</p>;
   if (!order) return null;
@@ -91,6 +105,66 @@ export default function AdminOrderDetails() {
         <p>Total: ₹{order.totalPrice}</p>
       </div>
 
+      {/* Delhivery Shipment */}
+      <div className="bg-white p-4 rounded-xl border space-y-3">
+        <h2 className="font-semibold">Delhivery Shipment</h2>
+
+        <p>
+          <strong>Status:</strong> {order.delhivery?.status || "Not Created"}
+        </p>
+
+        {order.delhivery?.waybill && (
+          <p>
+            <strong>Waybill:</strong>{" "}
+            <span className="font-mono text-sm">{order.delhivery.waybill}</span>
+          </p>
+        )}
+
+        {order.delhivery?.trackingUrl && (
+          <a
+            href={order.delhivery.trackingUrl}
+            target="_blank"
+            className="text-blue-600 underline text-sm"
+          >
+            Track Shipment
+          </a>
+        )}
+
+        {order.delhivery?.error && (
+          <p className="text-red-600 text-sm">Error: {order.delhivery.error}</p>
+        )}
+
+        {/* Retry Button */}
+        {order.delhivery?.status === "failed" && (
+          <button
+            disabled={updating}
+            onClick={async () => {
+              try {
+                setUpdating(true);
+
+                const { data } = await api.put(
+                  `/orders/admin/orders/${order._id}/retry-shipment`,
+                  {},
+                  { withCredentials: true },
+                );
+
+                setOrder(data.order);
+                setStatus(data.order.orderStatus);
+                alert("Shipment retried successfully");
+              } catch (err) {
+                console.error(err);
+                alert("Retry failed");
+              } finally {
+                setUpdating(false);
+              }
+            }}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm disabled:opacity-50"
+          >
+            Retry Shipment
+          </button>
+        )}
+      </div>
+
       {/* Order Status + Future Tracking */}
       {/* Order Fulfilment */}
       <div className="bg-white p-4 rounded-xl border space-y-4">
@@ -101,7 +175,10 @@ export default function AdminOrderDetails() {
           <label className="block text-sm font-medium mb-1">Order Status</label>
           <select
             value={status}
-            disabled={order.orderStatus === "Delivered"}
+            disabled={
+              order.orderStatus === "Delivered" ||
+              order.delhivery?.status === "created"
+            }
             onChange={(e) => setStatus(e.target.value)}
             className="w-full border rounded-lg px-3 py-2 text-sm disabled:bg-gray-100"
           >
@@ -116,7 +193,10 @@ export default function AdminOrderDetails() {
           <label className="block text-sm font-medium mb-1">Tracking ID</label>
           <input
             value={trackingId}
-            disabled={order.orderStatus === "Delivered"}
+            disabled={
+              order.orderStatus === "Delivered" ||
+              order.delhivery?.status === "created"
+            }
             onChange={(e) => setTrackingId(e.target.value)}
             placeholder="Enter tracking ID"
             className="w-full border rounded-lg px-3 py-2 text-sm disabled:bg-gray-100"
@@ -129,7 +209,10 @@ export default function AdminOrderDetails() {
           </label>
           <input
             value={delhiveryOrderId}
-            disabled={order.orderStatus === "Delivered"}
+            disabled={
+              order.orderStatus === "Delivered" ||
+              order.delhivery?.status === "created"
+            }
             onChange={(e) => setDelhiveryOrderId(e.target.value)}
             placeholder="Enter Delhivery Order ID"
             className="w-full border rounded-lg px-3 py-2 text-sm disabled:bg-gray-100"
@@ -156,6 +239,7 @@ export default function AdminOrderDetails() {
               );
 
               setOrder(data.order);
+              setStatus(data.order.orderStatus);
               alert("Order updated successfully");
             } catch (err) {
               console.error(err);
