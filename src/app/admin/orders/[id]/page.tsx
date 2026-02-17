@@ -46,15 +46,14 @@ export default function AdminOrderDetails() {
     fetchOrder();
   }, [id, router]);
 
+  if (loading) return <p>Loading order details...</p>;
+  if (!order) return null;
   const finalStatus =
     order.delhivery?.status === "created"
       ? "Shipped"
       : trackingId
         ? "Shipped"
         : status;
-
-  if (loading) return <p>Loading order details...</p>;
-  if (!order) return null;
   const isUnchanged =
     status === order.orderStatus &&
     trackingId === (order.trackingId || "") &&
