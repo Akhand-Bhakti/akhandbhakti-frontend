@@ -134,7 +134,7 @@ export default function AdminOrderDetails() {
         )}
 
         {/* Retry Button */}
-        {order.delhivery?.status === "created" && (
+        {order.delhivery?.status !== "created" && (
           <button
             disabled={updating}
             onClick={async () => {
