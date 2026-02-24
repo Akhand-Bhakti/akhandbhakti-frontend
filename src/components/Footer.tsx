@@ -166,7 +166,7 @@ export default function Footer() {
               <li className="flex gap-2 items-start">
                 <MapPin size={38} />
                 <Link
-                  href="https://maps.app.goo.gl/zuCrcR6aiqg8u1iZA"
+                  href="https://maps.app.goo.gl/AzGby8j34KhUT5v56"
                   className="hover:text-white"
                 >
                   Shiv shakti sadhna sthal, Makanpur
@@ -293,7 +293,7 @@ export default function Footer() {
             <ul className="space-y-3 text-white/80">
               <li className="flex gap-2 items-start">
                 <MapPin size={20} />
-                <Link href="https://maps.app.goo.gl/zuCrcR6aiqg8u1iZA">
+                <Link href="https://maps.app.goo.gl/AzGby8j34KhUT5v56">
                   Shiv shakti sadhna sthal, Makanpur <br />
                   Ghaziabad, Uttar Pradesh 201020
                 </Link>
@@ -350,7 +350,7 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             <Truck />
             <div>
-              <p className="font-semibold text-sm">Free Shipping</p>
+              <p className="font-semibold text-sm">All over World Shipping</p>
               <p className="text-white/70 text-xs">On every Order</p>
             </div>
           </div>
