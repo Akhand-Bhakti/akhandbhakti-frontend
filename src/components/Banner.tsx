@@ -9,8 +9,8 @@ export default function Banner() {
     {
       id: 1,
       title: "Homemade 100% Pure Malyagiri Chandan",
-      image: "/prod1.png",
-      thumb: "/prod1.png",
+      image: "/prods1.png",
+      thumb: "/prods1.png",
       bg: "linear-gradient(135deg,#5E2817,#C0653E)",
       slug: "homemade-100percent-pure-malyagiri-chandan",
     },
