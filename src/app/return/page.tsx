@@ -6,7 +6,6 @@ const RefundCancellationPolicy = () => {
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-gray-50 to-slate-200 px-4 py-14">
       <div className="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
-
         {/* Decorative Top Bar */}
         <div className="h-2 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500"></div>
 
@@ -25,11 +24,11 @@ const RefundCancellationPolicy = () => {
 
         {/* Content */}
         <div className="px-6 sm:px-10 py-10 space-y-10 text-gray-800 leading-relaxed">
-
           <p>
-            At AkhandBhakti, we deal in sacred and spiritually energized products.
-            Due to their personal and ritual nature, we follow a strict but
-            transparent refund and cancellation policy.
+            At AkhandBhakti, we deal in sacred, spiritual, and Abhimantrit
+            (energized) products. All items are specially prepared after the
+            order is placed. Therefore, all orders are considered final once
+            placed and we follow a strict no-cancellation and no-return policy.
           </p>
 
           {/* Section 1 */}
@@ -38,22 +37,27 @@ const RefundCancellationPolicy = () => {
               1. Order Cancellation
             </h2>
 
-            <p className="font-semibold mb-2">✅ Before Dispatch</p>
+            <p className="font-semibold mb-2">❌ No Cancellation Policy</p>
             <ul className="list-disc pl-10 space-y-2 mb-4">
-              <li>Orders can be cancelled within 12 hours of placing the order</li>
-              <li>Cancellation requests must be sent via email or WhatsApp</li>
+              <li>Orders cannot be cancelled once they are placed</li>
+              <li>All orders are processed immediately after confirmation</li>
               <li>
-                Full refund will be processed if the order has not entered
-                processing
+                Cancellation is not allowed for any reason after order placement
               </li>
+              <li>This applies to all domestic and international orders</li>
             </ul>
 
-            <p className="font-semibold mb-2">❌ After Processing / Abhimantrit</p>
-            <p className="mb-2">Orders cannot be cancelled once:</p>
+            <p className="mb-2">
+              Since our products are religious, Abhimantrit, and prepared
+              specially for the customer, once the order is placed it is
+              considered final.
+            </p>
+
             <ul className="list-disc pl-10 space-y-2">
-              <li>Abhimantran process has started</li>
-              <li>Product has been customized or energized</li>
-              <li>Order has been dispatched</li>
+              <li>No cancellation after order confirmation</li>
+              <li>No cancellation after packing</li>
+              <li>No cancellation after dispatch</li>
+              <li>No cancellation after Abhimantran / energizing</li>
             </ul>
           </div>
 
@@ -64,29 +68,36 @@ const RefundCancellationPolicy = () => {
             </h2>
 
             <p className="mb-3">
-              Due to the sacred and personal nature of our products:
+              Due to the sacred and personalized nature of our products, refunds
+              are not provided once the order is placed, processed, or
+              dispatched.
             </p>
 
             <p className="font-semibold mb-2">❌ Non-Refundable Items</p>
             <ul className="list-disc pl-10 space-y-2 mb-4">
-              <li>Abhimantrit / energized products</li>
-              <li>Rudraksha malas, beads, bracelets once delivered</li>
-              <li>Used, opened, or worn items</li>
+              <li>All Abhimantrit / energized products</li>
               <li>
-                Products bought during special offers or discounts
+                Rudraksha malas, beads, bracelets, kavach, or spiritual items
               </li>
+              <li>Orders once placed on the website</li>
+              <li>Orders once dispatched from our office</li>
+              <li>Orders refused or not accepted by customer</li>
+              <li>Incorrect address provided by customer</li>
+              <li>International shipments once shipped</li>
+              <li>Products bought during special offers or discounts</li>
             </ul>
 
-            <p className="font-semibold mb-2">✅ Refund Eligible (Rare Cases)</p>
-            <p className="mb-2">Refunds may be considered only if:</p>
+            <p className="font-semibold mb-2">
+              ✅ Refund Eligible (Very Rare Cases)
+            </p>
+            <p className="mb-2">Refund may be considered only if:</p>
             <ul className="list-disc pl-10 space-y-2 mb-3">
-              <li>Wrong product was delivered</li>
-              <li>Product arrived damaged during transit</li>
+              <li>Wrong product was sent by our team</li>
             </ul>
 
             <p className="font-semibold">
-              📌 Such issues must be reported within 48 hours of delivery, along
-              with clear photos/videos.
+              📌 Issue must be reported within 24 hours of delivery with photo /
+              video proof.
             </p>
           </div>
 
@@ -97,10 +108,15 @@ const RefundCancellationPolicy = () => {
             </h2>
             <ul className="list-disc pl-10 space-y-2">
               <li>
-                Approved refunds are processed within 7–10 business days
+                Refund will only be processed if approved after verification
               </li>
-              <li>Refunds are made to the original payment method</li>
-              <li>Shipping charges are non-refundable</li>
+              <li>No refund will be given after order placement</li>
+              <li>No refund after dispatch under any condition</li>
+              <li>Shipping and payment charges are non-refundable</li>
+              <li>
+                Courier delay, customs hold, or non-acceptance is not eligible
+                for refund
+              </li>
             </ul>
           </div>
           <div>
@@ -112,8 +128,7 @@ const RefundCancellationPolicy = () => {
               us:
             </p>
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-              <p>
-                📧 Email:{" "} akhandbhaktiofficial@gmail.com</p>
+              <p>📧 Email: akhandbhaktiofficial@gmail.com</p>
               <p>
                 🌐 Website:{" "}
                 <Link
