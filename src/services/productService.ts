@@ -17,8 +17,14 @@ export async function fetchProducts(params?: {
     query.append("limit", String(params.limit));
   }
 
+  const ipRes = await fetch("https://api.ipify.org?format=json");
+  const ipData = await ipRes.json();
+
   const res = await fetch(`${API_BASE_URL}/v1/products?${query.toString()}`, {
     cache: "no-store",
+    headers: {
+      "x-user-ip": ipData.ip,
+    },
   });
 
   if (!res.ok) throw new Error("Failed to fetch products");
