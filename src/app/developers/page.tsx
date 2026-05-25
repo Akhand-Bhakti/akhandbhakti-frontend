@@ -5,8 +5,8 @@ export default function developers() {
 
       <p className="mb-4">
         This website, <strong>AkhandBhakti</strong>, has been designed and
-        developed by <strong>Abhisekh Kumar</strong>, serving as the Founding
-        Full Stack Engineer.
+        developed by <strong>Abhisekh Kumar</strong> & Team, serving as the
+        Founding Full Stack Engineer.
       </p>
 
       <p className="mb-4">
